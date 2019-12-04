@@ -10,5 +10,5 @@ package com.mycompany.ileinterdite2019;
  * @author estevmat
  */
 public class Aventurier {
-    
+    private String nomJoueur;
 }
