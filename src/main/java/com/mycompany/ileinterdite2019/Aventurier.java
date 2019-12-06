@@ -14,4 +14,5 @@ public class Aventurier {
     private String test;
     private String test2;
     private int manu;
+    private int Wiss;
 }
