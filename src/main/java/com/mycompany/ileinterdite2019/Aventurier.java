@@ -15,4 +15,5 @@ public class Aventurier {
     private String test2;
     private int manu;
     private String hamza = "le plus beau du monde";
+    private int Wiss;
 }
