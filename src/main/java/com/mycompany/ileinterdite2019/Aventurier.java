@@ -12,4 +12,5 @@ package com.mycompany.ileinterdite2019;
 public class Aventurier {
     private String nomJoueur;
     private String test;
+    private String test2;
 }
