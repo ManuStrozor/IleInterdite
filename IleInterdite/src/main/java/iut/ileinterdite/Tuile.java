@@ -3,6 +3,7 @@ package iut.ileinterdite;
 import static iut.ileinterdite.EtatTuile.assechée;
 import static iut.ileinterdite.EtatTuile.coulée;
 import static iut.ileinterdite.EtatTuile.innondée;
+import iut.ileinterdite.aventuriers.Aventurier;
 import java.util.ArrayList;
 
 /**
