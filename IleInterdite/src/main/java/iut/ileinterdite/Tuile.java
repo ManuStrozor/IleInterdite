@@ -25,6 +25,7 @@ public class Tuile {
         this.nomTuile = nomTuile;
         this.etatTuile = assechée;
         this.aventuriersSurTuile = new ArrayList<>();
+        setTuileTresor(null);
     }
 
     Tuile(int ligne, int colonne, String nomTuile, Tresor tuileTresor) {
@@ -33,7 +34,7 @@ public class Tuile {
         this.nomTuile = nomTuile;
         this.etatTuile = assechée;
         this.aventuriersSurTuile = new ArrayList<>();
-        this.tuileTresor = tuileTresor;
+        setTuileTresor(tuileTresor);
 
     }
 
