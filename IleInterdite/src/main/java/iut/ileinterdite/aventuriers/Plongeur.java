@@ -1,3 +1,5 @@
+package iut.ileinterdite.aventuriers;
+
 /**
  *
  * @author estevmat
