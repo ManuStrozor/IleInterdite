@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  *
  * @author turbetde
  */
-public abstract class Vue extends JPanel {
+public abstract class Vue extends JPanel implements IVue {
     
     protected IHM ihm;
     
@@ -22,7 +22,7 @@ public abstract class Vue extends JPanel {
         this.ihm = ihm;
         this.setLayout(new BorderLayout());
     }
-    
+
     public IHM getIHM() {
         return ihm;
     }

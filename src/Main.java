@@ -7,6 +7,7 @@
 
 import game.IHM;
 import views.VueJeu;
+import views.VueMenu;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Main {
     public static void main(String[] args) {
         IHM ihm = new IHM();
         VueJeu jeu = new VueJeu(ihm);
-        jeu.show();
+        VueMenu menu = new VueMenu(ihm);
+        menu.show();
     }
 }
