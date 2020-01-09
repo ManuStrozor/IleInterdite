@@ -6,6 +6,8 @@
 package mvc.view;
 
 import javax.swing.*;
+import java.awt.*;
+
 /**
  *
  * @author turbetde

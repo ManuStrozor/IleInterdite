@@ -4,6 +4,7 @@ import mvc.Message;
 import mvc.TypeMessage;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -45,6 +46,10 @@ public class VueMenu extends Vue {
 
     @Override
     public void initComponents() {
-        this.add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("backgroundMenu.png"))));
+        this.setBackground(new ImageIcon(getClass().getClassLoader().getResource("backgroundMenu.png")).getImage());
+
+        JButton test = new JButton("BUTTON");
+        test.setPreferredSize(new Dimension(50, 50));
+        this.add(test);
     }
 }

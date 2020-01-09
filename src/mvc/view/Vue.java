@@ -5,7 +5,8 @@
  */
 package mvc.view;
 
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -15,10 +16,23 @@ public abstract class Vue extends JPanel implements IVue {
     
     protected IHM ihm;
     protected String name;
+    private Image background;
     
     Vue(String name, IHM ihm) {
         this.name = name;
         this.ihm = ihm;
         this.ihm.addVue(this);
+        //this.setLayout(new BorderLayout());
+    }
+
+    protected void setBackground(Image background) {
+        this.background = background;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        g.drawImage(background, 0, 0, null);
     }
 }

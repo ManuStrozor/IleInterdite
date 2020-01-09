@@ -26,6 +26,7 @@ public class IHM extends Observe {
         frame = new JFrame("Ile Interdite");
         frame.setUndecorated(false);
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         //Toolkit tk = Toolkit.getDefaultToolkit();
