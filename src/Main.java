@@ -5,9 +5,11 @@
  */
 
 
-import game.IHM;
-import views.VueJeu;
-import views.VueMenu;
+import mvc.controller.Controlleur;
+import mvc.view.IHM;
+import game.IleInterdite;
+import mvc.view.VueJeu;
+import mvc.view.VueMenu;
 
 /**
  *
@@ -16,9 +18,16 @@ import views.VueMenu;
 public class Main {
     
     public static void main(String[] args) {
-        IHM ihm = new IHM();
-        VueJeu jeu = new VueJeu(ihm);
-        VueMenu menu = new VueMenu(ihm);
-        menu.show();
+
+        IleInterdite ileInterdite = new IleInterdite(); // Modèle
+
+        IHM ihm = new IHM(); // Vue
+
+        ihm.addVue(new VueJeu("jeu", ihm));
+        ihm.addVue(new VueMenu("menu", ihm));
+
+        new Controlleur(ihm, ileInterdite); // Controlleur
+
+        ileInterdite.start();
     }
 }

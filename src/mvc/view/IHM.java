@@ -1,12 +1,14 @@
-package game;/*
+package mvc.view;
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import views.Vue;
+import mvc.Observe;
 
 import java.awt.Toolkit;
+import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -18,7 +20,8 @@ import javax.swing.WindowConstants;
 public class IHM extends Observe {
     
     private JFrame frame;
-    private JPanel content;
+    private JPanel vue;
+    private HashMap<String, Vue> vues = new HashMap<>();
     
     public IHM() {
         frame = new JFrame("Ile Interdite");
@@ -27,15 +30,22 @@ public class IHM extends Observe {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         Toolkit tk = Toolkit.getDefaultToolkit();
-        int w = (int) tk.getScreenSize().getWidth();
-        int h = (int) tk.getScreenSize().getHeight();
+        int w = (int) tk.getScreenSize().getWidth() / 2;
+        int h = (int) tk.getScreenSize().getHeight() / 2;
         frame.setSize(w, h);
-        
-        frame.setVisible(true);
     }
-    
-    public void setContentPane(Vue vue) {
-        content = vue;
-        frame.setContentPane(content);
+
+    public void addVue(Vue vue) {
+        vues.put(vue.name, vue);
+    }
+
+    public Vue getVue(String name) {
+        return vues.get(name);
+    }
+
+    public void setVue(String vue) {
+        this.vue = getVue(vue);
+        frame.setContentPane(this.vue);
+        frame.setVisible(true);
     }
 }

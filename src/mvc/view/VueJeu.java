@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
-
-import game.IHM;
+package mvc.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,13 +15,13 @@ import javax.swing.*;
  */
 public class VueJeu extends Vue {
     
-    public VueJeu(IHM ihm) {
-        super(ihm);
-        this.initialisation();
+    public VueJeu(String name, IHM ihm) {
+        super(name, ihm);
+        this.initComponents();
     }
 
     @Override
-    public void initialisation() {
+    public void initComponents() {
         JPanel header = new JPanel(new GridLayout(1, 3));
         header.add(new JLabel("GAUCHE"));
         header.add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("ileinterdite_logo.jpg"))));

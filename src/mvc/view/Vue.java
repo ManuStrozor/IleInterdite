@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views;
-
-import game.IHM;
+package mvc.view;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -17,17 +15,16 @@ import javax.swing.JPanel;
 public abstract class Vue extends JPanel implements IVue {
     
     protected IHM ihm;
+    protected String name;
     
-    Vue(IHM ihm) {
+    Vue(String name, IHM ihm) {
+        this.name = name;
         this.ihm = ihm;
+        this.ihm.addVue(this);
         this.setLayout(new BorderLayout());
     }
 
-    public IHM getIHM() {
-        return ihm;
-    }
-    
-    public void show() {
-        ihm.setContentPane(this);
+    public void display() {
+        ihm.setVue(name);
     }
 }
