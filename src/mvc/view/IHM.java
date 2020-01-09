@@ -7,7 +7,6 @@ package mvc.view;
 
 import mvc.Observe;
 
-import java.awt.Toolkit;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;

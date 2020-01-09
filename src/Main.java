@@ -8,6 +8,7 @@
 import mvc.controller.Controlleur;
 import mvc.view.IHM;
 import game.IleInterdite;
+import mvc.view.VueConfig;
 import mvc.view.VueJeu;
 import mvc.view.VueMenu;
 
@@ -25,6 +26,7 @@ public class Main {
 
         ihm.addVue(new VueJeu("jeu", ihm));
         ihm.addVue(new VueMenu("menu", ihm));
+        ihm.addVue(new VueConfig("config", ihm));
 
         new Controlleur(ihm, ileInterdite); // Controlleur
 
