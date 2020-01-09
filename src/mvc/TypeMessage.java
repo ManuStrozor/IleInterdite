@@ -9,6 +9,7 @@ package mvc;/*
  */
 public enum TypeMessage {
     START,
+    CONFIG,
     JOUER,
     QUITTER,
 }

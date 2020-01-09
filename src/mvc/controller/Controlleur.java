@@ -34,7 +34,12 @@ public class Controlleur implements IControlleur {
                 ihm.setVue("menu");
                 break;
 
+            case CONFIG:
+                ihm.setVue(msg.vue);
+                break;
+
             case JOUER:
+                ihm.setSize(1318, 840);
                 ihm.setVue(msg.vue);
                 ileInterdite.jouer();
                 break;

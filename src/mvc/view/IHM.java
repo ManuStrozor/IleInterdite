@@ -35,7 +35,7 @@ public class IHM extends Observe {
         int w = 580;
         int h = 840;
 
-        frame.setSize(w, h);
+        this.setSize(w, h);
     }
 
     public void addVue(Vue vue) {
@@ -44,6 +44,10 @@ public class IHM extends Observe {
 
     public Vue getVue(String name) {
         return vues.get(name);
+    }
+
+    public void setSize(int w, int h) {
+        frame.setSize(w, h);
     }
 
     public void setVue(String vue) {

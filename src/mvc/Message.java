@@ -5,6 +5,8 @@ package mvc;/*
  */
 
 
+import javax.swing.*;
+
 /**
  *
  * @author turbetde
