@@ -29,9 +29,13 @@ public class IHM extends Observe {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        int w = (int) tk.getScreenSize().getWidth() / 2;
-        int h = (int) tk.getScreenSize().getHeight() / 2;
+        //Toolkit tk = Toolkit.getDefaultToolkit();
+        // int w = (int) tk.getScreenSize().getWidth();
+        // int h = (int) tk.getScreenSize().getHeight();
+
+        int w = 580;
+        int h = 840;
+
         frame.setSize(w, h);
     }
 

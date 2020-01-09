@@ -8,7 +8,7 @@ package mvc;/*
  * @author turbetde
  */
 public enum TypeMessage {
+    START,
     JOUER,
     QUITTER,
-    AFFICHER_VUE,
 }

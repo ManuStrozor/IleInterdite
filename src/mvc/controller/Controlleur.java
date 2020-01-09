@@ -30,8 +30,8 @@ public class Controlleur implements IControlleur {
 
         switch (msg.type) {
 
-            case AFFICHER_VUE:
-                ihm.setVue(msg.vue);
+            case START:
+                ihm.setVue("menu");
                 break;
 
             case JOUER:

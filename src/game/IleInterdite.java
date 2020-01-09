@@ -21,8 +21,7 @@ public class IleInterdite extends Observe {
 
     public void start() {
         Message m = new Message();
-        m.type = TypeMessage.AFFICHER_VUE;
-        m.vue = "menu";
+        m.type = TypeMessage.START;
         notifierObservateur(m);
     }
 

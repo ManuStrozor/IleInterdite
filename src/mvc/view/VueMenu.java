@@ -5,51 +5,47 @@ import mvc.TypeMessage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class VueMenu extends Vue {
-
-    private JPanel corps, menu;
-    private JButton play, quit;
 
     public VueMenu(String name, IHM ihm) {
         super(name, ihm);
 
-        corps = new JPanel(new BorderLayout());
-        menu = new JPanel(new GridLayout(4,3));
-
-        play = new JButton("Jouer");
-        quit = new JButton("Quitter");
-
         this.initComponents();
 
-        play.addActionListener(e -> {
-            Message m = new Message();
-            m.type = TypeMessage.JOUER;
-            m.vue = "jeu";
-            ihm.notifierObservateur(m);
-        });
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                //System.out.println(mouseEvent.getX() + " " + mouseEvent.getY());
+                int x = mouseEvent.getX();
+                int y = mouseEvent.getY();
 
-        quit.addActionListener(e -> {
-            Message m = new Message();
-            m.type = TypeMessage.QUITTER;
-            ihm.notifierObservateur(m);
+                if (x > 217 && x < 357 && y > 628 && y < 681) { // Bouton Jouer
+                    Message m = new Message();
+                    m.type = TypeMessage.JOUER;
+                    m.vue = "jeu";
+                    ihm.notifierObservateur(m);
+                } else if (x > 217 && x < 355 && y > 714 && y < 769) { // Bouton Quitter
+                    Message m = new Message();
+                    m.type = TypeMessage.QUITTER;
+                    ihm.notifierObservateur(m);
+                }
+            }
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {}
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {}
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {}
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {}
         });
     }
 
     @Override
     public void initComponents() {
-
-        for (int i = 0; i < 12; i++) {
-            if (i == 4) {
-                menu.add(play);
-            } else if (i == 7) {
-                menu.add(quit);
-            } else {
-                menu.add(new JLabel());
-            }
-        }
-
-        corps.add(menu, BorderLayout.CENTER);
-        this.add(corps, BorderLayout.CENTER);
+        this.add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource("backgroundMenu.png"))));
     }
 }
