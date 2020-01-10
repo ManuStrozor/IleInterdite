@@ -41,15 +41,12 @@ public class Tuile {
 
     }
 
-    /*public ArrayList<Tuile> getTuileAdjacentes(Tuile tuile){
-
-        ArrayList<Tuile> tuilesadjacentes = new ArrayList<>();
-
-
-
-
-
-    }*/
+    public void afficheTuile(){
+        System.out.println(this.getNomTuile());
+        System.out.println(this.getLigne());
+        System.out.println(this.getColonne());
+        System.out.println("-------------------------------------------");
+    }
 
 
 

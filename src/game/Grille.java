@@ -1,5 +1,6 @@
 package game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,13 +14,21 @@ import static game.Tresor.statueDeZephir;
  */
 public class Grille {
 
-    private Tuile[][] tuiles ;
-    private Tuile[][] tuilesGrille = new Tuile[6][6];
-    Grille grille = new Grille(tuilesGrille);
-    private ArrayList<Tuile> nomDesTuiles;
-    Grille(Tuile[][] tuiles){
-        this.tuiles=tuiles;
+
+    private Tuile[][] tuilesGrille;
+    private ArrayList<Tuile> nomDesTuiles ;
+
+     public Grille(Tuile[][] tuiles, ArrayList<Tuile> nomDesTuiles){
+       tuilesGrille=tuiles;
+       this.nomDesTuiles=nomDesTuiles;
     }
+     public Grille (){
+            tuilesGrille=new Tuile[6][6];
+            nomDesTuiles=new ArrayList<>();
+     }
+
+     //Grille grille = new Grille(tuilesGrille,nomDesTuiles);
+
     public void initTuiles() {
 
         nomDesTuiles = new ArrayList<>();
@@ -78,6 +87,16 @@ public class Grille {
 
     public void initGrille() {
         initTuiles();
+
+        for (int t=0;t<24;t++) {
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 6; j++) {
+                    getTuilesGrille()[i][j] = getNomDesTuiles().get(t);
+                    getTuilesGrille()[i][j].setLigne(i);
+                    getTuilesGrille()[i][j].setColonne(j);
+                }
+            }
+        }
         tuilesGrille[0][0] = null;
         tuilesGrille[0][1] = null;
         tuilesGrille[0][4] = null;
@@ -91,14 +110,17 @@ public class Grille {
         tuilesGrille[5][4] = null;
         tuilesGrille[5][5] = null;
 
-        int t = 0;
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
-                if (getTuilesGrille()[i][j] != null) {
-                    getTuilesGrille()[i][j]= getNomDesTuiles().get(t);
-                    getTuilesGrille()[i][j].setLigne(i);
-                    getTuilesGrille()[i][j].setColonne(j);
-                    t++;
+
+    }
+
+    public void afficheGrille(){
+        initGrille();
+        for(int i=0; i<6;i++){
+            for(int j=0; j<6;j++){
+                System.out.println("helloworld2");
+                if (getTuilesGrille()[i][j] != null){
+                    System.out.println("hello world");
+                    getTuilesGrille()[i][j].afficheTuile();
                 }
             }
         }
@@ -112,13 +134,13 @@ public class Grille {
         this.tuilesGrille = tuilesGrille;
     }
 
-    public Grille getGrille() {
+    /*public Grille getGrille() {
         return grille;
     }
 
     public void setGrille(Grille grille) {
         this.grille = grille;
-    }
+    }*/
 
     public ArrayList<Tuile> getNomDesTuiles() {
         return nomDesTuiles;
