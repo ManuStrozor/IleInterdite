@@ -8,10 +8,18 @@ package game;
 import mvc.Message;
 import mvc.Observe;
 import mvc.TypeMessage;
+import static game.EtatTuile.*;
+import static game.Tresor.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.ListIterator;
+import java.util.ArrayList;
 
 /**
  *
- * @author turbetde
+ * @author turbetde,estevmat
  */
 public class IleInterdite extends Observe {
 
@@ -29,7 +37,7 @@ public class IleInterdite extends Observe {
         System.out.println("IleInterdite : jouer()");
     }
 
-    public void quitter() {
+    public void quitter(){
         System.exit(0);
     }
 }
