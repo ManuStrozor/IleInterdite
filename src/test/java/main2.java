@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class main2 {
     public static void main(String[] args) {
          //Tuile[][] tuilesGrille = new Tuile[6][6];
-         ///ArrayList<Tuile> nomDesTuiles = new ArrayList<>();
+         //ArrayList<Tuile> nomDesTuiles = new ArrayList<>();
          Grille grille = new Grille();
          grille.afficheGrille();
 
