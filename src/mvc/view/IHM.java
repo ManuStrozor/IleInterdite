@@ -21,7 +21,7 @@ public class IHM extends Observe {
 
     public final int WIDTH = 580;
     public final int HEIGHT = 800;
-    private double screenWidth, screenHeight, fW, fH;
+    private double screenWidth, screenHeight, frameWidth, frameHeight;
 
     private JFrame frame;
     private JPanel vue = new JPanel();
@@ -53,17 +53,25 @@ public class IHM extends Observe {
         this.setSize(w, h);
         frame.setVisible(true);
 
-        double cW = frame.getContentPane().getSize().getWidth();
-        double cH = frame.getContentPane().getSize().getHeight();
+        double contentWidth = frame.getContentPane().getSize().getWidth();
+        double contentHeight = frame.getContentPane().getSize().getHeight();
 
-        this.setSize((int) (w + fW- cW), (int) (h + fH- cH));
-        frame.setLocation((int) (screenWidth /2 - fW/2.0), (int) (screenHeight /2 - fH/2.0));
+        this.setSize((int) (w + frameWidth - contentWidth), (int) (h + frameHeight - contentHeight));
+        frame.setLocation((int) (screenWidth /2 - frameWidth /2.0), (int) (screenHeight /2 - frameHeight /2.0));
     }
 
     public void setSize(int w, int h) {
-        frame.setSize(Math.min(w, (int) screenWidth), Math.min(h, (int) screenHeight));
-        fW = frame.getSize().getWidth();
-        fH = frame.getSize().getHeight();
+        if (h > screenHeight) {
+            h = (int) screenHeight;
+            w = w / (int) (h / screenHeight);
+        }
+        if (w > screenWidth) {
+            w = (int)screenWidth;
+            h = h/(int)(w/screenWidth);
+        }
+        frame.setSize(w, h);
+        frameWidth = frame.getSize().getWidth();
+        frameHeight = frame.getSize().getHeight();
     }
 
     public void setVue(String vue) {
