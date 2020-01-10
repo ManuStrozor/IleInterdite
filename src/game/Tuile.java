@@ -16,6 +16,12 @@ public class Tuile {
     private EtatTuile etatTuile;
     private ArrayList<Aventurier> aventuriersSurTuile;
 
+    Tuile(String nomTuile,Tresor tuileTresor){
+        this.nomTuile=nomTuile;
+        this.tuileTresor=tuileTresor;
+        this.etatTuile = EtatTuile.assechee;
+    }
+
     Tuile(int ligne, int colonne, String nomTuile) {
         this.ligne = ligne;
         this.colonne = colonne;
@@ -34,6 +40,35 @@ public class Tuile {
         setTuileTresor(tuileTresor);
 
     }
+
+    /*public ArrayList<Tuile> getTuileAdjacentes(Tuile tuile){
+
+        ArrayList<Tuile> tuilesadjacentes = new ArrayList<>();
+
+
+
+
+
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public int getLigne() {
         return ligne;
