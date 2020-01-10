@@ -6,7 +6,6 @@
 package mvc.view;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  *
@@ -14,9 +13,8 @@ import java.awt.*;
  */
 public class VueJeu extends Vue {
     
-    public VueJeu(String name, IHM ihm) {
-        super(name, ihm);
-
+    public VueJeu(String name, IHM ihm, int width, int height) {
+        super(name, ihm, width, height);
         this.initComponents();
     }
 
