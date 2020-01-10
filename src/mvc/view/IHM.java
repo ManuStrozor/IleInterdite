@@ -7,6 +7,7 @@ package mvc.view;
 
 import mvc.Observe;
 
+import java.awt.*;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,7 +22,9 @@ public class IHM extends Observe {
     private JFrame frame;
     private JPanel vue;
     private HashMap<String, Vue> vues = new HashMap<>();
-    
+
+    private int[] screenSize = new int[2];
+
     public IHM() {
         frame = new JFrame("Ile Interdite");
         frame.setUndecorated(false);
@@ -29,14 +32,11 @@ public class IHM extends Observe {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
-        //Toolkit tk = Toolkit.getDefaultToolkit();
-        // int w = (int) tk.getScreenSize().getWidth();
-        // int h = (int) tk.getScreenSize().getHeight();
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        screenSize[0] = (int) tk.getScreenSize().getWidth();
+        screenSize[1] = (int) tk.getScreenSize().getHeight();
 
-        int w = 580;
-        int h = 840;
-
-        this.setSize(w, h);
+        this.setSize(580, 840);
     }
 
     public void addVue(Vue vue) {
@@ -48,7 +48,7 @@ public class IHM extends Observe {
     }
 
     public void setSize(int w, int h) {
-        frame.setSize(w, h);
+        frame.setSize(Math.min(w, screenSize[0]), Math.min(h, screenSize[1]));
     }
 
     public void setVue(String vue) {
