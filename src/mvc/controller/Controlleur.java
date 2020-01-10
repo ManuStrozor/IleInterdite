@@ -39,7 +39,6 @@ public class Controlleur implements IControlleur {
                 break;
 
             case JOUER:
-                ihm.setSize(1318, 840);
                 ihm.setVue(msg.vue);
                 ileInterdite.jouer();
                 break;
