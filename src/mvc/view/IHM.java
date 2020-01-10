@@ -19,8 +19,8 @@ import javax.swing.WindowConstants;
  */
 public class IHM extends Observe {
 
-    public final int WIDTH = 580;
-    public final int HEIGHT = 800;
+    public final int WIDTH = 560;
+    public final int HEIGHT = 798;
     private double screenWidth, screenHeight, frameWidth, frameHeight;
 
     private JFrame frame;
