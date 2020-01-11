@@ -4,6 +4,7 @@ import mvc.Message;
 import mvc.TypeMessage;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Objects;
@@ -31,18 +32,26 @@ public class VueMenu extends Vue {
 
     @Override
     public void initComponents() {
-        this.setLayout(null);
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundMenu.png"))).getImage());
 
         jouer = new JButton("JOUER");
         quitter = new JButton("QUITTER");
 
-        int w = 160;
-        int h = 50;
-        jouer.setBounds(this.getWidth()/2 - w/2, (int)(0.78*this.getHeight()), w, h);
-        quitter.setBounds(this.getWidth()/2 - w/2, (int)(0.88*this.getHeight()), w, h);
+        JPanel panel = new JPanel(new BorderLayout()); panel.setOpaque(false);
 
-        this.add(jouer);
-        this.add(quitter);
+        JPanel buttonsPanel = new JPanel(new BorderLayout(0, 10)); buttonsPanel.setOpaque(false);
+        JPanel marginLeft = new JPanel(); marginLeft.setPreferredSize(new Dimension(200, 0)); marginLeft.setOpaque(false);
+        JPanel marginRight = new JPanel(); marginRight.setPreferredSize(new Dimension(200, 0)); marginRight.setOpaque(false);
+        JPanel marginBot = new JPanel(); marginBot.setPreferredSize(new Dimension(0, 50)); marginBot.setOpaque(false);
+
+        buttonsPanel.add(jouer, BorderLayout.NORTH);
+        buttonsPanel.add(quitter, BorderLayout.SOUTH);
+
+        panel.add(buttonsPanel, BorderLayout.CENTER);
+        panel.add(marginBot, BorderLayout.SOUTH);
+        panel.add(marginLeft, BorderLayout.WEST);
+        panel.add(marginRight, BorderLayout.EAST);
+
+        this.add(panel, BorderLayout.SOUTH);
     }
 }
