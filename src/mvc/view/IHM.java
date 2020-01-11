@@ -62,12 +62,14 @@ public class IHM extends Observe {
 
     public void setSize(int w, int h) {
         if (h > screenHeight) {
+            double ratio = screenHeight/h;
             h = (int) screenHeight;
-            w = w / (int) (h / screenHeight);
+            w = (int) (w * ratio);
         }
         if (w > screenWidth) {
-            w = (int)screenWidth;
-            h = h/(int)(w/screenWidth);
+            double ratio = screenWidth/w;
+            w = (int) screenWidth;
+            h = (int) (h * ratio);
         }
         frame.setSize(w, h);
         frameWidth = frame.getSize().getWidth();

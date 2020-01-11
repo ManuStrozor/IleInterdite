@@ -12,6 +12,5 @@ public enum TypeMessage {
     CONFIG,
     JOUER,
     QUITTER,
-
-
+    UPDATE_IHM,
 }
