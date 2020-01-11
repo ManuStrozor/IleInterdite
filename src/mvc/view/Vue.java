@@ -62,6 +62,6 @@ public abstract class Vue extends JPanel implements IVue {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(background, 0, 0, (int)getSize().getWidth(), (int)getSize().getHeight(), null);
     }
 }

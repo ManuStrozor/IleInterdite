@@ -26,7 +26,7 @@ public class Main {
 
         ihm.addVue(new VueMenu("menu", ihm));
         ihm.addVue(new VueConfig("config", ihm));
-        ihm.addVue(new VueJeu("jeu", ihm, 1318, 800));
+        ihm.addVue(new VueJeu("jeu", ihm, 1320, 800));
 
         new Controlleur(ihm, ileInterdite); // Controlleur
 

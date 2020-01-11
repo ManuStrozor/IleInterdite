@@ -33,16 +33,13 @@ public class Controlleur implements IControlleur {
             case START:
                 ihm.setVue("menu");
                 break;
-
             case CONFIG:
                 ihm.setVue(msg.vue);
                 break;
-
             case JOUER:
                 ihm.setVue(msg.vue);
                 ileInterdite.jouer();
                 break;
-
             case QUITTER:
                 ileInterdite.quitter();
                 break;
