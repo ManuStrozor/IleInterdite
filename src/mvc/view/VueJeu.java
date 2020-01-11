@@ -25,7 +25,7 @@ public class VueJeu extends Vue {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundJeu.jpg"))).getImage());
 
         JPanel menu = new JPanel(null);
-
+        menu.setOpaque(false);
         ////// ZONE DE MENU //////
 
         ////// ZONE DE MENU //////
