@@ -129,6 +129,9 @@ public class VueConfig extends Vue {
         panelOuest.setOpaque(false);
         panelEst.setOpaque(false);
         panelSud.setOpaque(false);
+        radio1.setOpaque(false);
+        radio2.setOpaque(false);
+        radio3.setOpaque(false);
 
 
 
