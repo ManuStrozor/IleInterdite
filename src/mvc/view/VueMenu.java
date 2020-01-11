@@ -4,6 +4,8 @@ import mvc.Message;
 import mvc.TypeMessage;
 
 import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Objects;
 
 public class VueMenu extends Vue {
@@ -16,15 +18,13 @@ public class VueMenu extends Vue {
         this.initComponents();
 
         jouer.addActionListener(e -> {
-            Message m = new Message();
-            m.type = TypeMessage.CONFIG;
+            Message m = new Message(TypeMessage.CONFIG);
             m.vue = "config";
             ihm.notifierObservateur(m);
         });
 
         quitter.addActionListener(e -> {
-            Message m = new Message();
-            m.type = TypeMessage.QUITTER;
+            Message m = new Message(TypeMessage.QUITTER);
             ihm.notifierObservateur(m);
         });
     }

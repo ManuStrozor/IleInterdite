@@ -28,13 +28,34 @@ public class IleInterdite extends Observe {
     }
 
     public void start() {
-        Message m = new Message();
-        m.type = TypeMessage.START;
+        notifierObservateur(new Message(TypeMessage.START));
+    }
+
+    public void commencerPartie() {
+        // melanger Tuiles
+        initiateInondation();
+        initiateAventuriers();
+        initiateTresorCards();
+        initiateDifficulty();
+        Message m = new Message(TypeMessage.UPDATE_IHM);
+        m.vue = "jeu";
         notifierObservateur(m);
     }
 
-    public void jouer() {
-        System.out.println("IleInterdite : jouer()");
+    private void initiateDifficulty() {
+
+    }
+
+    private void initiateTresorCards() {
+
+    }
+
+    private void initiateAventuriers() {
+
+    }
+
+    private void initiateInondation() {
+
     }
 
     public void quitter(){

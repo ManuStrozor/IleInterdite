@@ -32,6 +32,7 @@ public class VueJeu extends Vue {
 
         JPanel menuPanel = new JPanel(new BorderLayout());
         menuPanel.setOpaque(false);
+
         JPanel marginLeft = new JPanel();
         marginLeft.setPreferredSize(new Dimension(100, 0)); marginLeft.setOpaque(false);
         JPanel marginTop = new JPanel();
@@ -45,7 +46,7 @@ public class VueJeu extends Vue {
         menuPanel.add(menu, BorderLayout.CENTER);
         menuPanel.setPreferredSize(new Dimension(450,0));
 
-        JPanel board = new JPanel(new BorderLayout());
+        JPanel board = new JPanel(new BorderLayout(5,5));
         board.setOpaque(false);
         JPanel tilesZone = new JPanel(new GridLayout(6, 6));
         tilesZone.setOpaque(false);
@@ -86,7 +87,7 @@ public class VueJeu extends Vue {
         boardPanel.add(marginBot2, BorderLayout.SOUTH);
         boardPanel.add(board, BorderLayout.CENTER);
 
-        JPanel dashBoard = new JPanel(new GridLayout(1, 4));
+        JPanel dashBoard = new JPanel(new GridLayout(1, 4, 10, 0));
         dashBoard.setPreferredSize(new Dimension(0, 200));
         dashBoard.setOpaque(false);
 

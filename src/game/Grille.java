@@ -1,9 +1,7 @@
 package game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 import static game.Tresor.*;
 import static game.Tresor.statueDeZephir;
@@ -16,7 +14,7 @@ public class Grille {
 
 
     private Tuile[][] tuilesGrille;
-    private ArrayList<Tuile> nomDesTuiles ;
+    private ArrayList<Tuile> nomDesTuiles;
 
      public Grille(Tuile[][] tuiles, ArrayList<Tuile> nomDesTuiles){
        tuilesGrille=tuiles;
@@ -26,8 +24,6 @@ public class Grille {
             tuilesGrille=new Tuile[6][6];
             nomDesTuiles=new ArrayList<>();
      }
-
-     //Grille grille = new Grille(tuilesGrille,nomDesTuiles);
 
     public void initTuiles() {
 

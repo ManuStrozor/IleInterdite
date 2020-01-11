@@ -16,7 +16,7 @@ public class Tuile {
     private EtatTuile etatTuile;
     private ArrayList<Aventurier> aventuriersSurTuile;
 
-    Tuile(String nomTuile,Tresor tuileTresor){
+    Tuile(String nomTuile, Tresor tuileTresor){
         this.nomTuile=nomTuile;
         this.tuileTresor=tuileTresor;
         this.etatTuile = EtatTuile.assechee;
