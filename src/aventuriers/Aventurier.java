@@ -4,7 +4,7 @@ package aventuriers;
  *
  * @author estevmat
  */
-public class Aventurier {
+public abstract class Aventurier {
     private Couleur couleurPion;
     private int nbCartes;
     private String actionsRestantes;
