@@ -5,6 +5,7 @@ package game;
  * and open the template in the editor.
  */
 
+import aventuriers.Aventurier;
 import mvc.Message;
 import mvc.Observe;
 import mvc.TypeMessage;
@@ -39,5 +40,20 @@ public class IleInterdite extends Observe {
 
     public void quitter(){
         System.exit(0);
+    }
+
+    public void assecher(Tuile tuile, Aventurier aventurier){
+        tuile.setEtatTuile(assechee);
+
+        double nbActions = aventurier.getNbActions();
+
+        if (aventurier.getRole() == Roles.ingenieur){
+            aventurier.setNbActions(nbActions - 0.5);
+        }else{
+            aventurier.setNbActions(nbActions - 1);
+        }
+        Message m = new Message();
+
+
     }
 }
