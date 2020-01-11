@@ -43,8 +43,10 @@ public class Controlleur implements IControlleur {
             case QUITTER:
                 ileInterdite.quitter();
                 break;
+            case UPDATE_IHM:
+                //A COMPLETER !!
+                System.out.println("code à completer");
         }
     }
 
-    
 }
