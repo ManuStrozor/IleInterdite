@@ -22,7 +22,7 @@ public abstract class Vue extends JPanel implements IVue {
         this.name = name;
         this.ihm = ihm;
         this.ihm.addVue(this);
-        //this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
     }
 
     protected void setBackground(Image background) {

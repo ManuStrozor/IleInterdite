@@ -48,8 +48,8 @@ public class VueMenu extends Vue {
     public void initComponents() {
         this.setBackground(new ImageIcon(getClass().getClassLoader().getResource("backgroundMenu.png")).getImage());
 
-        JButton test = new JButton("BUTTON");
-        test.setPreferredSize(new Dimension(50, 50));
-        this.add(test);
+        //JButton test = new JButton("BUTTON");
+        //test.setPreferredSize(new Dimension(50, 50));
+        //this.add(test);
     }
 }
