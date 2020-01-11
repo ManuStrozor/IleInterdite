@@ -1,4 +1,5 @@
-import aventuriers.Aventurier;
+package aventuriers;
+
 
 /**
  *

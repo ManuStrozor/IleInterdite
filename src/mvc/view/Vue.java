@@ -16,13 +16,43 @@ public abstract class Vue extends JPanel implements IVue {
     
     protected IHM ihm;
     protected String name;
+    protected int width, height;
     private Image background;
     
     Vue(String name, IHM ihm) {
         this.name = name;
         this.ihm = ihm;
+        setWidth(ihm.WIDTH);
+        setHeight(ihm.HEIGHT);
         this.ihm.addVue(this);
         this.setLayout(new BorderLayout());
+    }
+
+    Vue(String name, IHM ihm, int width, int height) {
+        this.name = name;
+        this.ihm = ihm;
+        setWidth(width);
+        setHeight(height);
+        this.ihm.addVue(this);
+        this.setLayout(new BorderLayout());
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     protected void setBackground(Image background) {
@@ -32,7 +62,6 @@ public abstract class Vue extends JPanel implements IVue {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(background, 0, 0, (int)getSize().getWidth(), (int)getSize().getHeight(), null);
     }
 }

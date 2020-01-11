@@ -4,52 +4,45 @@ import mvc.Message;
 import mvc.TypeMessage;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.util.Objects;
 
 public class VueMenu extends Vue {
+
+    private JButton jouer, quitter;
 
     public VueMenu(String name, IHM ihm) {
         super(name, ihm);
 
         this.initComponents();
 
-        this.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                //System.out.println(mouseEvent.getX() + " " + mouseEvent.getY());
-                int x = mouseEvent.getX();
-                int y = mouseEvent.getY();
+        jouer.addActionListener(e -> {
+            Message m = new Message();
+            m.type = TypeMessage.CONFIG;
+            m.vue = "config";
+            ihm.notifierObservateur(m);
+        });
 
-                if (x > 217 && x < 357 && y > 628 && y < 681) { // Bouton Jouer
-                    Message m = new Message();
-                    m.type = TypeMessage.CONFIG;
-                    m.vue = "config";
-                    ihm.notifierObservateur(m);
-                } else if (x > 217 && x < 355 && y > 714 && y < 769) { // Bouton Quitter
-                    Message m = new Message();
-                    m.type = TypeMessage.QUITTER;
-                    ihm.notifierObservateur(m);
-                }
-            }
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {}
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {}
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {}
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {}
+        quitter.addActionListener(e -> {
+            Message m = new Message();
+            m.type = TypeMessage.QUITTER;
+            ihm.notifierObservateur(m);
         });
     }
 
     @Override
     public void initComponents() {
-        this.setBackground(new ImageIcon(getClass().getClassLoader().getResource("backgroundMenu.png")).getImage());
+        this.setLayout(null);
+        this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundMenu.png"))).getImage());
 
-        //JButton test = new JButton("BUTTON");
-        //test.setPreferredSize(new Dimension(50, 50));
-        //this.add(test);
+        jouer = new JButton("JOUER");
+        quitter = new JButton("QUITTER");
+
+        int w = 160;
+        int h = 50;
+        jouer.setBounds(this.getWidth()/2 - w/2, (int)(0.78*this.getHeight()), w, h);
+        quitter.setBounds(this.getWidth()/2 - w/2, (int)(0.88*this.getHeight()), w, h);
+
+        this.add(jouer);
+        this.add(quitter);
     }
 }

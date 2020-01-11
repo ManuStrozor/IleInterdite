@@ -22,11 +22,11 @@ public class Main {
 
         IleInterdite ileInterdite = new IleInterdite(); // Modèle
 
-        IHM ihm = new IHM(); // Vue
+        IHM ihm = new IHM(); // Vues
 
-        ihm.addVue(new VueJeu("jeu", ihm));
         ihm.addVue(new VueMenu("menu", ihm));
         ihm.addVue(new VueConfig("config", ihm));
+        ihm.addVue(new VueJeu("jeu", ihm, 1320, 800));
 
         new Controlleur(ihm, ileInterdite); // Controlleur
 

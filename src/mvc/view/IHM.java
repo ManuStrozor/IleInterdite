@@ -7,6 +7,7 @@ package mvc.view;
 
 import mvc.Observe;
 
+import java.awt.*;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,26 +18,27 @@ import javax.swing.WindowConstants;
  * @author turbetde
  */
 public class IHM extends Observe {
-    
+
+    public final int WIDTH = 580;
+    public final int HEIGHT = 800;
+    private double screenWidth, screenHeight, frameWidth, frameHeight;
+
     private JFrame frame;
-    private JPanel vue;
+    private JPanel vue = new JPanel();
     private HashMap<String, Vue> vues = new HashMap<>();
-    
+
     public IHM() {
         frame = new JFrame("Ile Interdite");
         frame.setUndecorated(false);
         frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
-        //Toolkit tk = Toolkit.getDefaultToolkit();
-        // int w = (int) tk.getScreenSize().getWidth();
-        // int h = (int) tk.getScreenSize().getHeight();
+        frame.setContentPane(vue);
 
-        int w = 580;
-        int h = 840;
+        Rectangle ws = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        screenWidth = ws.width;
+        screenHeight = ws.height;
 
-        this.setSize(w, h);
+        this.resizeFromSize(WIDTH, HEIGHT);
     }
 
     public void addVue(Vue vue) {
@@ -47,13 +49,35 @@ public class IHM extends Observe {
         return vues.get(name);
     }
 
+    private void resizeFromSize(int w, int h) {
+        this.setSize(w, h);
+        frame.setVisible(true);
+
+        double contentWidth = frame.getContentPane().getSize().getWidth();
+        double contentHeight = frame.getContentPane().getSize().getHeight();
+
+        this.setSize((int) (w + frameWidth - contentWidth), (int) (h + frameHeight - contentHeight));
+        frame.setLocation((int) (screenWidth /2 - frameWidth /2.0), (int) (screenHeight /2 - frameHeight /2.0));
+    }
+
     public void setSize(int w, int h) {
+        if (h > screenHeight) {
+            h = (int) screenHeight;
+            w = w / (int) (h / screenHeight);
+        }
+        if (w > screenWidth) {
+            w = (int)screenWidth;
+            h = h/(int)(w/screenWidth);
+        }
         frame.setSize(w, h);
+        frameWidth = frame.getSize().getWidth();
+        frameHeight = frame.getSize().getHeight();
     }
 
     public void setVue(String vue) {
         this.vue = getVue(vue);
         frame.setContentPane(this.vue);
+        this.resizeFromSize(getVue(vue).getWidth(), getVue(vue).getHeight());
         frame.setVisible(true);
     }
 }
