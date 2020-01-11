@@ -54,19 +54,6 @@ public class Tuile {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     public int getLigne() {
         return ligne;
     }

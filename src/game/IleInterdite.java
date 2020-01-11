@@ -42,7 +42,7 @@ public class IleInterdite extends Observe {
         System.exit(0);
     }
 
-    public void assecher(Tuile tuile, Aventurier aventurier){
+    public void assecher(Tuile tuile, Aventurier aventurier){   /* A FINIR /!\/!\/!\/!\/!\/!\/!\ */
         tuile.setEtatTuile(assechee);
 
         double nbActions = aventurier.getNbActions();
@@ -54,6 +54,7 @@ public class IleInterdite extends Observe {
         }
         Message m = new Message();
 
+        //INSTANCIER LE MESSAGE ET NOTIFIER L'OBERVATEUR
 
     }
 }
