@@ -114,9 +114,8 @@ public class VueConfig extends Vue {
             public void actionPerformed(ActionEvent e) {
                 Message m = new Message(TypeMessage.JOUER);
                 m.vue = "jeu";
-                ihm.notifierObservateur(m);
                 m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
-
+                ihm.notifierObservateur(m);
             }
         });
         panelJoueur.add(inscrire);

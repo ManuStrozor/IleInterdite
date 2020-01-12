@@ -44,6 +44,18 @@ public class Controlleur implements IControlleur {
             case CHANGER_VUE:
                 ihm.setVue(msg.vue);
                 break;
+            case DEPLACEMENT:
+                System.out.println("sedeplacer()");
+                break;
+            case ECHANGE_CARTE:
+                System.out.println("echangerCarte()");
+                break;
+            case ASSECHER_TUILE:
+                System.out.println("assecher()");
+                break;
+            case RECUPERER_TRESOR:
+                System.out.println("recupererTresor()");
+                break;
         }
     }
 

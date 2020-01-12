@@ -15,4 +15,6 @@ public enum TypeMessage {
     UPDATE_GRILLE,
     ASSECHER_TUILE,
     RECUPERER_TRESOR,
+    DEPLACEMENT,
+    ECHANGE_CARTE,
 }

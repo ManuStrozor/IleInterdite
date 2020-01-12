@@ -6,10 +6,14 @@
 package mvc.view;
 
 import aventuriers.Aventurier;
+import enumerations.TypeMessage;
 import game.Grille;
+import mvc.Message;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
 /**
@@ -46,9 +50,53 @@ public class VueJeu extends Vue {
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundJeu.jpg"))).getImage());
 
-        JPanel menu = new JPanel(null);
+        JPanel menu = new JPanel( new GridLayout(4,1, 0 ,10));
         menu.setOpaque(false);
         ////// ZONE DE MENU //////
+
+        JButton deplacer = new JButton("Se déplacer");
+        JButton assecher = new JButton("Dessécher");
+        JButton donnerCarteTresor = new JButton("Donner une carte Trésor");
+        JButton recupererTresor = new JButton("Recuperer le Tresor");
+
+
+        deplacer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message(TypeMessage.DEPLACEMENT);
+                m.vue = "jeu";
+                ihm.notifierObservateur(m);
+            }
+        });
+
+        assecher.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message(TypeMessage.ASSECHER_TUILE);
+                ihm.notifierObservateur(m);
+            }
+        });
+
+        donnerCarteTresor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message(TypeMessage.ECHANGE_CARTE);
+                ihm.notifierObservateur(m);
+            }
+        });
+
+        recupererTresor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message(TypeMessage.RECUPERER_TRESOR);
+                ihm.notifierObservateur(m);
+            }
+        });
+
+        menu.add(deplacer);
+        menu.add(assecher);
+        menu.add(donnerCarteTresor);
+        menu.add(recupererTresor);
 
         ////// ZONE DE MENU //////
 
@@ -62,11 +110,14 @@ public class VueJeu extends Vue {
         JPanel marginBot = new JPanel();
         marginBot.setPreferredSize(new Dimension(0, 100)); marginBot.setOpaque(false);
 
+
         menuPanel.add(marginTop, BorderLayout.NORTH);
         menuPanel.add(marginLeft, BorderLayout.WEST);
         menuPanel.add(marginBot, BorderLayout.SOUTH);
         menuPanel.add(menu, BorderLayout.CENTER);
         menuPanel.setPreferredSize(new Dimension(450,0));
+
+
 
         JPanel board = new JPanel(new BorderLayout());
         board.setOpaque(false);
