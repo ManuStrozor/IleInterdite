@@ -7,4 +7,5 @@ package aventuriers;
  */
 public class Pilote extends Aventurier {
 
+
 }
