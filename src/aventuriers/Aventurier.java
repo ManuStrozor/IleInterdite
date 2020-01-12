@@ -1,6 +1,7 @@
 package aventuriers;
 
 import enumerations.Couleur;
+import enumerations.EtatTuile;
 import enumerations.Roles;
 import game.Tuile;
 
@@ -57,5 +58,28 @@ public abstract class Aventurier {
 
     public Tuile getTuile() {
         return tuile;
+    }
+
+    public boolean peutAssecher(game.Tuile tuileInnondee){
+
+        if ( tuileInnondee.getEtatTuile() == EtatTuile.innondee){
+            if (tuileInnondee.getColonne() == this.getTuile().getColonne() + 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
+                return true;
+            }
+            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() - 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
+                return true;
+            }
+            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() + 1) {
+                return true;
+            }
+            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() - 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
     }
 }

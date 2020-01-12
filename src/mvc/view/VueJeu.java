@@ -73,6 +73,7 @@ public class VueJeu extends Vue {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Message m = new Message(TypeMessage.ASSECHER_TUILE);
+
                 ihm.notifierObservateur(m);
             }
         });

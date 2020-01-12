@@ -97,6 +97,7 @@ public class IleInterdite extends Observe {
     public void recupererTresor(Aventurier aventurier){
         Tresor tresor = aventurier.getTuile().getTuileTresor();
         tresorsRecup.add(tresor);
+
     }
 
 

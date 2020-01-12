@@ -51,7 +51,8 @@ public class Controlleur implements IControlleur {
                 System.out.println("echangerCarte()");
                 break;
             case ASSECHER_TUILE:
-                System.out.println("assecher()");
+                //ileInterdite.assecher();
+
                 break;
             case RECUPERER_TRESOR:
                 System.out.println("recupererTresor()");
