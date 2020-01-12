@@ -25,6 +25,7 @@ public class IleInterdite extends Observe {
     private ArrayList<Tresor> tresorsRecup;
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
+    private Aventurier[] aventuriers;
 
     public IleInterdite() {
     tresorsRecup = new ArrayList<>();

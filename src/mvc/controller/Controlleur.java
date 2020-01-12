@@ -39,6 +39,7 @@ public class Controlleur implements IControlleur {
             case JOUER:
                 ihm.setVue(msg.vue);
                 ileInterdite.commencerPartie();
+
                 break;
             case QUITTER:
                 ileInterdite.quitter();

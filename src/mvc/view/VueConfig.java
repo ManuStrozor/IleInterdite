@@ -1,5 +1,6 @@
 package mvc.view;
 
+import aventuriers.Aventurier;
 import mvc.Message;
 import enumerations.TypeMessage;
 
@@ -15,7 +16,6 @@ public class VueConfig extends Vue {
     private JTextField [] saisieNomJoueurs = new JTextField[4];
     private final JButton inscrire = new JButton("OKAY");
     private final JButton retour = new JButton("RETOUR");
-
     private String[] nomJoueurs;
 
     public VueConfig(String name, IHM ihm) {
@@ -112,6 +112,8 @@ public class VueConfig extends Vue {
                 Message m = new Message(TypeMessage.JOUER);
                 m.vue = "jeu";
                 ihm.notifierObservateur(m);
+                m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
+
             }
         });
         panelJoueur.add(inscrire);

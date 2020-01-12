@@ -19,4 +19,5 @@ public class Message {
 
     public TypeMessage type;
     public String vue;
+    public int nbJoueur;
 }

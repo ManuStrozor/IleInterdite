@@ -5,6 +5,8 @@
  */
 package mvc.view;
 
+import aventuriers.Aventurier;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
@@ -14,7 +16,10 @@ import java.util.Objects;
  * @author turbetde
  */
 public class VueJeu extends Vue {
-    
+    private int nbJoueurs;
+    private Aventurier[] aventuriers;
+
+
     public VueJeu(String name, IHM ihm, int width, int height) {
         super(name, ihm, width, height);
         this.initComponents();

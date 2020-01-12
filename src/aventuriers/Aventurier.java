@@ -14,7 +14,7 @@ public abstract class Aventurier {
     private game.Carte[] inventaire;
     private double nbActions;
     private Roles role;
-
+    private String nomJoueur;
 
     public int getNombreCarte(){
         int nb = 0;
