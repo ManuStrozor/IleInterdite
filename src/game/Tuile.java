@@ -4,117 +4,117 @@ import aventuriers.Aventurier;
 import enumerations.EtatTuile;
 import enumerations.Tresor;
 
-import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
+import java.util.HashSet;
 
 /**
  *
  * @author estevmat
  */
-public class Tuile {
+public class Tuile implements Comparable<Tuile> {
 
-    private int ligne;
-    private int colonne;
-    private String nomTuile;
-    private Tresor tuileTresor;
+    private String nom;
+    private Image image;
+    private Tresor tresor;
     private EtatTuile etatTuile;
-    private ArrayList<Aventurier> aventuriersSurTuile;
+    private int ligne, colonne;
+    private HashSet<Aventurier> aventuriers;
 
-    Tuile(String nomTuile, Tresor tuileTresor){
-        this.nomTuile=nomTuile;
-        this.tuileTresor=tuileTresor;
-        this.etatTuile = EtatTuile.assechee;
+    Tuile(String nom){
+        setNom(nom);
+        setImage();
+        this.assecher();
+        aventuriers = new HashSet<>();
+        setTresor(null);
     }
 
-    Tuile(int ligne, int colonne, String nomTuile) {
-        this.ligne = ligne;
-        this.colonne = colonne;
-        this.nomTuile = nomTuile;
-        this.etatTuile = EtatTuile.assechee;
-        this.aventuriersSurTuile = new ArrayList<>();
-        setTuileTresor(null);
+    Tuile(String nom, Tresor tresor){
+        setNom(nom);
+        setImage();
+        this.assecher();
+        aventuriers = new HashSet<>();
+        setTresor(tresor);
     }
 
-    Tuile(int ligne, int colonne, String nomTuile, Tresor tuileTresor) {
-        this.ligne = ligne;
-        this.colonne = colonne;
-        this.nomTuile = nomTuile;
-        this.etatTuile = EtatTuile.assechee;
-        this.aventuriersSurTuile = new ArrayList<>();
-        setTuileTresor(tuileTresor);
-
+    public String getNom() {
+        return nom;
+    }
+    private void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public void afficheTuile(){
-        System.out.println(this.getNomTuile());
-        System.out.println(this.getLigne());
-        System.out.println(this.getColonne());
-        System.out.println("-------------------------------------------");
+    public Image getImage() {
+        return this.image;
+    }
+    private void setImage() {
+        String filename = Utils.getImageFromName(this.nom);
+        URL url = getClass().getClassLoader().getResource("images/tuiles/" + filename + ".png");
+        if(url != null) {
+            this.image = new ImageIcon(url).getImage();
+        }
     }
 
-
-
-
-
-
+    public Tresor getTresor() {
+        return tresor;
+    }
+    private void setTresor(Tresor tresor) {
+        this.tresor = tresor;
+    }
 
     public int getLigne() {
         return ligne;
     }
-
-    public void setLigne(int ligne) {
-        this.ligne = ligne;
-    }
-
     public int getColonne() {
         return colonne;
     }
-
-    public void setColonne(int colonne) {
+    private void setLigne(int ligne) {
+        this.ligne = ligne;
+    }
+    private void setColonne(int colonne) {
         this.colonne = colonne;
     }
 
-    public String getNomTuile() {
-        return nomTuile;
-    }
-
-    public void setNomTuile(String nomTuile) {
-        this.nomTuile = nomTuile;
-    }
-
-    public Tresor getTuileTresor() {
-        return tuileTresor;
-    }
-
-    public void setTuileTresor(Tresor tuileTresor) {
-        this.tuileTresor = tuileTresor;
+    public void setCoor(int ligne, int colonne) {
+        setLigne(ligne);
+        setColonne(colonne);
     }
 
     public EtatTuile getEtatTuile() {
         return etatTuile;
     }
-
-    public ArrayList<Aventurier> getAventuriersSurTuile() {
-        return aventuriersSurTuile;
-    }
-
-    public void setEtatTuile(EtatTuile etatTuile) {
+    void setEtatTuile(EtatTuile etatTuile) {
         this.etatTuile = etatTuile;
     }
 
-    public void setAssechée() {
-        this.etatTuile = EtatTuile.assechee;
+    public void assecher() {
+        setEtatTuile(EtatTuile.assechee);
+    }
+    public void couler() {
+        setEtatTuile(EtatTuile.coulee);
+    }
+    public void innonder() {
+        setEtatTuile(EtatTuile.innondee);
     }
 
-    public void setCoulée() {
-        this.etatTuile = EtatTuile.coulee;
+    public HashSet<Aventurier> getAventuriers() {
+        return aventuriers;
+    }
+    public void addAventurier(Aventurier aventurier) {
+        this.aventuriers.add(aventurier);
+    }
+    public void delAventurier(Aventurier aventurier) {
+        this.aventuriers.remove(aventurier);
     }
 
-    public void setInnondée() {
-        this.etatTuile = EtatTuile.innondee;
+    @Override
+    public int compareTo(Tuile o) {
+        return (o.getLigne() > this.getLigne() || (o.getLigne() == this.getLigne() && o.getColonne() > this.getColonne())) ? 1 : 0;
     }
 
-    public void setAventuriersSurTuile(ArrayList<Aventurier> aventuriersSurTuile) {
-        this.aventuriersSurTuile = aventuriersSurTuile;
-    }
+    public Tresor getTuileTresor() {
 
+        return null;
+    }
 }

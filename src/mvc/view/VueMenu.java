@@ -1,5 +1,6 @@
 package mvc.view;
 
+import game.Grille;
 import mvc.Message;
 import enumerations.TypeMessage;
 
@@ -27,6 +28,9 @@ public class VueMenu extends Vue {
             ihm.notifierObservateur(m);
         });
     }
+
+    @Override
+    public void updateGrille(Grille grille) {}
 
     @Override
     public void initComponents() {

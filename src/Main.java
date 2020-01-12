@@ -5,9 +5,9 @@
  */
 
 
+import game.IleInterdite;
 import mvc.controller.Controlleur;
 import mvc.view.IHM;
-import game.IleInterdite;
 import mvc.view.VueConfig;
 import mvc.view.VueJeu;
 import mvc.view.VueMenu;

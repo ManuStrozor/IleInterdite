@@ -1,12 +1,13 @@
 package mvc.view;
 
-import aventuriers.Aventurier;
+import game.Grille;
 import mvc.Message;
 import enumerations.TypeMessage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class VueConfig extends Vue {
@@ -36,6 +37,9 @@ public class VueConfig extends Vue {
     }
 
     @Override
+    public void updateGrille(Grille grille) {}
+
+    @Override
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundConfig.jpg"))).getImage());
 
@@ -45,7 +49,6 @@ public class VueConfig extends Vue {
         JPanel panelOuest = new JPanel(new BorderLayout());
         JPanel panelEst = new JPanel(new BorderLayout());
         JPanel panelSud = new JPanel(new BorderLayout());
-
 
         // nombre de joueurs
         choixNbJoueurs = new JComboBox<>(new Integer[] { 2, 3, 4 });

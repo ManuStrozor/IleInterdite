@@ -13,5 +13,5 @@ public enum Tresor {
     pierreSacree,
     cristalArdent,
     caliceDelombre,
-    statueDeZephir;
+    statueDeZephir
 }
