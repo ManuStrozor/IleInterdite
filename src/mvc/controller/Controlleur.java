@@ -30,16 +30,9 @@ public class Controlleur implements IControlleur {
 
         switch (msg.type) {
 
-            case START:
-                ihm.setVue("menu");
-                break;
-            case CONFIG:
-                ihm.setVue(msg.vue);
-                break;
             case JOUER:
                 ihm.setVue(msg.vue);
                 ileInterdite.commencerPartie();
-
                 break;
             case UPDATE_GRILLE:
                 ihm.getVue("jeu").updateGrille(msg.grille);
@@ -47,11 +40,9 @@ public class Controlleur implements IControlleur {
             case QUITTER:
                 ileInterdite.quitter();
                 break;
-            case UPDATE_IHM:
-                //A COMPLETER !!
-                System.out.println("code à completer");
-            case RETOUR:
+            case CHANGER_VUE:
                 ihm.setVue(msg.vue);
+                break;
         }
     }
 

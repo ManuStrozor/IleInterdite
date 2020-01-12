@@ -100,7 +100,7 @@ public class VueConfig extends Vue {
         retour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.RETOUR);
+                Message m = new Message(TypeMessage.CHANGER_VUE);
                 m.vue = "menu";
                 ihm.notifierObservateur(m);
             }

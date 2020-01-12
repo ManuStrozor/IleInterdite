@@ -6,6 +6,7 @@ import enumerations.Tresor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashSet;
 
@@ -24,16 +25,16 @@ public class Tuile implements Comparable<Tuile> {
 
     Tuile(String nom){
         setNom(nom);
-        setImage();
         this.assecher();
+        setImage(etatTuile);
         aventuriers = new HashSet<>();
         setTresor(null);
     }
 
     Tuile(String nom, Tresor tresor){
         setNom(nom);
-        setImage();
         this.assecher();
+        setImage(etatTuile);
         aventuriers = new HashSet<>();
         setTresor(tresor);
     }
@@ -48,11 +49,18 @@ public class Tuile implements Comparable<Tuile> {
     public Image getImage() {
         return this.image;
     }
-    private void setImage() {
+    private void setImage(EtatTuile etat) {
         String filename = Utils.getImageFromName(this.nom);
         URL url = getClass().getClassLoader().getResource("images/tuiles/" + filename + ".png");
-        if(url != null) {
-            this.image = new ImageIcon(url).getImage();
+        if (url != null) {
+            Image img = new ImageIcon(url).getImage();
+            if(etat == EtatTuile.assechee) {
+                this.image = img;
+            } else if(etat == EtatTuile.innondee) {
+                this.image = Utils.createColorImage( Utils.toBufferedImage(img), 0xFF0000FF);
+            } else {
+                this.image = Utils.createColorImage( Utils.toBufferedImage(img), 0xFFFF0000);
+            }
         }
     }
 
@@ -84,18 +92,21 @@ public class Tuile implements Comparable<Tuile> {
     public EtatTuile getEtatTuile() {
         return etatTuile;
     }
-    void setEtatTuile(EtatTuile etatTuile) {
+    private void setEtatTuile(EtatTuile etatTuile) {
         this.etatTuile = etatTuile;
     }
 
     public void assecher() {
         setEtatTuile(EtatTuile.assechee);
+        setImage(EtatTuile.assechee);
     }
     public void couler() {
         setEtatTuile(EtatTuile.coulee);
+        setImage(EtatTuile.coulee);
     }
     public void innonder() {
         setEtatTuile(EtatTuile.innondee);
+        setImage(EtatTuile.innondee);
     }
 
     public HashSet<Aventurier> getAventuriers() {

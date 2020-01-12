@@ -32,11 +32,13 @@ public class IleInterdite extends Observe {
 
     public IleInterdite() {
         grille = new Grille();
-    tresorsRecup = new ArrayList<>();
+        tresorsRecup = new ArrayList<>();
     }
 
     public void start() {
-        notifierObservateur(new Message(TypeMessage.START));
+        Message m = new Message(TypeMessage.CHANGER_VUE);
+        m.vue = "menu";
+        notifierObservateur(m);
     }
 
     public void commencerPartie() {
@@ -72,7 +74,7 @@ public class IleInterdite extends Observe {
     }
 
     public void assecher(Tuile tuile, Aventurier aventurier){
-        tuile.setEtatTuile(assechee);
+        tuile.assecher();
 
         double nbActions = aventurier.getNbActions();
 
@@ -81,7 +83,8 @@ public class IleInterdite extends Observe {
         }else{
             aventurier.setNbActions(nbActions - 1);
         }
-        Message m = new Message(TypeMessage.UPDATE_IHM);
+        Message m = new Message(TypeMessage.UPDATE_GRILLE);
+        m.grille = grille;
         notifierObservateur(m);
     }
 
