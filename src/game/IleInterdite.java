@@ -6,16 +6,14 @@ package game;
  */
 
 import aventuriers.Aventurier;
+import enumerations.NomsTuiles;
+import enumerations.Roles;
+import enumerations.Tresor;
 import mvc.Message;
 import mvc.Observe;
 import mvc.TypeMessage;
-import static game.EtatTuile.*;
-import static game.Tresor.*;
+import static enumerations.EtatTuile.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.ListIterator;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +22,12 @@ import java.util.ArrayList;
  */
 public class IleInterdite extends Observe {
 
-    public IleInterdite() {
+    private ArrayList<Tresor> tresorsRecup;
+    private ArrayList<NomsTuiles> pileCarteInnondation;
+    private ArrayList<NomsTuiles> defausseCarteInnondation;
 
+    public IleInterdite() {
+    tresorsRecup = new ArrayList<>();
     }
 
     public void start() {
@@ -76,4 +78,10 @@ public class IleInterdite extends Observe {
         Message m = new Message(TypeMessage.UPDATE_IHM);
         notifierObservateur(m);
     }
+
+    public void recupererTresor(Tuile tuile, Aventurier aventurier){
+        Tresor tresor = tuile.getTuileTresor();
+        tresorsRecup.add(tresor);
+    }
+
 }

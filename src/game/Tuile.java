@@ -1,6 +1,9 @@
 package game;
 
 import aventuriers.Aventurier;
+import enumerations.EtatTuile;
+import enumerations.Tresor;
+
 import java.util.ArrayList;
 
 /**

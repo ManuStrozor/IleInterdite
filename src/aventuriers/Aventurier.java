@@ -1,13 +1,14 @@
 package aventuriers;
 
-import game.Roles;
+import enumerations.Couleur;
+import enumerations.Roles;
 
 /**
  *
  * @author estevmat
  */
 public abstract class Aventurier {
-    private game.Couleur couleurPion;
+    private Couleur couleurPion;
     private String actionsRestantes;
     private game.Tuile tuile;
     private game.Carte[] inventaire;
@@ -43,6 +44,13 @@ public abstract class Aventurier {
 
     public void defausseCarte(){
 
+    }
+
+    public int[] getPosition(){         //Renvoie un tableau avec les coordonnées de la tuile où se trouve l'aventurier
+        int[] position = new int[2];
+        position[0] = tuile.getLigne();
+        position[1] = tuile.getColonne();
+        return position;
     }
 
 }

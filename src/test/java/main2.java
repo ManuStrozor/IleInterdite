@@ -18,6 +18,5 @@ public class main2 {
          Grille grille = new Grille();
          grille.afficheGrille();
 
-
     }
 }

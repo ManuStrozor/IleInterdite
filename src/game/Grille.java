@@ -3,8 +3,8 @@ package game;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static game.Tresor.*;
-import static game.Tresor.statueDeZephir;
+import static enumerations.Tresor.*;
+import static enumerations.Tresor.statueDeZephir;
 
 /**
  *
