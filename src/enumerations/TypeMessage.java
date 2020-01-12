@@ -9,13 +9,10 @@ package enumerations;
  * @author turbetde
  */
 public enum TypeMessage {
-    START,
-    CONFIG,
     JOUER,
-    RETOUR,
+    CHANGER_VUE,
     QUITTER,
     UPDATE_GRILLE,
-    UPDATE_IHM,
     ASSECHER_TUILE,
     RECUPERER_TRESOR,
 }

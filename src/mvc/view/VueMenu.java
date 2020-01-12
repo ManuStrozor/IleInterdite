@@ -18,7 +18,7 @@ public class VueMenu extends Vue {
         this.initComponents();
 
         jouer.addActionListener(e -> {
-            Message m = new Message(TypeMessage.CONFIG);
+            Message m = new Message(TypeMessage.CHANGER_VUE);
             m.vue = "config";
             ihm.notifierObservateur(m);
         });
