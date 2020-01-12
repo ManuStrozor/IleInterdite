@@ -11,8 +11,10 @@ public enum TypeMessage {
     START,
     CONFIG,
     JOUER,
+    RETOUR,
     QUITTER,
     UPDATE_IHM,
     ASSECHER_TUILE,
     RECUPERER_TRESOR,
+
 }

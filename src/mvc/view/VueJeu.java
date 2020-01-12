@@ -87,6 +87,7 @@ public class VueJeu extends Vue {
         boardPanel.add(marginBot2, BorderLayout.SOUTH);
         boardPanel.add(board, BorderLayout.CENTER);
 
+
         JPanel dashBoard = new JPanel(new GridLayout(1, 4, 10, 0));
         dashBoard.setPreferredSize(new Dimension(0, 200));
         dashBoard.setOpaque(false);

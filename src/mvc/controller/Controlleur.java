@@ -46,6 +46,8 @@ public class Controlleur implements IControlleur {
             case UPDATE_IHM:
                 //A COMPLETER !!
                 System.out.println("code à completer");
+            case RETOUR:
+                ihm.setVue(msg.vue);
         }
     }
 
