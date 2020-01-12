@@ -11,7 +11,7 @@ import enumerations.Roles;
 import enumerations.Tresor;
 import mvc.Message;
 import mvc.Observe;
-import mvc.TypeMessage;
+import enumerations.TypeMessage;
 import static enumerations.EtatTuile.*;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package mvc.view;
 
 import mvc.Message;
-import mvc.TypeMessage;
+import enumerations.TypeMessage;
 
 import javax.swing.*;
 import java.awt.*;

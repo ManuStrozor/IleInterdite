@@ -1,12 +1,10 @@
 package mvc.view;
 
 import mvc.Message;
-import mvc.TypeMessage;
+import enumerations.TypeMessage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Objects;
 
 public class VueMenu extends Vue {

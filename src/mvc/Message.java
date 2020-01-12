@@ -5,7 +5,7 @@ package mvc;/*
  */
 
 
-import javax.swing.*;
+import enumerations.TypeMessage;
 
 /**
  *
