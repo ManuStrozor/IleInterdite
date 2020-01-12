@@ -75,6 +75,10 @@ public class IleInterdite extends Observe {
         System.exit(0);
     }
 
+    public void seDeplacer(Tuile ancienne , Aventurier aventurier , Tuile nouvelle ){
+        ancienne.getNom();
+
+    }
     public void assecher(Tuile tuile, Aventurier aventurier){
         tuile.assecher();
 
@@ -99,5 +103,7 @@ public class IleInterdite extends Observe {
     public void setNbJoueurs(int i){
         nbJoueurs = i;
     }
+
+
 
 }

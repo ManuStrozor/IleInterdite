@@ -54,6 +54,7 @@ public abstract class Aventurier {
         return position;
     }
 
+
     public Tuile getTuile() {
         return tuile;
     }
