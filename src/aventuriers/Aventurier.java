@@ -2,6 +2,7 @@ package aventuriers;
 
 import enumerations.Couleur;
 import enumerations.Roles;
+import game.Tuile;
 
 /**
  *
@@ -53,4 +54,7 @@ public abstract class Aventurier {
         return position;
     }
 
+    public Tuile getTuile() {
+        return tuile;
+    }
 }

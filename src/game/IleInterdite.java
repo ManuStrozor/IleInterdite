@@ -29,6 +29,8 @@ public class IleInterdite extends Observe {
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
     private Aventurier[] aventuriers;
+    private int nbJoueurs;
+
 
     public IleInterdite() {
         grille = new Grille();
@@ -85,9 +87,14 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
     }
 
-    public void recupererTresor(Tuile tuile, Aventurier aventurier){
-        Tresor tresor = tuile.getTuileTresor();
+    public void recupererTresor(Aventurier aventurier){
+        Tresor tresor = aventurier.getTuile().getTuileTresor();
         tresorsRecup.add(tresor);
+    }
+
+
+    public void setNbJoueurs(int i){
+        nbJoueurs = i;
     }
 
 }

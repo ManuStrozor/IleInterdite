@@ -25,6 +25,7 @@ public class VueJeu extends Vue {
     public VueJeu(String name, IHM ihm, int width, int height) {
         super(name, ihm, width, height);
         this.initComponents();
+
     }
 
     public void updateGrille(Grille grille) {

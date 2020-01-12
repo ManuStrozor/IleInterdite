@@ -39,7 +39,7 @@ public class Controlleur implements IControlleur {
             case JOUER:
                 ihm.setVue(msg.vue);
                 ileInterdite.commencerPartie();
-
+                ileInterdite.setNbJoueurs(msg.nbJoueur);
                 break;
             case UPDATE_GRILLE:
                 ihm.getVue("jeu").updateGrille(msg.grille);

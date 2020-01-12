@@ -48,6 +48,7 @@ public class Tuile implements Comparable<Tuile> {
     public Image getImage() {
         return this.image;
     }
+
     private void setImage() {
         String filename = Utils.getImageFromName(this.nom);
         URL url = getClass().getClassLoader().getResource("images/tuiles/" + filename + ".png");
@@ -62,7 +63,6 @@ public class Tuile implements Comparable<Tuile> {
     private void setTresor(Tresor tresor) {
         this.tresor = tresor;
     }
-
     public int getLigne() {
         return ligne;
     }
@@ -84,7 +84,7 @@ public class Tuile implements Comparable<Tuile> {
     public EtatTuile getEtatTuile() {
         return etatTuile;
     }
-    void setEtatTuile(EtatTuile etatTuile) {
+    public void setEtatTuile(EtatTuile etatTuile) {
         this.etatTuile = etatTuile;
     }
 
@@ -114,7 +114,6 @@ public class Tuile implements Comparable<Tuile> {
     }
 
     public Tresor getTuileTresor() {
-
-        return null;
+        return tresor;
     }
 }
