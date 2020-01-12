@@ -11,5 +11,5 @@ package enumerations;/*
 public enum EtatTuile {
     assechee,
     innondee,
-    coulee;
+    coulee
 }

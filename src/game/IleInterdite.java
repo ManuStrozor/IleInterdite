@@ -12,9 +12,10 @@ import enumerations.Tresor;
 import mvc.Message;
 import mvc.Observe;
 import enumerations.TypeMessage;
-import static enumerations.EtatTuile.*;
 
 import java.util.ArrayList;
+
+import static enumerations.EtatTuile.assechee;
 
 /**
  *
@@ -22,12 +23,15 @@ import java.util.ArrayList;
  */
 public class IleInterdite extends Observe {
 
+    private Grille grille;
+
     private ArrayList<Tresor> tresorsRecup;
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
     private Aventurier[] aventuriers;
 
     public IleInterdite() {
+        grille = new Grille();
     tresorsRecup = new ArrayList<>();
     }
 
@@ -36,13 +40,14 @@ public class IleInterdite extends Observe {
     }
 
     public void commencerPartie() {
-        // melanger Tuiles
+        grille.melangerTuiles();
         initiateInondation();
         initiateAventuriers();
         initiateTresorCards();
         initiateDifficulty();
-        Message m = new Message(TypeMessage.UPDATE_IHM);
+        Message m = new Message(TypeMessage.UPDATE_GRILLE);
         m.vue = "jeu";
+        m.grille = grille;
         notifierObservateur(m);
     }
 

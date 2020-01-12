@@ -5,6 +5,8 @@
  */
 package mvc.view;
 
+import game.Grille;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -64,4 +66,6 @@ public abstract class Vue extends JPanel implements IVue {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, (int)getSize().getWidth(), (int)getSize().getHeight(), null);
     }
+
+    public abstract void updateGrille(Grille grille);
 }

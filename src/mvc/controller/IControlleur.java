@@ -11,5 +11,5 @@ import mvc.Message;
  * @author turbetde
  */
 public interface IControlleur {
-    public void traiterMessage(Message msg);
+    void traiterMessage(Message msg);
 }

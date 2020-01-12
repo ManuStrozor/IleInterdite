@@ -41,6 +41,9 @@ public class Controlleur implements IControlleur {
                 ileInterdite.commencerPartie();
 
                 break;
+            case UPDATE_GRILLE:
+                ihm.getVue("jeu").updateGrille(msg.grille);
+                break;
             case QUITTER:
                 ileInterdite.quitter();
                 break;

@@ -7,11 +7,9 @@ package mvc.view;
 
 import mvc.Observe;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 /**
  *

@@ -6,6 +6,7 @@
 package mvc.view;
 
 import aventuriers.Aventurier;
+import game.Grille;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,13 +17,28 @@ import java.util.Objects;
  * @author turbetde
  */
 public class VueJeu extends Vue {
+
+    private JPanel grille;
     private int nbJoueurs;
     private Aventurier[] aventuriers;
-
 
     public VueJeu(String name, IHM ihm, int width, int height) {
         super(name, ihm, width, height);
         this.initComponents();
+    }
+
+    public void updateGrille(Grille grille) {
+        int pos = 0;
+        for (int i = 0; i < 36; i++) {
+            TilePanel tile = new TilePanel(null);
+            if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
+                tile.setBackground(grille.getTuile(pos).getImage());
+                pos++;
+            } else {
+                tile.setOpaque(false);
+            }
+            this.grille.add(tile);
+        }
     }
 
     @Override
@@ -51,21 +67,10 @@ public class VueJeu extends Vue {
         menuPanel.add(menu, BorderLayout.CENTER);
         menuPanel.setPreferredSize(new Dimension(450,0));
 
-        JPanel board = new JPanel(new BorderLayout(5,5));
+        JPanel board = new JPanel(new BorderLayout());
         board.setOpaque(false);
-        JPanel tilesZone = new JPanel(new GridLayout(6, 6));
-        tilesZone.setOpaque(false);
-
-        ////// ZONE DE JEU //////
-        for (int i = 0; i < 36; i++) {
-            TilePanel tile = new TilePanel(new BorderLayout());
-            if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
-                tile.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("emptyTile.png"))).getImage());
-            }
-            tile.setOpaque(false);
-            tilesZone.add(tile);
-        }
-        ////// ZONE DE JEU //////
+        grille = new JPanel(new GridLayout(6, 6, 5, 5));
+        grille.setOpaque(false);
 
         JPanel leftSide = new JPanel();
         leftSide.setPreferredSize(new Dimension(100, 0)); leftSide.setOpaque(false);
@@ -73,7 +78,7 @@ public class VueJeu extends Vue {
         rightSide.setPreferredSize(new Dimension(100, 0)); rightSide.setOpaque(false);
         board.add(leftSide, BorderLayout.WEST);
         board.add(rightSide, BorderLayout.EAST);
-        board.add(tilesZone, BorderLayout.CENTER);
+        board.add(grille, BorderLayout.CENTER);
 
         JPanel boardPanel = new JPanel(new BorderLayout());
         boardPanel.setOpaque(false);
@@ -91,7 +96,6 @@ public class VueJeu extends Vue {
         boardPanel.add(marginRight2, BorderLayout.EAST);
         boardPanel.add(marginBot2, BorderLayout.SOUTH);
         boardPanel.add(board, BorderLayout.CENTER);
-
 
         JPanel dashBoard = new JPanel(new GridLayout(1, 4, 10, 0));
         dashBoard.setPreferredSize(new Dimension(0, 200));
