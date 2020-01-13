@@ -5,8 +5,7 @@ package game;
  * and open the template in the editor.
  */
 
-import aventuriers.Aventurier;
-import aventuriers.Ingenieur;
+import aventuriers.*;
 import enumerations.NomsTuiles;
 import enumerations.Roles;
 import enumerations.Tresor;
@@ -15,7 +14,9 @@ import mvc.Observe;
 import enumerations.TypeMessage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static enumerations.EtatTuile.assechee;
 
@@ -35,15 +36,20 @@ public class IleInterdite extends Observe {
     private Aventurier[] aventuriers;
     private Roles[] roles ;
     private int nbJoueurs;
+    private List<Roles> lesRoles;
 
 
     public IleInterdite() {
         grille = new Grille();
         tresorsRecup = new ArrayList<>();
-        aventuriers = new Aventurier[3];
+        aventuriers = new Aventurier[4];
+        roles = new Roles[6];
         roles = Roles.values();
-        for (int i = 0; i <= roles.length - 1 ; i++){
-            System.out.println(roles[i]);
+        lesRoles= Arrays.asList(roles);
+        Collections.shuffle(lesRoles);
+
+        for (int i = 0; i < 6 ; i++){
+            System.out.println(lesRoles.get(i));
         }
     }
 
@@ -53,28 +59,19 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
     }
 
-    public void commencerPartie() { // cette methode = appuyer sur start donc on
-        grille.melangerTuiles();                 // a besoin du niveau d'eau en parametre ?
+    public void commencerPartie(String[] nomJoueurs) {               // cette methode = appuyer sur start donc on
+        grille.melangerTuiles();                                        // a besoin du niveau d'eau en parametre ?
         initiateInondation();
         initiateTresorCards();
-        //initiateAventuriers();
+        initiateAventuriers(nomJoueurs);
         Message m = new Message(TypeMessage.UPDATE_GRILLE);
         m.vue = "jeu";
         m.grille = grille;
         notifierObservateur(m);
     }
 
-    public void initiateDifficulty(int niveauEau) {
-
-    }
-//    public void setNomJoueurs(String[] nomJoueurs){
-//        for (int i=0;i<=nomJoueurs.length;i++){
-//            this.
-//        }
-//    }
     private void initiateTresorCards() {
         cartesTresor=new ArrayList<>();
-
 
         for (int j = 0; j < 5; j++) {
             CarteTresor carte = new CarteTresor("Le Cristal ardent");
@@ -109,13 +106,29 @@ public class IleInterdite extends Observe {
     }
 
 
-//    private void initiateAventuriers(String[] nomJoueurs) {
-//        int random;
-//
-//        for (int i = 0; i <= nomJoueurs.length; i++){
-//            Aventurier aventurier = new Aventurier(nomJoueurs[i]);
-//        }
-//    }
+    private void initiateAventuriers(String[] nomJoueurs) {
+
+        for (int i = 0; i <= nomJoueurs.length; i++){
+            if(lesRoles.get(i).equals("ingenieur")){
+                Ingenieur ingenieur = new Ingenieur(nomJoueurs[i]);
+            }
+            else if(lesRoles.get(i).equals("pilote")){
+                Pilote pilote = new Pilote(nomJoueurs[i]);
+            }
+            else if(lesRoles.get(i).equals("navigateur")){
+                Navigateur navigateur = new Navigateur(nomJoueurs[i]);
+            }
+            else if(lesRoles.get(i).equals("messager")){
+                Messager messager = new Messager(nomJoueurs[i]);
+            }
+            else if(lesRoles.get(i).equals("plongeur")){
+                Plongeur plongeur = new Plongeur(nomJoueurs[i]);
+            }
+            else if(lesRoles.get(i).equals("explorateur")){
+                Explorateur explorateur = new Explorateur(nomJoueurs[i]);
+            }
+        }
+    }
 
     private void initiateInondation() {
 

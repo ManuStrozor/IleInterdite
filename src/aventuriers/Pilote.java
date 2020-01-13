@@ -1,17 +1,21 @@
 package aventuriers;
 
 
+import enumerations.Couleur;
 import enumerations.EtatTuile;
+import enumerations.Roles;
 import game.Tuile;
 
 /**
  *
  * @author estevmat
  */
-public abstract class Pilote extends Aventurier {
+public class Pilote extends Aventurier {
 
     public Pilote(String nomJoueur){
         super(nomJoueur);
+        setRole(Roles.pilote);
+        setCouleurPion(Couleur.bleu);
     }
 
     public boolean estAccessible(Tuile tuile){

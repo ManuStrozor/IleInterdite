@@ -43,6 +43,10 @@ public abstract class Aventurier {
         return role;
     }
 
+    public void setRole(Roles role) { this.role = role;  }
+
+    public void setCouleurPion(Couleur couleur) { this.couleurPion = couleur;}
+
     public void setNbActions(double nbActions) {
         this.nbActions = nbActions;
     }
