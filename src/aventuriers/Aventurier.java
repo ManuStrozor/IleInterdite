@@ -11,14 +11,24 @@ import game.Tuile;
  */
 public abstract class Aventurier {
     private Couleur couleurPion;
-    private String actionsRestantes;
+    private double actionsRestantes;
     private game.Tuile tuile;
     private game.Carte[] inventaire;
     private double nbActions;
     private Roles role;
     private String nomJoueur;
 
-    public int getNombreCarte() {
+    public Aventurier(String nomJoueur) {
+        actionsRestantes = 3;
+        nbActions = 0;
+        role = null;
+        setNomJoueur(nomJoueur);
+        inventaire = new Carte[4];
+        //tuile = getTuileSpawn();
+        //couleurPion = null;
+    }
+
+    public int getNombreCarte(){
         int nb = 0;
         for (int i = 0; i < inventaire.length; i++) {
             if (inventaire[i] != null) {
@@ -31,6 +41,10 @@ public abstract class Aventurier {
     public Roles getRole() {
         return role;
     }
+
+    public void setRole(Roles role) { this.role = role;  }
+
+    public void setCouleurPion(Couleur couleur) { this.couleurPion = couleur;}
 
     public void setNbActions(double nbActions) {
         this.nbActions = nbActions;
@@ -60,9 +74,17 @@ public abstract class Aventurier {
         return tuile;
     }
 
+    public void setNomJoueur(String nomJoueur){
+        this.nomJoueur = nomJoueur;
+    }
+
+    public boolean estAccessible(){
     abstract boolean estAccessible(Tuile tuile);
 
-    public boolean peutAssecher(game.Tuile tuileInnondee) {
+        return estAccessible();
+    };
+
+    public boolean peutAssecher(game.Tuile tuileInnondee){
 
         if (tuileInnondee.getEtatTuile() == EtatTuile.innondee) {
             if (tuileInnondee.getColonne() == this.getTuile().getColonne() + 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {

@@ -1,7 +1,9 @@
 package aventuriers;
 
 
+import enumerations.Couleur;
 import enumerations.EtatTuile;
+import enumerations.Roles;
 import game.Tuile;
 
 /**
@@ -9,6 +11,13 @@ import game.Tuile;
  * @author estevmat
  */
 public class Explorateur extends Aventurier {
+
+    public Explorateur(String nomJoueur){
+        super(nomJoueur);
+        setRole(Roles.explorateur);
+        setCouleurPion(Couleur.vert);
+    }
+
 
     public boolean estAccessible( game.Tuile tuile){
         if (tuile.getEtatTuile()== EtatTuile.assechee) {
