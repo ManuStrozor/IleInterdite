@@ -128,7 +128,7 @@ public class IleInterdite extends Observe {
             ajoutok = aventurier.ajouterCarte(pileCartesTresor.get(pileCartesTresor.size()-1)); // On ajoute à l'inventaire de l'aventurier la derniere carte de l'arraylist pilecarteTresor
             if (ajoutok){
                 pileCartesTresor.remove(pileCartesTresor.get(pileCartesTresor.size()-1)); //et on l'enleve de la pile de carte tresor
-                System.out.println("une carte a ete ajouté à " + aventurier.getNomJoueur());
+                System.out.println("une carte a ete ajouté à : " + aventurier.getNomJoueur());
             }
         }
     }
