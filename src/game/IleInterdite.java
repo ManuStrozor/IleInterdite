@@ -112,17 +112,7 @@ public class IleInterdite extends Observe {
     }
 
     public void seDeplacer(Aventurier aventurier , Tuile nouvelle ){
-       // nouvelle = getMessage(aventurier) ;
-
-           if (aventurier.estAccessible()== true){
-              aventurier.getTuile().getAventuriers().remove(aventurier);
-              nouvelle.getAventuriers().add(aventurier);
-           }
-           else {
-               System.out.println("cette tuile n'est pas accéssible ");
-           }
-
-
+        aventurier.seDeplacer(aventurier, nouvelle);
 
         double nbActions = aventurier.getNbActions();
         aventurier.setNbActions(nbActions - 1);
@@ -149,13 +139,14 @@ public class IleInterdite extends Observe {
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
         }
+        double nbActions = donneur.getNbActions();
+        donneur.setNbActions(nbActions - 1);
 // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 
     public void recupererTresor(Aventurier aventurier){
         Tresor tresor = aventurier.getTuile().getTuileTresor();
         tresorsRecup.add(tresor);
-
     }
 
 

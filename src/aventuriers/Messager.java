@@ -7,7 +7,7 @@ import enumerations.EtatTuile;
  *
  * @author estevmat
  */
-public abstract class Messager extends Aventurier {
+public  class Messager extends Aventurier {
 
     public boolean estAccessible(game.Tuile tuile){
 

@@ -18,10 +18,10 @@ public abstract class Aventurier {
     private Roles role;
     private String nomJoueur;
 
-    public int getNombreCarte(){
+    public int getNombreCarte() {
         int nb = 0;
-        for (int i = 0 ; i < inventaire.length; i++){
-            if (inventaire[i] != null){
+        for (int i = 0; i < inventaire.length; i++) {
+            if (inventaire[i] != null) {
                 nb++;
             }
         }
@@ -40,15 +40,15 @@ public abstract class Aventurier {
         return nbActions;
     }
 
-    public void ajouterCarte(game.Carte carte){
+    public void ajouterCarte(game.Carte carte) {
 
     }
 
-    public void defausseCarte(){
+    public void defausseCarte() {
 
     }
 
-    public int[] getPosition(){         //Renvoie un tableau avec les coordonnées de la tuile où se trouve l'aventurier
+    public int[] getPosition() {         //Renvoie un tableau avec les coordonnées de la tuile où se trouve l'aventurier
         int[] position = new int[2];
         position[0] = tuile.getLigne();
         position[1] = tuile.getColonne();
@@ -60,31 +60,35 @@ public abstract class Aventurier {
         return tuile;
     }
 
-    public boolean estAccessible(){
+    abstract boolean estAccessible(Tuile tuile);
 
-        return estAccessible();
-    };
-    
-    public boolean peutAssecher(game.Tuile tuileInnondee){
+    public boolean peutAssecher(game.Tuile tuileInnondee) {
 
-        if ( tuileInnondee.getEtatTuile() == EtatTuile.innondee){
+        if (tuileInnondee.getEtatTuile() == EtatTuile.innondee) {
             if (tuileInnondee.getColonne() == this.getTuile().getColonne() + 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
                 return true;
-            }
-            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() - 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
+            } else if (tuileInnondee.getColonne() == this.getTuile().getColonne() - 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
                 return true;
-            }
-            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() + 1) {
+            } else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() + 1) {
                 return true;
-            }
-            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() - 1) {
+            } else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() - 1) {
                 return true;
             } else {
                 return false;
             }
-        }
-        else{
+        } else {
             return false;
+        }
+    }
+
+    public void seDeplacer(Aventurier aventurier, Tuile nouvelle) {
+        // nouvelle = getMessage(aventurier) ;
+
+        if (aventurier.estAccessible(nouvelle) == true) {
+            aventurier.getTuile().getAventuriers().remove(aventurier);
+            nouvelle.getAventuriers().add(aventurier);
+        } else {
+            System.out.println("cette tuile n'est pas accéssible ");
         }
     }
 }

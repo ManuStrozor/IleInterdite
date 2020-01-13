@@ -8,7 +8,7 @@ import game.Tuile;
  *
  * @author estevmat
  */
-public abstract class Pilote extends Aventurier {
+public class Pilote extends Aventurier {
 
     public boolean estAccessible(Tuile tuile){
         // pour l'instant je le fais sans prendre en compte le nb d'actions

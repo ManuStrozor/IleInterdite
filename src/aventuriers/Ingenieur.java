@@ -9,7 +9,7 @@ import game.Tuile;
  *
  * @author estevmat
  */
-public abstract class Ingenieur extends Aventurier {
+public class Ingenieur extends Aventurier {
 
     public boolean estAccessible( game.Tuile tuile) {
 

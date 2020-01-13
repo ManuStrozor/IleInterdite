@@ -8,7 +8,7 @@ import game.Tuile;
  *
  * @author estevmat
  */
-public abstract class Explorateur extends Aventurier {
+public class Explorateur extends Aventurier {
 
     public boolean estAccessible( game.Tuile tuile){
         if (tuile.getEtatTuile()== EtatTuile.assechee) {
