@@ -144,6 +144,14 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
     }
 
+    public void donnerCarte(Aventurier donneur , Aventurier receveur, Carte carte ){
+        if(donneur.getTuile()== receveur.getTuile()&& receveur.getNombreCarte()<4){
+            donneur.defausseCarte();
+            receveur.ajouterCarte(carte);
+        }
+// il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
+    }
+
     public void recupererTresor(Aventurier aventurier){
         Tresor tresor = aventurier.getTuile().getTuileTresor();
         tresorsRecup.add(tresor);
