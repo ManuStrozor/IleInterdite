@@ -28,14 +28,13 @@ public class IleInterdite extends Observe {
 
     private Grille grille;
     private int niveauEau = 0;
-
+    private int nbJoueurs;
     private ArrayList<Tresor> tresorsRecup;
     private ArrayList<CarteTresor>cartesTresor;
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
     private Aventurier[] aventuriers;
     private Roles[] roles ;
-    private int nbJoueurs;
     private List<Roles> lesRoles;
 
 
@@ -59,13 +58,14 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
     }
 
-    public void commencerPartie(String[] nomJoueurs) {               // cette methode = appuyer sur start donc on
-        grille.melangerTuiles();                                        // a besoin du niveau d'eau en parametre ?
+    public void commencerPartie(int nbJoueurs, String level, String[] nomJoueurs) {
+        setNbJoueurs(nbJoueurs);
+        setNiveauEau(level);
+        grille.melangerTuiles();
         initiateInondation();
         initiateTresorCards();
         initiateAventuriers(nomJoueurs);
         Message m = new Message(TypeMessage.UPDATE_GRILLE);
-        m.vue = "jeu";
         m.grille = grille;
         notifierObservateur(m);
     }
@@ -138,12 +138,19 @@ public class IleInterdite extends Observe {
         System.exit(0);
     }
 
-    public void seDeplacer(Aventurier aventurier , Tuile nouvelle ){
-        aventurier.seDeplacer(aventurier, nouvelle);
+    public void seDeplacer(Aventurier aventurier, Tuile nouvelle){
+       // nouvelle = getMessage(aventurier) ;
 
-        double nbActions = aventurier.getNbActions();
-        aventurier.setNbActions(nbActions - 1);
+       if (aventurier.estAccessible()){
+          aventurier.getTuile().getAventuriers().remove(aventurier);
+          nouvelle.getAventuriers().add(aventurier);
+       }
+       else {
+           System.out.println("cette tuile n'est pas accéssible ");
+       }
 
+       double nbActions = aventurier.getNbActions();
+       aventurier.setNbActions(nbActions - 1);
     }
     public void assecher(Tuile tuile, Aventurier aventurier){
         //if (aventurier.peutAcceder(tuile)== true ) { tuile.assecher();}
@@ -166,26 +173,39 @@ public class IleInterdite extends Observe {
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
         }
-        double nbActions = donneur.getNbActions();
-        donneur.setNbActions(nbActions - 1);
 // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 
     public void recupererTresor(Aventurier aventurier){
         Tresor tresor = aventurier.getTuile().getTuileTresor();
         tresorsRecup.add(tresor);
-    }
 
+    }
 
     public void setNbJoueurs(int i){
         nbJoueurs = i;
     }
 
-    public void setNiveauEau(int niveauEau){
-        this.niveauEau=niveauEau;
+    public void setNiveauEau(String niveauEau){
+        switch(niveauEau) {
+            case "Novice":
+                this.niveauEau = 1;
+                break;
+            case "Normal":
+                this.niveauEau = 2;
+                break;
+            case "Elite":
+                this.niveauEau = 3;
+                break;
+            case "Legendaire":
+                this.niveauEau = 4;
+                break;
+            default:
+                this.niveauEau = 0;
+        }
     }
+
     public int getNiveauEau() {
         return this.niveauEau;
     }
-
 }

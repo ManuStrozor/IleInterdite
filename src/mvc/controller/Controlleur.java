@@ -32,10 +32,7 @@ public class Controlleur implements IControlleur {
 
             case JOUER:
                 ihm.setVue(msg.vue);
-                ileInterdite.commencerPartie(msg.nomsJoueurs);
-                ileInterdite.setNiveauEau(msg.niveauEau);
-                ileInterdite.setNbJoueurs(msg.nbJoueur);
-                System.out.println(ileInterdite.getNiveauEau());
+                ileInterdite.commencerPartie(msg.nbJoueur, msg.niveauEau, msg.nomsJoueurs);
                 break;
             case UPDATE_GRILLE:
                 ihm.getVue("jeu").updateGrille(msg.grille);

@@ -159,7 +159,7 @@ public class VueJeu extends Vue {
         dashBoard.setPreferredSize(new Dimension(0, 200));
         dashBoard.setOpaque(false);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 2; i++) {
             JPanel playerPanel = new JPanel(new BorderLayout());
             playerPanel.setOpaque(false);
 
