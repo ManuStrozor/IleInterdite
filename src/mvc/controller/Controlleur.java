@@ -35,6 +35,7 @@ public class Controlleur implements IControlleur {
                 ileInterdite.commencerPartie();
                 ileInterdite.setNiveauEau(msg.niveauEau);
                 ileInterdite.setNbJoueurs(msg.nbJoueur);
+                //ileInterdite.setNomJoueurs(msg.nomsJoueurs);
                 System.out.println(ileInterdite.getNiveauEau());
                 break;
             case UPDATE_GRILLE:

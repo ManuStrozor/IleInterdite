@@ -10,6 +10,11 @@ import game.Tuile;
  */
 public abstract class Explorateur extends Aventurier {
 
+    public Explorateur(String nomJoueur){
+        super(nomJoueur);
+    }
+
+
     public boolean estAccessible( game.Tuile tuile){
         if (tuile.getEtatTuile()== EtatTuile.assechee) {
             if (tuile.getColonne() == super.getTuile().getColonne() + 1 && tuile.getLigne() == super.getTuile().getLigne()) {

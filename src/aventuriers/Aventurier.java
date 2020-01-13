@@ -3,6 +3,7 @@ package aventuriers;
 import enumerations.Couleur;
 import enumerations.EtatTuile;
 import enumerations.Roles;
+import game.Carte;
 import game.Tuile;
 
 /**
@@ -11,12 +12,22 @@ import game.Tuile;
  */
 public abstract class Aventurier {
     private Couleur couleurPion;
-    private String actionsRestantes;
+    private double actionsRestantes;
     private game.Tuile tuile;
     private game.Carte[] inventaire;
     private double nbActions;
     private Roles role;
     private String nomJoueur;
+
+    public Aventurier(String nomJoueur) {
+        actionsRestantes = 3;
+        nbActions = 0;
+        role = null;
+        setNomJoueur(nomJoueur);
+        inventaire = new Carte[4];
+        //tuile = getTuileSpawn();
+        //couleurPion = null;
+    }
 
     public int getNombreCarte(){
         int nb = 0;
@@ -58,6 +69,10 @@ public abstract class Aventurier {
 
     public Tuile getTuile() {
         return tuile;
+    }
+
+    public void setNomJoueur(String nomJoueur){
+        this.nomJoueur = nomJoueur;
     }
 
     public boolean estAccessible(){

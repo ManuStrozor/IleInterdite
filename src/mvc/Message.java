@@ -24,4 +24,5 @@ public class Message {
     public int nbJoueur;
     public Grille grille;
     public int niveauEau;
+    public String[] nomsJoueurs;
 }

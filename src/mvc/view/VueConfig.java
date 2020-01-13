@@ -118,6 +118,13 @@ public class VueConfig extends Vue {
                 Message m = new Message(TypeMessage.JOUER);
                 m.vue = "jeu";
                 m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
+
+                for(int i = 0 ; i < m.nbJoueur; i++){
+                    m.nomsJoueurs=new String[m.nbJoueur];
+                    m.nomsJoueurs[i] = saisieNomJoueurs[i].getText();
+                    System.out.println(m.nomsJoueurs[i]);
+                }
+
                 if(radio1.isSelected()){
                     m.niveauEau=1;
                 }

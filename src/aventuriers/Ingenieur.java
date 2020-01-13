@@ -11,6 +11,10 @@ import game.Tuile;
  */
 public abstract class Ingenieur extends Aventurier {
 
+    public Ingenieur(String nomJoueur){
+        super(nomJoueur);
+    }
+
     public boolean estAccessible( game.Tuile tuile) {
 
         if (tuile.getEtatTuile() == EtatTuile.assechee) {

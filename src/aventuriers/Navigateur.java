@@ -8,8 +8,12 @@ import enumerations.EtatTuile;
  * @author estevmat
  */
 public abstract class Navigateur extends Aventurier {
-    public boolean estAccessible( game.Tuile tuile){
 
+    public Navigateur(String nomJoueur){
+        super(nomJoueur);
+    }
+
+    public boolean estAccessible( game.Tuile tuile){
 
         if (tuile.getEtatTuile() == EtatTuile.assechee){
             if (tuile.getColonne() == super.getTuile().getColonne() + 1 && tuile.getLigne() == super.getTuile().getLigne()) {

@@ -9,6 +9,10 @@ import enumerations.EtatTuile;
  */
 public class Plongeur extends Aventurier {
 
+    public Plongeur(String nomJoueur){
+        super(nomJoueur);
+    }
+
     public boolean estAccessible(game.Tuile tuileJoueur, game.Tuile tuile){
 
 

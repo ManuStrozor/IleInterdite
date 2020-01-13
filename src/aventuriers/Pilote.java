@@ -10,6 +10,10 @@ import game.Tuile;
  */
 public abstract class Pilote extends Aventurier {
 
+    public Pilote(String nomJoueur){
+        super(nomJoueur);
+    }
+
     public boolean estAccessible(Tuile tuile){
         // pour l'instant je le fais sans prendre en compte le nb d'actions
         if (tuile.getEtatTuile() == EtatTuile.assechee){

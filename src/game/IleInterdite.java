@@ -33,12 +33,18 @@ public class IleInterdite extends Observe {
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
     private Aventurier[] aventuriers;
+    private Roles[] roles ;
     private int nbJoueurs;
 
 
     public IleInterdite() {
         grille = new Grille();
         tresorsRecup = new ArrayList<>();
+        aventuriers = new Aventurier[3];
+        roles = Roles.values();
+        for (int i = 0; i <= roles.length - 1 ; i++){
+            System.out.println(roles[i]);
+        }
     }
 
     public void start() {
@@ -50,8 +56,8 @@ public class IleInterdite extends Observe {
     public void commencerPartie() { // cette methode = appuyer sur start donc on
         grille.melangerTuiles();                 // a besoin du niveau d'eau en parametre ?
         initiateInondation();
-        initiateAventuriers();
         initiateTresorCards();
+        //initiateAventuriers();
         Message m = new Message(TypeMessage.UPDATE_GRILLE);
         m.vue = "jeu";
         m.grille = grille;
@@ -61,7 +67,11 @@ public class IleInterdite extends Observe {
     public void initiateDifficulty(int niveauEau) {
 
     }
-
+//    public void setNomJoueurs(String[] nomJoueurs){
+//        for (int i=0;i<=nomJoueurs.length;i++){
+//            this.
+//        }
+//    }
     private void initiateTresorCards() {
         cartesTresor=new ArrayList<>();
 
@@ -99,9 +109,13 @@ public class IleInterdite extends Observe {
     }
 
 
-    private void initiateAventuriers() {
-
-    }
+//    private void initiateAventuriers(String[] nomJoueurs) {
+//        int random;
+//
+//        for (int i = 0; i <= nomJoueurs.length; i++){
+//            Aventurier aventurier = new Aventurier(nomJoueurs[i]);
+//        }
+//    }
 
     private void initiateInondation() {
 

@@ -73,8 +73,12 @@ public class VueJeu extends Vue {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Message m = new Message(TypeMessage.ASSECHER_TUILE);
-
+                //m.currentplayer = currentplayer();
                 ihm.notifierObservateur(m);
+                for (int i = 0; i < 5 ; i++){
+                    grille.add(new JButton("test"));
+                }
+
             }
         });
 
@@ -83,6 +87,7 @@ public class VueJeu extends Vue {
             public void actionPerformed(ActionEvent e) {
                 Message m = new Message(TypeMessage.ECHANGE_CARTE);
                 ihm.notifierObservateur(m);
+
             }
         });
 
@@ -195,4 +200,5 @@ public class VueJeu extends Vue {
         this.add(boardPanel, BorderLayout.CENTER);
         this.add(dashBoard, BorderLayout.SOUTH);
     }
+
 }
