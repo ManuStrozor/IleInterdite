@@ -17,4 +17,5 @@ public enum TypeMessage {
     RECUPERER_TRESOR,
     DEPLACEMENT,
     ECHANGE_CARTE,
+    NIVEAU_EAU,
 }

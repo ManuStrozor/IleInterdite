@@ -33,7 +33,9 @@ public class Controlleur implements IControlleur {
             case JOUER:
                 ihm.setVue(msg.vue);
                 ileInterdite.commencerPartie();
+                ileInterdite.setNiveauEau(msg.niveauEau);
                 ileInterdite.setNbJoueurs(msg.nbJoueur);
+                System.out.println(ileInterdite.getNiveauEau());
                 break;
             case UPDATE_GRILLE:
                 ihm.getVue("jeu").updateGrille(msg.grille);
@@ -57,6 +59,8 @@ public class Controlleur implements IControlleur {
             case RECUPERER_TRESOR:
                 System.out.println("recupererTresor()");
                 break;
+            case NIVEAU_EAU:
+                ileInterdite.setNiveauEau(msg.niveauEau);
         }
     }
 

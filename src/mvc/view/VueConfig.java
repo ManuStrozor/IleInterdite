@@ -19,6 +19,7 @@ public class VueConfig extends Vue {
     private final JButton retour = new JButton("RETOUR");
     private String[] nomJoueurs;
 
+
     public VueConfig(String name, IHM ihm) {
 
         super(name, ihm);
@@ -84,7 +85,9 @@ public class VueConfig extends Vue {
         JRadioButton radio1 = new JRadioButton("Niveau 1");
         JRadioButton radio2 = new JRadioButton("Niveau 2");
         JRadioButton radio3 = new JRadioButton("Niveau 3");
+        JRadioButton radio4 = new JRadioButton("Niveau 4"); //4 niveaux de difficulté la team
         radio1.setSelected(true);
+
 
         groupeBouton.add(radio1);
         groupeBouton.add(radio2);
@@ -115,6 +118,18 @@ public class VueConfig extends Vue {
                 Message m = new Message(TypeMessage.JOUER);
                 m.vue = "jeu";
                 m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
+                if(radio1.isSelected()){
+                    m.niveauEau=1;
+                }
+                if(radio2.isSelected()){
+                    m.niveauEau=2;
+                }
+                if(radio3.isSelected()){
+                    m.niveauEau=3;
+                }
+                if (radio4.isSelected()){
+                    m.niveauEau=4;
+                }
                 ihm.notifierObservateur(m);
             }
         });

@@ -15,6 +15,7 @@ import mvc.Observe;
 import enumerations.TypeMessage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static enumerations.EtatTuile.assechee;
 
@@ -25,8 +26,10 @@ import static enumerations.EtatTuile.assechee;
 public class IleInterdite extends Observe {
 
     private Grille grille;
+    private int niveauEau = 0;
 
     private ArrayList<Tresor> tresorsRecup;
+    private ArrayList<CarteTresor>cartesTresor;
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
     private Aventurier[] aventuriers;
@@ -44,25 +47,57 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
     }
 
-    public void commencerPartie() {
-        grille.melangerTuiles();
+    public void commencerPartie() { // cette methode = appuyer sur start donc on
+        grille.melangerTuiles();                 // a besoin du niveau d'eau en parametre ?
         initiateInondation();
         initiateAventuriers();
         initiateTresorCards();
-        initiateDifficulty();
         Message m = new Message(TypeMessage.UPDATE_GRILLE);
         m.vue = "jeu";
         m.grille = grille;
         notifierObservateur(m);
     }
 
-    private void initiateDifficulty() {
+    public void initiateDifficulty(int niveauEau) {
 
     }
 
     private void initiateTresorCards() {
+        cartesTresor=new ArrayList<>();
 
+
+        for (int j = 0; j < 5; j++) {
+            CarteTresor carte = new CarteTresor("Le Cristal ardent");
+            cartesTresor.add(carte);
+        }
+        for (int j = 0; j < 5; j++) {
+            CarteTresor carte = new CarteTresor("La Pierre sacrée");
+            cartesTresor.add(carte);
+        }
+        for (int j = 0; j < 5; j++) {
+            CarteTresor carte = new CarteTresor("La Statue du zéphyr");
+            cartesTresor.add(carte);
+        }
+        for (int j = 0; j < 5; j++) {
+            CarteTresor carte = new CarteTresor("Le Calice de l’onde");
+            cartesTresor.add(carte);
+        }
+        for (int j = 0; j < 3; j++) {
+            CarteTresor carte = new CarteTresor("Montée des eaux");
+            cartesTresor.add(carte);
+        }
+        for (int j = 0; j < 2; j++) {
+            CarteTresor carte = new CarteTresor("Sac de sable");
+            cartesTresor.add(carte);
+        }
+        for (int j = 0; j < 3; j++) {
+            CarteTresor carte = new CarteTresor("Helicoptere");
+            cartesTresor.add(carte);
+        }
+
+        Collections.shuffle(cartesTresor);
     }
+
 
     private void initiateAventuriers() {
 
@@ -120,6 +155,11 @@ public class IleInterdite extends Observe {
         nbJoueurs = i;
     }
 
-
+    public void setNiveauEau(int niveauEau){
+        this.niveauEau=niveauEau;
+    }
+    public int getNiveauEau() {
+        return this.niveauEau;
+    }
 
 }

@@ -23,4 +23,5 @@ public class Message {
     public String vue;
     public int nbJoueur;
     public Grille grille;
+    public int niveauEau;
 }
