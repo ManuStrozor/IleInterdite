@@ -1,8 +1,7 @@
 package aventuriers;
 
-import enumerations.Couleur;
-import enumerations.EtatTuile;
-import enumerations.Roles;
+
+import enumerations.*;
 import game.*;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public abstract class Aventurier {
         nbActions = 0;
         role = null;
         setNomJoueur(nomJoueur);
-        inventaire = new Carte[4];
+        inventaire = new Carte[5];
         tuile = getTuileSpawn(grille);
         //couleurPion = null;
     }
@@ -58,8 +57,18 @@ public abstract class Aventurier {
         return nbActions;
     }
 
-    public void ajouterCarte(Carte carte){
-
+    public boolean ajouterCarte(game.Carte carte){
+        int i = 0;
+        while (i < inventaire.length && inventaire[i] != null ){
+            i++;
+        }
+        if (i >= inventaire.length){
+            System.out.println("L'inventaire de l'aventurier est plein");
+            return false;
+        }else{
+            this.inventaire[i] = carte;
+            return true;
+        }
     }
 
     public void defausseCarte(){

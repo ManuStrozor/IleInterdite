@@ -3,11 +3,11 @@ package game;
  *
  * @author estevmat
  */
-public class CarteTresor {
+public class CarteTresor extends Carte{
     private String nomCarteTresor;
 
     CarteTresor(String nom){
-        nom = nomCarteTresor;
+        nomCarteTresor = nom;
     }
     public String getNomCarteTresor() {
         return nomCarteTresor;

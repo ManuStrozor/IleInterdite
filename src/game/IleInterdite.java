@@ -25,7 +25,8 @@ public class IleInterdite extends Observe {
     private List<Tresor> tresorsDispo;
     private List<Tresor> tresorsRecuperes;
     private int niveauEau = 0, nbJoueurs = 0, currentAventurier = 0;
-    private ArrayList<CarteTresor> cartesTresor;
+    private ArrayList<CarteTresor> defausseCartesTresor = new ArrayList<>();
+    private ArrayList<CarteTresor> pileCartesTresor;
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
     private ArrayList<Aventurier> aventuriers;
@@ -59,25 +60,26 @@ public class IleInterdite extends Observe {
     }
 
     private void initiateTresorCards() {
-        cartesTresor = new ArrayList<>();
+        pileCartesTresor = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            cartesTresor.add(new CarteTresor("Le Cristal ardent"));
-            cartesTresor.add(new CarteTresor("La Pierre sacrée"));
-            cartesTresor.add(new CarteTresor("La Statue du zéphyr"));
-            cartesTresor.add(new CarteTresor("Le Calice de l’onde"));
+            pileCartesTresor.add(new CarteTresor("Le Cristal ardent"));
+            pileCartesTresor.add(new CarteTresor("La Pierre sacrée"));
+            pileCartesTresor.add(new CarteTresor("La Statue du zéphyr"));
+            pileCartesTresor.add(new CarteTresor("Le Calice de l’onde"));
         }
 
         for (int i = 0; i < 3; i++) {
-            cartesTresor.add(new CarteTresor("Montée des eaux"));
-            cartesTresor.add(new CarteTresor("Helicoptere"));
+            pileCartesTresor.add(new CarteTresor("Montée des eaux"));
+            pileCartesTresor.add(new CarteTresor("Helicoptere"));
         }
 
         for (int i = 0; i < 2; i++) {
-            cartesTresor.add(new CarteTresor("Sac de sable"));
+            pileCartesTresor.add(new CarteTresor("Sac de sable"));
         }
 
-        Collections.shuffle(cartesTresor);
+        Collections.shuffle(pileCartesTresor);
+
     }
 
 
@@ -106,8 +108,28 @@ public class IleInterdite extends Observe {
                 default:
                     throw new IllegalStateException("[InitiateAventuriers] Unexpected value: " + lesRoles.get(i));
             }
+            distribuerCarteTresor(newAventurier);
             aventuriers.add(newAventurier);
-            System.out.println("Role: " + aventuriers.get(i).getRole() + " Nom: " +aventuriers.get(i).getNomJoueur());
+            System.out.println("Role: " + aventuriers.get(i).getRole() + " Nom: " + aventuriers.get(i).getNomJoueur());
+        }
+    }
+
+
+    private void distribuerCarteTresor(Aventurier aventurier){
+        for (int k = 1; k <= 2 ; k ++){
+            int i = pileCartesTresor.size() - 1;
+            CarteTresor carte = pileCartesTresor.get(i);
+
+            while(carte.getNomCarteTresor().equals("Montée des eaux")){
+                i--;
+                carte = pileCartesTresor.get(i);
+            }
+            boolean ajoutok;
+            ajoutok = aventurier.ajouterCarte(pileCartesTresor.get(pileCartesTresor.size()-1)); // On ajoute à l'inventaire de l'aventurier la derniere carte de l'arraylist pilecarteTresor
+            if (ajoutok){
+                pileCartesTresor.remove(pileCartesTresor.get(pileCartesTresor.size()-1)); //et on l'enleve de la pile de carte tresor
+                System.out.println("une carte a ete ajouté à " + aventurier.getNomJoueur());
+            }
         }
     }
 
