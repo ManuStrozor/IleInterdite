@@ -6,8 +6,11 @@ package mvc.controller;
  */
 
 import game.IleInterdite;
+import game.Tuile;
 import mvc.Message;
 import mvc.view.IHM;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -44,14 +47,14 @@ public class Controlleur implements IControlleur {
                 ihm.setVue(msg.vue);
                 break;
             case DEPLACEMENT:
-                System.out.println("sedeplacer()");
+                ArrayList<Tuile> tuiles = ileInterdite.getCurrentAventurier().getTuilesAccessibles(ileInterdite.getGrille());
+                ihm.getVue("jeu").afficherTuilesAccessibles(tuiles);
                 break;
             case ECHANGE_CARTE:
                 System.out.println("echangerCarte()");
                 break;
             case ASSECHER_TUILE:
                 //ileInterdite.assecher();
-
                 break;
             case RECUPERER_TRESOR:
                 System.out.println("recupererTresor()");

@@ -6,19 +6,14 @@ package game;
  */
 
 import aventuriers.*;
-import enumerations.NomsTuiles;
-import enumerations.Roles;
-import enumerations.Tresor;
+import enumerations.*;
 import mvc.Message;
 import mvc.Observe;
-import enumerations.TypeMessage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static enumerations.EtatTuile.assechee;
 
 /**
  *
@@ -27,29 +22,22 @@ import static enumerations.EtatTuile.assechee;
 public class IleInterdite extends Observe {
 
     private Grille grille;
-    private int niveauEau = 0;
-    private int nbJoueurs;
-    private ArrayList<Tresor> tresorsRecup;
-    private ArrayList<CarteTresor>cartesTresor;
+    private List<Tresor> tresorsDispo;
+    private List<Tresor> tresorsRecuperes;
+    private int niveauEau = 0, nbJoueurs = 0, currentAventurier = 0;
+    private ArrayList<CarteTresor> cartesTresor;
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
-    private Aventurier[] aventuriers;
-    private Roles[] roles ;
+    private ArrayList<Aventurier> aventuriers;
     private List<Roles> lesRoles;
 
 
     public IleInterdite() {
-        grille = new Grille();
-        tresorsRecup = new ArrayList<>();
-        aventuriers = new Aventurier[4];
-        roles = new Roles[6];
-        roles = Roles.values();
-        lesRoles= Arrays.asList(roles);
+        grille = new Grille(); //initialisation grille
+        aventuriers = new ArrayList<>(); //initialisation aventuriers
+        lesRoles = Arrays.asList(Roles.values());
         Collections.shuffle(lesRoles);
-
-        for (int i = 0; i < 6 ; i++){
-            System.out.println(lesRoles.get(i));
-        }
+        tresorsDispo=Arrays.asList(Tresor.values()); //initialisation tresors
     }
 
     public void start() {
@@ -71,62 +59,55 @@ public class IleInterdite extends Observe {
     }
 
     private void initiateTresorCards() {
-        cartesTresor=new ArrayList<>();
+        cartesTresor = new ArrayList<>();
 
-        for (int j = 0; j < 5; j++) {
-            CarteTresor carte = new CarteTresor("Le Cristal ardent");
-            cartesTresor.add(carte);
+        for (int i = 0; i < 5; i++) {
+            cartesTresor.add(new CarteTresor("Le Cristal ardent"));
+            cartesTresor.add(new CarteTresor("La Pierre sacrée"));
+            cartesTresor.add(new CarteTresor("La Statue du zéphyr"));
+            cartesTresor.add(new CarteTresor("Le Calice de l’onde"));
         }
-        for (int j = 0; j < 5; j++) {
-            CarteTresor carte = new CarteTresor("La Pierre sacrée");
-            cartesTresor.add(carte);
+
+        for (int i = 0; i < 3; i++) {
+            cartesTresor.add(new CarteTresor("Montée des eaux"));
+            cartesTresor.add(new CarteTresor("Helicoptere"));
         }
-        for (int j = 0; j < 5; j++) {
-            CarteTresor carte = new CarteTresor("La Statue du zéphyr");
-            cartesTresor.add(carte);
-        }
-        for (int j = 0; j < 5; j++) {
-            CarteTresor carte = new CarteTresor("Le Calice de l’onde");
-            cartesTresor.add(carte);
-        }
-        for (int j = 0; j < 3; j++) {
-            CarteTresor carte = new CarteTresor("Montée des eaux");
-            cartesTresor.add(carte);
-        }
-        for (int j = 0; j < 2; j++) {
-            CarteTresor carte = new CarteTresor("Sac de sable");
-            cartesTresor.add(carte);
-        }
-        for (int j = 0; j < 3; j++) {
-            CarteTresor carte = new CarteTresor("Helicoptere");
-            cartesTresor.add(carte);
+
+        for (int i = 0; i < 2; i++) {
+            cartesTresor.add(new CarteTresor("Sac de sable"));
         }
 
         Collections.shuffle(cartesTresor);
     }
 
 
-    private void initiateAventuriers(String[] nomJoueurs) {
-
-        for (int i = 0; i <= nomJoueurs.length; i++){
-            if(lesRoles.get(i).equals("ingenieur")){
-                Ingenieur ingenieur = new Ingenieur(nomJoueurs[i]);
+    private void initiateAventuriers(String[] nomJoueurs) throws IllegalStateException {
+        for (int i = 0; i < nbJoueurs; i++) {
+            Aventurier newAventurier;
+            switch(lesRoles.get(i)) {
+                case explorateur:
+                    newAventurier = new Explorateur(nomJoueurs[i], grille);
+                    break;
+                case navigateur:
+                    newAventurier = new Navigateur(nomJoueurs[i], grille);
+                    break;
+                case plongeur:
+                    newAventurier = new Plongeur(nomJoueurs[i], grille);
+                    break;
+                case messager:
+                    newAventurier = new Messager(nomJoueurs[i], grille);
+                    break;
+                case pilote:
+                    newAventurier = new Pilote(nomJoueurs[i], grille);
+                    break;
+                case ingenieur:
+                    newAventurier = new Ingenieur(nomJoueurs[i], grille);
+                    break;
+                default:
+                    throw new IllegalStateException("[InitiateAventuriers] Unexpected value: " + lesRoles.get(i));
             }
-            else if(lesRoles.get(i).equals("pilote")){
-                Pilote pilote = new Pilote(nomJoueurs[i]);
-            }
-            else if(lesRoles.get(i).equals("navigateur")){
-                Navigateur navigateur = new Navigateur(nomJoueurs[i]);
-            }
-            else if(lesRoles.get(i).equals("messager")){
-                Messager messager = new Messager(nomJoueurs[i]);
-            }
-            else if(lesRoles.get(i).equals("plongeur")){
-                Plongeur plongeur = new Plongeur(nomJoueurs[i]);
-            }
-            else if(lesRoles.get(i).equals("explorateur")){
-                Explorateur explorateur = new Explorateur(nomJoueurs[i]);
-            }
+            aventuriers.add(newAventurier);
+            System.out.println("Role: " + aventuriers.get(i).getRole() + " Nom: " +aventuriers.get(i).getNomJoueur());
         }
     }
 
@@ -138,21 +119,14 @@ public class IleInterdite extends Observe {
         System.exit(0);
     }
 
-    public void seDeplacer(Aventurier aventurier, Tuile nouvelle){
-       // nouvelle = getMessage(aventurier) ;
-
-       if (aventurier.estAccessible()){
-          aventurier.getTuile().getAventuriers().remove(aventurier);
-          nouvelle.getAventuriers().add(aventurier);
-       }
-       else {
-           System.out.println("cette tuile n'est pas accéssible ");
-       }
-
-       double nbActions = aventurier.getNbActions();
-       aventurier.setNbActions(nbActions - 1);
+    public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
+        aventurier.seDeplacer(tuileDest);
+        Message m = new Message(TypeMessage.UPDATE_GRILLE);
+        m.grille = grille;
+        notifierObservateur(m);
     }
-    public void assecher(Tuile tuile, Aventurier aventurier){
+
+    public void assecher(Tuile tuile, Aventurier aventurier) {
         //if (aventurier.peutAcceder(tuile)== true ) { tuile.assecher();}
         tuile.assecher();
 
@@ -168,7 +142,7 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
     }
 
-    public void donnerCarte(Aventurier donneur , Aventurier receveur, Carte carte ){
+    public void donnerCarte(Aventurier donneur , Aventurier receveur, Carte carte ) {
         if(donneur.getTuile()== receveur.getTuile()&& receveur.getNombreCarte()<4){
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
@@ -176,14 +150,14 @@ public class IleInterdite extends Observe {
 // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 
-    public void recupererTresor(Aventurier aventurier){
-        Tresor tresor = aventurier.getTuile().getTuileTresor();
-        tresorsRecup.add(tresor);
+    public void recupererTresor(Tresor tresor) {
+        tresorsDispo.remove(tresor);
+        tresorsRecuperes.add(tresor);
 
     }
 
-    public void setNbJoueurs(int i){
-        nbJoueurs = i;
+    public void setNbJoueurs(int nbJoueurs){
+        this.nbJoueurs = nbJoueurs;
     }
 
     public void setNiveauEau(String niveauEau){
@@ -201,11 +175,19 @@ public class IleInterdite extends Observe {
                 this.niveauEau = 4;
                 break;
             default:
-                this.niveauEau = 0;
+                this.niveauEau = 1;
         }
     }
 
     public int getNiveauEau() {
         return this.niveauEau;
+    }
+
+    public Grille getGrille() {
+        return grille;
+    }
+
+    public Aventurier getCurrentAventurier() {
+        return aventuriers.get(currentAventurier);
     }
 }

@@ -4,6 +4,8 @@ package aventuriers;
 import enumerations.Couleur;
 import enumerations.EtatTuile;
 import enumerations.Roles;
+import game.Grille;
+import game.Tuile;
 
 /**
  *
@@ -11,35 +13,14 @@ import enumerations.Roles;
  */
 public class Plongeur extends Aventurier {
 
-    public Plongeur(String nomJoueur){
-        super(nomJoueur);
+    public Plongeur(String nomJoueur, Grille grille){
+        super(nomJoueur, grille);
         setRole(Roles.plongeur);
         setCouleurPion(Couleur.noir);
-
-
     }
 
-    public boolean estAccessible(game.Tuile tuileJoueur, game.Tuile tuile){
-
-
-        if (tuile.getEtatTuile() == EtatTuile.assechee || tuile.getEtatTuile()== EtatTuile.innondee){
-            if (tuile.getColonne() == tuileJoueur.getColonne() + 1 && tuile.getLigne() == tuileJoueur.getLigne()) {
-                return true;
-            }
-            else if (tuile.getColonne() == tuileJoueur.getColonne() - 1 && tuile.getLigne() == tuileJoueur.getLigne()) {
-                return true;
-            }
-            else if (tuile.getColonne() == tuileJoueur.getColonne() && tuile.getLigne() == tuileJoueur.getLigne() + 1) {
-                return true;
-            }
-            else if (tuile.getColonne() == tuileJoueur.getColonne() && tuile.getLigne() == tuileJoueur.getLigne() - 1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        else{
-            return false;
-        }
+    @Override
+    protected Tuile getTuileSpawn(Grille grille) {
+        return grille.getTuilesMap().get("La Porte de Fer");
     }
 }

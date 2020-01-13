@@ -3,7 +3,9 @@ package aventuriers;
 import enumerations.Couleur;
 import enumerations.EtatTuile;
 import enumerations.Roles;
-import game.Tuile;
+import game.*;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -12,26 +14,28 @@ import game.Tuile;
 public abstract class Aventurier {
     private Couleur couleurPion;
     private double actionsRestantes;
-    private game.Tuile tuile;
-    private game.Carte[] inventaire;
+    private Tuile tuile;
+    private Carte[] inventaire;
     private double nbActions;
     private Roles role;
     private String nomJoueur;
 
-    public Aventurier(String nomJoueur) {
+    public Aventurier(String nomJoueur, Grille grille) {
         actionsRestantes = 3;
         nbActions = 0;
         role = null;
         setNomJoueur(nomJoueur);
         inventaire = new Carte[4];
-        //tuile = getTuileSpawn();
+        tuile = getTuileSpawn(grille);
         //couleurPion = null;
     }
 
+    protected abstract Tuile getTuileSpawn(Grille grille);
+
     public int getNombreCarte(){
         int nb = 0;
-        for (int i = 0; i < inventaire.length; i++) {
-            if (inventaire[i] != null) {
+        for (int i = 0 ; i < inventaire.length; i++) {
+            if (inventaire[i] != null){
                 nb++;
             }
         }
@@ -54,63 +58,104 @@ public abstract class Aventurier {
         return nbActions;
     }
 
-    public void ajouterCarte(game.Carte carte) {
+    public void ajouterCarte(Carte carte){
 
     }
 
-    public void defausseCarte() {
+    public void defausseCarte(){
 
     }
-
-    public int[] getPosition() {         //Renvoie un tableau avec les coordonnées de la tuile où se trouve l'aventurier
-        int[] position = new int[2];
-        position[0] = tuile.getLigne();
-        position[1] = tuile.getColonne();
-        return position;
-    }
-
 
     public Tuile getTuile() {
         return tuile;
     }
 
+    public String getNomJoueur(){
+        return this.nomJoueur;
+    }
+
     public void setNomJoueur(String nomJoueur){
         this.nomJoueur = nomJoueur;
     }
-
-    public boolean estAccessible(){
-    abstract boolean estAccessible(Tuile tuile);
-
-        return estAccessible();
-    };
-
+    
     public boolean peutAssecher(game.Tuile tuileInnondee){
 
-        if (tuileInnondee.getEtatTuile() == EtatTuile.innondee) {
+        if ( tuileInnondee.getEtatTuile() == EtatTuile.innondee){
             if (tuileInnondee.getColonne() == this.getTuile().getColonne() + 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
                 return true;
-            } else if (tuileInnondee.getColonne() == this.getTuile().getColonne() - 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
+            }
+            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() - 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
                 return true;
-            } else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() + 1) {
+            }
+            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() + 1) {
                 return true;
-            } else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() - 1) {
+            }
+            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() - 1) {
                 return true;
             } else {
                 return false;
             }
-        } else {
+        }
+        else{
             return false;
         }
     }
 
-    public void seDeplacer(Aventurier aventurier, Tuile nouvelle) {
-        // nouvelle = getMessage(aventurier) ;
+    public ArrayList<Tuile> getTuilesAccessibles(Grille grille) {
+        ArrayList<Tuile> tuiles = new ArrayList<>();
 
-        if (aventurier.estAccessible(nouvelle) == true) {
-            aventurier.getTuile().getAventuriers().remove(aventurier);
-            nouvelle.getAventuriers().add(aventurier);
-        } else {
-            System.out.println("cette tuile n'est pas accéssible ");
+        switch(getRole()) {
+            case ingenieur:
+            case messager:
+            case navigateur:
+            case explorateur:
+            case plongeur:
+                Tuile newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()-1);
+                if(newTuile != null) tuiles.add(newTuile);
+
+                newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()+1);
+                if(newTuile != null) tuiles.add(newTuile);
+
+                newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne());
+                if(newTuile != null) tuiles.add(newTuile);
+
+                newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne());
+                if(newTuile != null) tuiles.add(newTuile);
+                break;
+            case pilote:
+                tuiles.addAll(grille.getTuiles());
+                break;
         }
+
+        if (getRole() == Roles.explorateur) {
+            Tuile newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()+1);
+            if(newTuile != null) tuiles.add(newTuile);
+
+            newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne()-1);
+            if(newTuile != null) tuiles.add(newTuile);
+
+            newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne()+1);
+            if(newTuile != null) tuiles.add(newTuile);
+
+            newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()-1);
+            if(newTuile != null) tuiles.add(newTuile);
+        }
+
+        switch(getRole()) {
+            case ingenieur:
+            case messager:
+            case navigateur:
+            case pilote:
+            case explorateur:
+                tuiles.removeIf(t -> t.getEtatTuile() == EtatTuile.coulee);
+                break;
+        }
+        return tuiles;
+    }
+
+    public void seDeplacer(Tuile nouvelle) {
+        this.getTuile().getAventuriers().remove(this);
+        nouvelle.getAventuriers().add(this);
+        this.setNbActions(this.getNbActions() - 1);
     }
 }

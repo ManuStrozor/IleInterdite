@@ -5,10 +5,12 @@ package mvc.view;
  * and open the template in the editor.
  */
 
+import game.Tuile;
 import mvc.Observe;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -79,5 +81,8 @@ public class IHM extends Observe {
         frame.setContentPane(this.vue);
         this.resizeFromSize(getVue(vue).getWidth(), getVue(vue).getHeight());
         frame.setVisible(true);
+    }
+
+    public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {
     }
 }

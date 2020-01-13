@@ -1,6 +1,7 @@
 package mvc.view;
 
 import game.Grille;
+import game.Tuile;
 import mvc.Message;
 import enumerations.TypeMessage;
 
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class VueConfig extends Vue {
@@ -55,6 +57,8 @@ public class VueConfig extends Vue {
 
     @Override
     public void updateGrille(Grille grille) {}
+    @Override
+    public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {}
 
     @Override
     public void initComponents() {

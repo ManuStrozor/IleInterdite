@@ -8,12 +8,14 @@ package mvc.view;
 import aventuriers.Aventurier;
 import enumerations.TypeMessage;
 import game.Grille;
+import game.Tuile;
 import mvc.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -26,10 +28,37 @@ public class VueJeu extends Vue {
     private int nbJoueurs;
     private Aventurier[] aventuriers;
 
+    private JButton deplacer, assecher, donnerCarteTresor, recupererTresor;
+
     public VueJeu(String name, IHM ihm, int width, int height) {
         super(name, ihm, width, height);
         this.initComponents();
 
+        deplacer.addActionListener(e -> {
+            Message m = new Message(TypeMessage.DEPLACEMENT);
+            ihm.notifierObservateur(m);
+        });
+
+        assecher.addActionListener(e -> {
+            Message m = new Message(TypeMessage.ASSECHER_TUILE);
+            //m.currentplayer = currentplayer();
+            ihm.notifierObservateur(m);
+            for (int i = 0; i < 5 ; i++){
+                grille.add(new JButton("test"));
+            }
+
+        });
+
+        donnerCarteTresor.addActionListener(e -> {
+            Message m = new Message(TypeMessage.ECHANGE_CARTE);
+            ihm.notifierObservateur(m);
+
+        });
+
+        recupererTresor.addActionListener(e -> {
+            Message m = new Message(TypeMessage.RECUPERER_TRESOR);
+            ihm.notifierObservateur(m);
+        });
     }
 
     public void updateGrille(Grille grille) {
@@ -39,10 +68,17 @@ public class VueJeu extends Vue {
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
                 tile.setBackground(grille.getTuile(pos).getImage());
                 pos++;
-            } else {
-                tile.setOpaque(false);
             }
+            tile.setOpaque(false);
             this.grille.add(tile);
+        }
+    }
+
+    @Override
+    public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {
+        System.out.println("Tuiles accessibles :");
+        for(Tuile t : tuiles) {
+            System.out.println("\t" + t.getNom());
         }
     }
 
@@ -54,50 +90,10 @@ public class VueJeu extends Vue {
         menu.setOpaque(false);
         ////// ZONE DE MENU //////
 
-        JButton deplacer = new JButton("Se déplacer");
-        JButton assecher = new JButton("Dessécher");
-        JButton donnerCarteTresor = new JButton("Donner une carte Trésor");
-        JButton recupererTresor = new JButton("Recuperer le Tresor");
-
-
-        deplacer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.DEPLACEMENT);
-                m.vue = "jeu";
-                ihm.notifierObservateur(m);
-            }
-        });
-
-        assecher.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.ASSECHER_TUILE);
-                //m.currentplayer = currentplayer();
-                ihm.notifierObservateur(m);
-                for (int i = 0; i < 5 ; i++){
-                    grille.add(new JButton("test"));
-                }
-
-            }
-        });
-
-        donnerCarteTresor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.ECHANGE_CARTE);
-                ihm.notifierObservateur(m);
-
-            }
-        });
-
-        recupererTresor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.RECUPERER_TRESOR);
-                ihm.notifierObservateur(m);
-            }
-        });
+        deplacer = new JButton("Se déplacer");
+        assecher = new JButton("Dessécher");
+        donnerCarteTresor = new JButton("Donner une carte Trésor");
+        recupererTresor = new JButton("Recuperer le Tresor");
 
         menu.add(deplacer);
         menu.add(assecher);
@@ -116,14 +112,11 @@ public class VueJeu extends Vue {
         JPanel marginBot = new JPanel();
         marginBot.setPreferredSize(new Dimension(0, 100)); marginBot.setOpaque(false);
 
-
         menuPanel.add(marginTop, BorderLayout.NORTH);
         menuPanel.add(marginLeft, BorderLayout.WEST);
         menuPanel.add(marginBot, BorderLayout.SOUTH);
         menuPanel.add(menu, BorderLayout.CENTER);
         menuPanel.setPreferredSize(new Dimension(450,0));
-
-
 
         JPanel board = new JPanel(new BorderLayout());
         board.setOpaque(false);
@@ -141,13 +134,13 @@ public class VueJeu extends Vue {
         JPanel boardPanel = new JPanel(new BorderLayout());
         boardPanel.setOpaque(false);
         JPanel marginLeft2 = new JPanel();
-        marginLeft2.setPreferredSize(new Dimension(50, 0)); marginLeft2.setOpaque(false);
+        marginLeft2.setPreferredSize(new Dimension(10, 0)); marginLeft2.setOpaque(false);
         JPanel marginRight2 = new JPanel();
-        marginRight2.setPreferredSize(new Dimension(50, 0)); marginRight2.setOpaque(false);
+        marginRight2.setPreferredSize(new Dimension(10, 0)); marginRight2.setOpaque(false);
         JPanel marginTop2 = new JPanel();
-        marginTop2.setPreferredSize(new Dimension(0, 50)); marginTop2.setOpaque(false);
+        marginTop2.setPreferredSize(new Dimension(0, 10)); marginTop2.setOpaque(false);
         JPanel marginBot2 = new JPanel();
-        marginBot2.setPreferredSize(new Dimension(0, 50)); marginBot2.setOpaque(false);
+        marginBot2.setPreferredSize(new Dimension(0, 10)); marginBot2.setOpaque(false);
 
         boardPanel.add(marginTop2, BorderLayout.NORTH);
         boardPanel.add(marginLeft2, BorderLayout.WEST);
