@@ -2,6 +2,7 @@ package game;
 
 import aventuriers.Aventurier;
 import enumerations.EtatTuile;
+import enumerations.Roles;
 import enumerations.Tresor;
 
 import javax.swing.*;
@@ -36,13 +37,6 @@ public class Tuile implements Comparable<Tuile> {
         setImage(etatTuile);
         aventuriers = new HashSet<>();
         setTresor(tresor);
-    }
-
-    Tuile(int ligne, int colonne){
-        this.ligne =ligne ;
-        this.colonne= colonne ;
-        setNom(nom);
-        aventuriers= new HashSet<>();
     }
 
     public String getNom() {
@@ -125,12 +119,12 @@ public class Tuile implements Comparable<Tuile> {
         this.aventuriers.remove(aventurier);
     }
 
+    public Tresor getTuileTresor() {
+        return tresor;
+    }
+
     @Override
     public int compareTo(Tuile o) {
         return (o.getLigne() > this.getLigne() || (o.getLigne() == this.getLigne() && o.getColonne() > this.getColonne())) ? 1 : 0;
-    }
-
-    public Tresor getTuileTresor() {
-        return tresor;
     }
 }

@@ -6,9 +6,11 @@
 package mvc.view;
 
 import game.Grille;
+import game.Tuile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -68,4 +70,6 @@ public abstract class Vue extends JPanel implements IVue {
     }
 
     public abstract void updateGrille(Grille grille);
+
+    public abstract void afficherTuilesAccessibles(ArrayList<Tuile> tuiles);
 }

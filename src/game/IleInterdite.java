@@ -27,30 +27,22 @@ import static enumerations.EtatTuile.assechee;
 public class IleInterdite extends Observe {
 
     private Grille grille;
-    private int niveauEau = 0;
-    private int nbJoueurs ;
-    private List<Tresor>tresorsDispo;
+    private List<Tresor> tresorsDispo;
     private List<Tresor> tresorsRecuperes;
-    private ArrayList<CarteTresor>cartesTresor;
+    private int niveauEau = 0, nbJoueurs = 0, currentAventurier = 0;
+    private ArrayList<CarteTresor> cartesTresor;
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
     private ArrayList<Aventurier> aventuriers;
-    private Roles[] roles ;
     private List<Roles> lesRoles;
-    private Tresor[] tresors;
-
 
 
     public IleInterdite() {
         grille = new Grille(); //initialisation grille
         aventuriers = new ArrayList<>(); //initialisation aventuriers
-        roles = new Roles[6];
-        roles = Roles.values();
-        lesRoles= Arrays.asList(roles);
+        lesRoles= Arrays.asList(Roles.values());
         Collections.shuffle(lesRoles);
-        tresorsDispo=Arrays.asList(tresors); //initialisation tresors
-
-
+        tresorsDispo=Arrays.asList(Tresor.values()); //initialisation tresors
     }
 
     public void start() {
@@ -72,7 +64,7 @@ public class IleInterdite extends Observe {
     }
 
     private void initiateTresorCards() {
-        cartesTresor=new ArrayList<>();
+        cartesTresor = new ArrayList<>();
 
         for (int j = 0; j < 5; j++) {
             CarteTresor carte = new CarteTresor("Le Cristal ardent");
@@ -110,32 +102,31 @@ public class IleInterdite extends Observe {
     private void initiateAventuriers(String[] nomJoueurs) {
         for (int i = 0; i <= nbJoueurs-1; i++){
             if(lesRoles.get(i).equals(Roles.ingenieur)){
-                Ingenieur ingenieur = new Ingenieur(nomJoueurs[i]);
-                aventuriers.add(ingenieur);
+                aventuriers.add(new Ingenieur(nomJoueurs[i], grille));
                 System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
             else if(lesRoles.get(i).equals(Roles.pilote)){
-                Pilote pilote = new Pilote(nomJoueurs[i]);
+                Pilote pilote = new Pilote(nomJoueurs[i], grille);
                 aventuriers.add(pilote);
                 System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
             else if(lesRoles.get(i).equals(Roles.navigateur)){
-                Navigateur navigateur = new Navigateur(nomJoueurs[i]);
+                Navigateur navigateur = new Navigateur(nomJoueurs[i], grille);
                 aventuriers.add(navigateur);
                 System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
             else if(lesRoles.get(i).equals(Roles.messager)){
-                Messager messager = new Messager(nomJoueurs[i]);
+                Messager messager = new Messager(nomJoueurs[i], grille);
                 aventuriers.add(messager);
                 System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
             else if(lesRoles.get(i).equals(Roles.plongeur)){
-                Plongeur plongeur = new Plongeur(nomJoueurs[i]);
+                Plongeur plongeur = new Plongeur(nomJoueurs[i], grille);
                 aventuriers.add(plongeur);
                 System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
             else if(lesRoles.get(i).equals(Roles.explorateur)){
-                Explorateur explorateur = new Explorateur(nomJoueurs[i]);
+                Explorateur explorateur = new Explorateur(nomJoueurs[i], grille);
                 aventuriers.add(explorateur);
                 System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
@@ -151,20 +142,13 @@ public class IleInterdite extends Observe {
         System.exit(0);
     }
 
-    public void seDeplacer(Aventurier aventurier, Tuile nouvelle){
-       // nouvelle = getMessage(aventurier) ;
-
-       if (aventurier.estAccessible()){
-          aventurier.getTuile().getAventuriers().remove(aventurier);
-          nouvelle.getAventuriers().add(aventurier);
-       }
-       else {
-           System.out.println("cette tuile n'est pas accéssible ");
-       }
-
-       double nbActions = aventurier.getNbActions();
-       aventurier.setNbActions(nbActions - 1);
+    public void seDeplacer(Aventurier aventurier, Tuile tuileDest){
+        aventurier.seDeplacer(tuileDest);
+        Message m = new Message(TypeMessage.UPDATE_GRILLE);
+        m.grille = grille;
+        notifierObservateur(m);
     }
+
     public void assecher(Tuile tuile, Aventurier aventurier){
         //if (aventurier.peutAcceder(tuile)== true ) { tuile.assecher();}
         tuile.assecher();
@@ -214,11 +198,19 @@ public class IleInterdite extends Observe {
                 this.niveauEau = 4;
                 break;
             default:
-                this.niveauEau = 0;
+                this.niveauEau = 1;
         }
     }
 
     public int getNiveauEau() {
         return this.niveauEau;
+    }
+
+    public Grille getGrille() {
+        return grille;
+    }
+
+    public Aventurier getCurrentAventurier() {
+        return aventuriers.get(currentAventurier);
     }
 }

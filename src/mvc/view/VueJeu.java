@@ -8,12 +8,14 @@ package mvc.view;
 import aventuriers.Aventurier;
 import enumerations.TypeMessage;
 import game.Grille;
+import game.Tuile;
 import mvc.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -26,10 +28,37 @@ public class VueJeu extends Vue {
     private int nbJoueurs;
     private Aventurier[] aventuriers;
 
+    private JButton deplacer, assecher, donnerCarteTresor, recupererTresor;
+
     public VueJeu(String name, IHM ihm, int width, int height) {
         super(name, ihm, width, height);
         this.initComponents();
 
+        deplacer.addActionListener(e -> {
+            Message m = new Message(TypeMessage.DEPLACEMENT);
+            ihm.notifierObservateur(m);
+        });
+
+        assecher.addActionListener(e -> {
+            Message m = new Message(TypeMessage.ASSECHER_TUILE);
+            //m.currentplayer = currentplayer();
+            ihm.notifierObservateur(m);
+            for (int i = 0; i < 5 ; i++){
+                grille.add(new JButton("test"));
+            }
+
+        });
+
+        donnerCarteTresor.addActionListener(e -> {
+            Message m = new Message(TypeMessage.ECHANGE_CARTE);
+            ihm.notifierObservateur(m);
+
+        });
+
+        recupererTresor.addActionListener(e -> {
+            Message m = new Message(TypeMessage.RECUPERER_TRESOR);
+            ihm.notifierObservateur(m);
+        });
     }
 
     public void updateGrille(Grille grille) {
@@ -47,6 +76,14 @@ public class VueJeu extends Vue {
     }
 
     @Override
+    public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {
+        System.out.println("Tuiles accessibles :");
+        for(Tuile t : tuiles) {
+            System.out.println("\t" + t.getNom());
+        }
+    }
+
+    @Override
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundJeu.jpg"))).getImage());
 
@@ -54,50 +91,10 @@ public class VueJeu extends Vue {
         menu.setOpaque(false);
         ////// ZONE DE MENU //////
 
-        JButton deplacer = new JButton("Se déplacer");
-        JButton assecher = new JButton("Dessécher");
-        JButton donnerCarteTresor = new JButton("Donner une carte Trésor");
-        JButton recupererTresor = new JButton("Recuperer le Tresor");
-
-
-        deplacer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.DEPLACEMENT);
-                m.vue = "jeu";
-                ihm.notifierObservateur(m);
-            }
-        });
-
-        assecher.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.ASSECHER_TUILE);
-                //m.currentplayer = currentplayer();
-                ihm.notifierObservateur(m);
-                for (int i = 0; i < 5 ; i++){
-                    grille.add(new JButton("test"));
-                }
-
-            }
-        });
-
-        donnerCarteTresor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.ECHANGE_CARTE);
-                ihm.notifierObservateur(m);
-
-            }
-        });
-
-        recupererTresor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.RECUPERER_TRESOR);
-                ihm.notifierObservateur(m);
-            }
-        });
+        deplacer = new JButton("Se déplacer");
+        assecher = new JButton("Dessécher");
+        donnerCarteTresor = new JButton("Donner une carte Trésor");
+        recupererTresor = new JButton("Recuperer le Tresor");
 
         menu.add(deplacer);
         menu.add(assecher);

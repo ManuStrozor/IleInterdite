@@ -1,11 +1,13 @@
 package mvc.view;
 
 import game.Grille;
+import game.Tuile;
 import mvc.Message;
 import enumerations.TypeMessage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class VueMenu extends Vue {
@@ -31,6 +33,9 @@ public class VueMenu extends Vue {
 
     @Override
     public void updateGrille(Grille grille) {}
+
+    @Override
+    public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {}
 
     @Override
     public void initComponents() {
