@@ -75,6 +75,10 @@ public abstract class Aventurier {
         return tuile;
     }
 
+    public String getNomJoueur(){
+        return this.nomJoueur;
+    }
+
     public void setNomJoueur(String nomJoueur){
         this.nomJoueur = nomJoueur;
     }

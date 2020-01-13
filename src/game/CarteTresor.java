@@ -7,7 +7,7 @@ public class CarteTresor {
     private String nomCarteTresor;
 
     CarteTresor(String nom){
-        nom=nomCarteTresor;
+        nom = nomCarteTresor;
     }
     public String getNomCarteTresor() {
         return nomCarteTresor;

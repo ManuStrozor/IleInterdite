@@ -28,28 +28,29 @@ public class IleInterdite extends Observe {
 
     private Grille grille;
     private int niveauEau = 0;
-    private int nbJoueurs;
-    private ArrayList<Tresor> tresorsRecup;
+    private int nbJoueurs ;
+    private List<Tresor>tresorsDispo;
+    private List<Tresor> tresorsRecuperes;
     private ArrayList<CarteTresor>cartesTresor;
     private ArrayList<NomsTuiles> pileCarteInnondation;
     private ArrayList<NomsTuiles> defausseCarteInnondation;
-    private Aventurier[] aventuriers;
+    private ArrayList<Aventurier> aventuriers;
     private Roles[] roles ;
     private List<Roles> lesRoles;
+    private Tresor[] tresors;
+
 
 
     public IleInterdite() {
-        grille = new Grille();
-        tresorsRecup = new ArrayList<>();
-        aventuriers = new Aventurier[4];
+        grille = new Grille(); //initialisation grille
+        aventuriers = new ArrayList<>(); //initialisation aventuriers
         roles = new Roles[6];
         roles = Roles.values();
         lesRoles= Arrays.asList(roles);
         Collections.shuffle(lesRoles);
+        tresorsDispo=Arrays.asList(tresors); //initialisation tresors
 
-        for (int i = 0; i < 6 ; i++){
-            System.out.println(lesRoles.get(i));
-        }
+
     }
 
     public void start() {
@@ -107,26 +108,38 @@ public class IleInterdite extends Observe {
 
 
     private void initiateAventuriers(String[] nomJoueurs) {
-
-        for (int i = 0; i <= nomJoueurs.length; i++){
-            if(lesRoles.get(i).equals("ingenieur")){
+        for (int i = 0; i <= nbJoueurs-1; i++){
+            if(lesRoles.get(i).equals(Roles.ingenieur)){
                 Ingenieur ingenieur = new Ingenieur(nomJoueurs[i]);
+                aventuriers.add(ingenieur);
+                System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
-            else if(lesRoles.get(i).equals("pilote")){
+            else if(lesRoles.get(i).equals(Roles.pilote)){
                 Pilote pilote = new Pilote(nomJoueurs[i]);
+                aventuriers.add(pilote);
+                System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
-            else if(lesRoles.get(i).equals("navigateur")){
+            else if(lesRoles.get(i).equals(Roles.navigateur)){
                 Navigateur navigateur = new Navigateur(nomJoueurs[i]);
+                aventuriers.add(navigateur);
+                System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
-            else if(lesRoles.get(i).equals("messager")){
+            else if(lesRoles.get(i).equals(Roles.messager)){
                 Messager messager = new Messager(nomJoueurs[i]);
+                aventuriers.add(messager);
+                System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
-            else if(lesRoles.get(i).equals("plongeur")){
+            else if(lesRoles.get(i).equals(Roles.plongeur)){
                 Plongeur plongeur = new Plongeur(nomJoueurs[i]);
+                aventuriers.add(plongeur);
+                System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
-            else if(lesRoles.get(i).equals("explorateur")){
+            else if(lesRoles.get(i).equals(Roles.explorateur)){
                 Explorateur explorateur = new Explorateur(nomJoueurs[i]);
+                aventuriers.add(explorateur);
+                System.out.println(aventuriers.get(i).getRole() + " " +aventuriers.get(i).getNomJoueur());
             }
+
         }
     }
 
@@ -176,9 +189,9 @@ public class IleInterdite extends Observe {
 // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 
-    public void recupererTresor(Aventurier aventurier){
-        Tresor tresor = aventurier.getTuile().getTuileTresor();
-        tresorsRecup.add(tresor);
+    public void recupererTresor(Tresor tresor){
+        tresorsDispo.remove(tresor);
+        tresorsRecuperes.add(tresor);
 
     }
 
