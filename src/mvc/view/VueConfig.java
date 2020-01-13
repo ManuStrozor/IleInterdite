@@ -15,17 +15,15 @@ public class VueConfig extends Vue {
     private JComboBox<Integer> choixNbJoueurs;
     private JLabel [] labelNomJoueurs = new JLabel[4];
     private JTextField [] saisieNomJoueurs = new JTextField[4];
+    private ButtonGroup groupeBouton;
     private final JButton inscrire = new JButton("OKAY");
     private final JButton retour = new JButton("RETOUR");
     private String[] nomJoueurs;
 
-
     public VueConfig(String name, IHM ihm) {
 
         super(name, ihm);
-
         this.initComponents();
-
 
         choixNbJoueurs.addItemListener(e -> {
             int nb = (Integer) choixNbJoueurs.getSelectedItem();
@@ -34,6 +32,24 @@ public class VueConfig extends Vue {
                 labelNomJoueurs[i].setEnabled(i < nb);
                 saisieNomJoueurs[i].setEnabled(i < nb);
             }
+        });
+
+        retour.addActionListener(e -> {
+            Message m = new Message(TypeMessage.CHANGER_VUE);
+            m.vue = "menu";
+            ihm.notifierObservateur(m);
+        });
+
+        inscrire.addActionListener(e -> {
+            Message m = new Message(TypeMessage.JOUER);
+            m.vue = "jeu";
+            m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
+            m.niveauEau = groupeBouton.getSelection().getActionCommand();
+            int i = 0;
+            nomJoueurs = new String[4];
+            for(JTextField text : saisieNomJoueurs) nomJoueurs[i++] = text.getText();
+            m.nomsJoueurs = nomJoueurs;
+            ihm.notifierObservateur(m);
         });
     }
 
@@ -69,8 +85,6 @@ public class VueConfig extends Vue {
             saisieNomJoueurs[i].setEnabled(i < 2);
         }
 
-
-
         panelJoueur.add(new JLabel());
         panelJoueur.add(new JLabel());
         panelJoueur.add(new JLabel());
@@ -80,14 +94,16 @@ public class VueConfig extends Vue {
         this.add(panelEst,BorderLayout.EAST);
         this.add(panelSud,BorderLayout.SOUTH);
 
-        ButtonGroup groupeBouton = new ButtonGroup();
+        groupeBouton = new ButtonGroup();
         JLabel choixNiveau = new JLabel ("Difficulté : ");
-        JRadioButton radio1 = new JRadioButton("Niveau 1");
-        JRadioButton radio2 = new JRadioButton("Niveau 2");
-        JRadioButton radio3 = new JRadioButton("Niveau 3");
-        JRadioButton radio4 = new JRadioButton("Niveau 4"); //4 niveaux de difficulté la team
+        JRadioButton radio1 = new JRadioButton("Novice");
+        radio1.setActionCommand("Novice");
+        JRadioButton radio2 = new JRadioButton("Normal");
+        radio2.setActionCommand("Normal");
+        JRadioButton radio3 = new JRadioButton("Elite");
+        radio3.setActionCommand("Elite");
+        //4 niveaux de difficulté la team
         radio1.setSelected(true);
-
 
         groupeBouton.add(radio1);
         groupeBouton.add(radio2);
@@ -100,52 +116,9 @@ public class VueConfig extends Vue {
         panelJoueur.add(radio2);
         panelJoueur.add(radio3);
 
-        retour.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.CHANGER_VUE);
-                m.vue = "menu";
-                ihm.notifierObservateur(m);
-            }
-        });
         panelJoueur.add(retour);
-
         panelJoueur.add(new JLabel());
-
-        inscrire.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message(TypeMessage.JOUER);
-                m.vue = "jeu";
-                m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
-
-                for(int i = 0 ; i < m.nbJoueur; i++){
-                    m.nomsJoueurs=new String[m.nbJoueur];
-                    m.nomsJoueurs[i] = saisieNomJoueurs[i].getText();
-                    System.out.println(m.nomsJoueurs[i]);
-                }
-
-                if(radio1.isSelected()){
-                    m.niveauEau=1;
-                }
-                if(radio2.isSelected()){
-                    m.niveauEau=2;
-                }
-                if(radio3.isSelected()){
-                    m.niveauEau=3;
-                }
-                if (radio4.isSelected()){
-                    m.niveauEau=4;
-                }
-                ihm.notifierObservateur(m);
-            }
-        });
         panelJoueur.add(inscrire);
-
-
-
-
-
 
         panelNord.setPreferredSize(new Dimension(300,200));
         panelOuest.setPreferredSize(new Dimension(150,200));
