@@ -68,9 +68,8 @@ public class VueJeu extends Vue {
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
                 tile.setBackground(grille.getTuile(pos).getImage());
                 pos++;
-            } else {
-                tile.setOpaque(false);
             }
+            tile.setOpaque(false);
             this.grille.add(tile);
         }
     }
@@ -113,14 +112,11 @@ public class VueJeu extends Vue {
         JPanel marginBot = new JPanel();
         marginBot.setPreferredSize(new Dimension(0, 100)); marginBot.setOpaque(false);
 
-
         menuPanel.add(marginTop, BorderLayout.NORTH);
         menuPanel.add(marginLeft, BorderLayout.WEST);
         menuPanel.add(marginBot, BorderLayout.SOUTH);
         menuPanel.add(menu, BorderLayout.CENTER);
         menuPanel.setPreferredSize(new Dimension(450,0));
-
-
 
         JPanel board = new JPanel(new BorderLayout());
         board.setOpaque(false);
@@ -138,13 +134,13 @@ public class VueJeu extends Vue {
         JPanel boardPanel = new JPanel(new BorderLayout());
         boardPanel.setOpaque(false);
         JPanel marginLeft2 = new JPanel();
-        marginLeft2.setPreferredSize(new Dimension(50, 0)); marginLeft2.setOpaque(false);
+        marginLeft2.setPreferredSize(new Dimension(10, 0)); marginLeft2.setOpaque(false);
         JPanel marginRight2 = new JPanel();
-        marginRight2.setPreferredSize(new Dimension(50, 0)); marginRight2.setOpaque(false);
+        marginRight2.setPreferredSize(new Dimension(10, 0)); marginRight2.setOpaque(false);
         JPanel marginTop2 = new JPanel();
-        marginTop2.setPreferredSize(new Dimension(0, 50)); marginTop2.setOpaque(false);
+        marginTop2.setPreferredSize(new Dimension(0, 10)); marginTop2.setOpaque(false);
         JPanel marginBot2 = new JPanel();
-        marginBot2.setPreferredSize(new Dimension(0, 50)); marginBot2.setOpaque(false);
+        marginBot2.setPreferredSize(new Dimension(0, 10)); marginBot2.setOpaque(false);
 
         boardPanel.add(marginTop2, BorderLayout.NORTH);
         boardPanel.add(marginLeft2, BorderLayout.WEST);

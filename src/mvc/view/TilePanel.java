@@ -6,6 +6,7 @@ import java.awt.*;
 public class TilePanel extends JPanel {
 
     private Image background = null;
+    private int w, h;
 
     public TilePanel(LayoutManager layout) {
         super(layout);
@@ -18,6 +19,8 @@ public class TilePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, (int)getSize().getWidth(), (int)getSize().getHeight(), null);
+        w = (int) getSize().getWidth();
+        h = (int) getSize().getHeight();
+        g.drawImage(background, 0, 0, Math.min(w, h), Math.min(w, h), null);
     }
 }
