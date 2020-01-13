@@ -6,6 +6,7 @@ package game;
  */
 
 import aventuriers.Aventurier;
+import aventuriers.Ingenieur;
 import enumerations.NomsTuiles;
 import enumerations.Roles;
 import enumerations.Tresor;
@@ -75,11 +76,25 @@ public class IleInterdite extends Observe {
         System.exit(0);
     }
 
-    public void seDeplacer(Tuile ancienne , Aventurier aventurier , Tuile nouvelle ){
-        ancienne.getNom();
+    public void seDeplacer(Aventurier aventurier , Tuile nouvelle ){
+       // nouvelle = getMessage(aventurier) ;
+
+           if (aventurier.estAccessible()== true){
+              aventurier.getTuile().getAventuriers().remove(aventurier);
+              nouvelle.getAventuriers().add(aventurier);
+           }
+           else {
+               System.out.println("cette tuile n'est pas accéssible ");
+           }
+
+
+
+        double nbActions = aventurier.getNbActions();
+        aventurier.setNbActions(nbActions - 1);
 
     }
     public void assecher(Tuile tuile, Aventurier aventurier){
+        //if (aventurier.peutAcceder(tuile)== true ) { tuile.assecher();}
         tuile.assecher();
 
         double nbActions = aventurier.getNbActions();

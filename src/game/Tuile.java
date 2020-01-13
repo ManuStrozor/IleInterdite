@@ -38,6 +38,13 @@ public class Tuile implements Comparable<Tuile> {
         setTresor(tresor);
     }
 
+    Tuile(int ligne, int colonne){
+        this.ligne =ligne ;
+        this.colonne= colonne ;
+        setNom(nom);
+        aventuriers= new HashSet<>();
+    }
+
     public String getNom() {
         return nom;
     }

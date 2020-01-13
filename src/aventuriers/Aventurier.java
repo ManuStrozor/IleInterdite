@@ -60,6 +60,11 @@ public abstract class Aventurier {
         return tuile;
     }
 
+    public boolean estAccessible(){
+
+        return estAccessible();
+    };
+    
     public boolean peutAssecher(game.Tuile tuileInnondee){
 
         if ( tuileInnondee.getEtatTuile() == EtatTuile.innondee){
