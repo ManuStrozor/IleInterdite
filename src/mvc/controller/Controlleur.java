@@ -5,6 +5,7 @@ package mvc.controller;
  * and open the template in the editor.
  */
 
+import aventuriers.Aventurier;
 import game.IleInterdite;
 import game.Tuile;
 import mvc.Message;
@@ -55,9 +56,14 @@ public class Controlleur implements IControlleur {
                 break;
             case ECHANGE_CARTE:
                 System.out.println("echangerCarte()");
+                ArrayList<Aventurier> aventuriers = ileInterdite.getCurrentAventurier().aventurierAccessibles(ileInterdite.getCurrentAventurier());
+                ihm.getVue("jeu").afficherAventurierAccessibles(aventuriers);
                 break;
             case ASSECHER_TUILE:
-                //ileInterdite.assecher();
+
+                ileInterdite.assecher(ileInterdite.getCurrentAventurier().getTuile(), ileInterdite.getCurrentAventurier());
+                System.out.println(" assécher la tuile choisie par le joueur"); // ici la tuile ou se trouve le joueur
+
                 break;
             case RECUPERER_TRESOR:
                 System.out.println("recupererTresor()");

@@ -1,9 +1,14 @@
 package game;
+
+import enumerations.Tresor;
+
 /**
  *
  * @author estevmat
  */
 public abstract class Carte {
+
+    protected Tresor tresor;
 
     protected String nom;
 
@@ -19,4 +24,6 @@ public abstract class Carte {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    abstract Tresor getTresor();
 }

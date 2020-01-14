@@ -1,5 +1,7 @@
 package game;
 
+import enumerations.Tresor;
+
 public class CarteInondation extends Carte {
 
     CarteInondation(String nom) {
@@ -8,5 +10,10 @@ public class CarteInondation extends Carte {
 
     public void defausser() {
 
+    }
+
+    @Override
+    Tresor getTresor() {
+        return null;
     }
 }

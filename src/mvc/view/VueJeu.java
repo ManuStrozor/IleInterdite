@@ -41,10 +41,6 @@ public class VueJeu extends Vue {
             Message m = new Message(TypeMessage.ASSECHER_TUILE);
             //m.currentplayer = currentplayer();
             ihm.notifierObservateur(m);
-            for (int i = 0; i < 5 ; i++){
-                grille.add(new JButton("test"));
-            }
-
         });
 
         donnerCarteTresor.addActionListener(e -> {
@@ -55,7 +51,9 @@ public class VueJeu extends Vue {
 
         recupererTresor.addActionListener(e -> {
             Message m = new Message(TypeMessage.RECUPERER_TRESOR);
+
             ihm.notifierObservateur(m);
+
         });
     }
 
@@ -71,6 +69,7 @@ public class VueJeu extends Vue {
             this.grille.add(tile);
         }
     }
+
 
     public void updateDashboard(ArrayList<Aventurier> aventuriers) {
         for (Aventurier aventurier : aventuriers) {
@@ -126,6 +125,14 @@ public class VueJeu extends Vue {
     }
 
     @Override
+    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers) {
+        System.out.println("Aventuriers qui peuvent recevoir :");
+        for(Aventurier a : aventuriers) {
+            System.out.println("\t" + a.getNomJoueur());
+        }
+    }
+
+    @Override
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundJeu.jpg"))).getImage());
 
@@ -134,13 +141,16 @@ public class VueJeu extends Vue {
 
         ////// ZONE DE MENU //////
         deplacer = new JButton("Se déplacer");
-        assecher = new JButton("Dessécher");
+        assecher = new JButton("Assécher");
         donnerCarteTresor = new JButton("Donner une carte Trésor");
         recupererTresor = new JButton("Recuperer le Tresor");
+
         menu.add(deplacer);
         menu.add(assecher);
         menu.add(donnerCarteTresor);
         menu.add(recupererTresor);
+        // deplacer.setContentAreaFilled(false);  rendre le fond transparent
+        // deplacer.setBorderPainted(false);  rendre la bordure transparente
         ////// ZONE DE MENU //////
 
         JPanel menuPanel = new JPanel(new BorderLayout());
