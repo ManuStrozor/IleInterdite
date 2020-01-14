@@ -127,4 +127,7 @@ public class Tuile implements Comparable<Tuile> {
     public int compareTo(Tuile o) {
         return (o.getLigne() > this.getLigne() || (o.getLigne() == this.getLigne() && o.getColonne() > this.getColonne())) ? 1 : 0;
     }
+
+
+
 }
