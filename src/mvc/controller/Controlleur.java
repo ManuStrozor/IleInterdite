@@ -58,6 +58,11 @@ public class Controlleur implements IControlleur {
                 ihm.getVue("jeu").afficherTuilesAccessibles(grille, tuiles);
                 break;
 
+            case  SAUVER:
+                ArrayList<Tuile> t =msg.a.getTuilesAccessibles(grille);
+                ihm.getVue("jeu").afficherTuilesAccessibles(grille, t);
+                break;
+
             case ASSECHER_TUILE:
                 ArrayList<Tuile> tuiless = ile.getJoueur().peutAssecher(grille);
                 ihm.getVue("jeu").afficherTuilesAccessibles(grille, tuiless);
@@ -67,6 +72,9 @@ public class Controlleur implements IControlleur {
                 switch (lastAction) {
                     case DEPLACEMENT:
                         ile.seDeplacer(ile.getJoueur(), grille.getTuile(msg.tuileIndex));
+                        break;
+                    case SAUVER:
+                        ile.seDeplacer(ile.getJoueurASauver(), grille.getTuile(msg.tuileIndex));
                         break;
                     case ASSECHER_TUILE:
                         ile.assecher(ile.getJoueur(), grille.getTuile(msg.tuileIndex));

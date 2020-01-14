@@ -23,5 +23,6 @@ public enum TypeMessage {
     PASSERTOUR,
     CLIK_TUILE,
     HELICO,
-    SABLE
+    SABLE,
+    SAUVER
 }

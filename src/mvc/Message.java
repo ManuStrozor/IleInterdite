@@ -31,4 +31,5 @@ public class Message {
     public String[] nomsJoueurs;
     public ArrayList<Aventurier> aventuriers;
     public int tuileIndex;
+    public Aventurier a ;
 }
