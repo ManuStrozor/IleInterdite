@@ -19,4 +19,8 @@ public class CarteTresor extends Carte {
     public Tresor getTresor(){
         return tresor;
     }
+
+    public String getNom() {
+        return super.getNom();
+    }
 }

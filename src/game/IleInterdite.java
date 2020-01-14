@@ -144,7 +144,7 @@ public class IleInterdite extends Observe {
                 i--;
                 carte = pileCartesTresor.get(i);
             }
-            aventurier.ajouterCarte(carte);
+            aventurier.ajouterCarte(carte) ;
             pileCartesTresor.remove(carte);
         }
     }
@@ -161,23 +161,21 @@ public class IleInterdite extends Observe {
         aventurier.moinsUneAction(aventurier);
     }
 
-    public void assecher(Tuile tuile, Aventurier aventurier) {
+    public void assecher(Tuile tuile) {
         //if (aventurier.peutAcceder(tuile)== true ) { tuile.assecher();}
         tuile.assecher();
-
-        double nbActions = aventurier.getNbActions();
-
-        if (aventurier.getRole() == Roles.ingenieur) {
-            aventurier.setNbActions(nbActions - 0.5);
-        }else{
-            aventurier.moinsUneAction(aventurier);
+        if(getCurrentAventurier().getRole() == Roles.ingenieur){
+            getCurrentAventurier().setNbActions(getCurrentAventurier().getNbActions()-0.5);
+        }
+        else {
+            getCurrentAventurier().setNbActions(getCurrentAventurier().getNbActions()-0.5);
         }
         Message m = new Message(TypeMessage.UPDATE_GRILLE);
         m.grille = grille;
         notifierObservateur(m);
     }
 
-    public void donnerCarte(Aventurier donneur, Aventurier receveur, Carte carte) {
+    public void donnerCarte(Aventurier donneur, Aventurier receveur, CarteTresor carte) {
         if (donneur.aventurierAccessibles(donneur).contains(receveur)) {
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
@@ -229,9 +227,11 @@ public class IleInterdite extends Observe {
 
     public void useCarteMonteeDesEaux() {
         niveauEau = niveauEau + 1;
+
         if (niveauEau <= 2) {
                 cartesAPiocher = 2;
         }
+
         if (niveauEau > 2 && niveauEau <= 5) {
                 cartesAPiocher = 3;
         }
@@ -253,11 +253,17 @@ public class IleInterdite extends Observe {
         }
     }
 
+    public void useCarteSacDeSable(Tuile tuile){
+        tuile.assecher();
+        defausseCartesTresor.add(getCurrentAventurier().getCarteSacDeSable());
+        getCurrentAventurier().getInventaire().remove(getCurrentAventurier().getCarteSacDeSable());
+    }
+
     public boolean estRecuperable(Aventurier aventurier) {
 
         boolean conditionOK = false;
         int nbcarte = 0;
-        Carte[] inventaire = aventurier.getInventaire();    //inventaire de l'aventurier
+        ArrayList<CarteTresor>  inventaire = aventurier.getInventaire();    //inventaire de l'aventurier
         Tresor tresorTuile = aventurier.getTuile().getTresor(); //Type de la tuile où est l'aventurier
 
         //si le tresor n'est pas deja recup
@@ -269,11 +275,10 @@ public class IleInterdite extends Observe {
         }
 
         //si l'aventurier a le bon nombre de carte du meme type que la tuile où il se situe
-        for (int i = 0; i < inventaire.length; i++) {
-            if (inventaire[i].getTresor() == tresorTuile) {
+        for (int i = 0; i < inventaire.size(); i++) {
                 nbcarte++;
             }
-        }
+
         if (nbcarte >= 4) {
             conditionOK = true;
         } else {
@@ -321,14 +326,14 @@ public class IleInterdite extends Observe {
     }
 
     public void setTuilesTresor(){
-        tuilesTresor.add( new Tuile("La caverne des ombres", cristalArdent));
-        tuilesTresor.add( new Tuile("La caverne du brasier", cristalArdent));
-        tuilesTresor.add( new Tuile("Le palais de corail", caliceDelombre));
-        tuilesTresor.add( new Tuile("Le palais des marees", caliceDelombre));
-        tuilesTresor.add( new Tuile("Le temple de la lune", pierreSacree));
-        tuilesTresor.add( new Tuile("Le temple du soleil", pierreSacree));
-        tuilesTresor.add( new Tuile("Le jardin des hurlements", statueDeZephir));
-        tuilesTresor.add( new Tuile("Le jardin de murmures", statueDeZephir));
+        tuilesTresor.add( new Tuile("La caverne des ombres", Tresor.cristalArdent));
+        tuilesTresor.add( new Tuile("La caverne du brasier", Tresor.cristalArdent));
+        tuilesTresor.add( new Tuile("Le palais de corail", Tresor.caliceDelombre));
+        tuilesTresor.add( new Tuile("Le palais des marees", Tresor.caliceDelombre));
+        tuilesTresor.add( new Tuile("Le temple de la lune", Tresor.pierreSacree));
+        tuilesTresor.add( new Tuile("Le temple du soleil", Tresor.pierreSacree));
+        tuilesTresor.add( new Tuile("Le jardin des hurlements",Tresor.statueDeZephir));
+        tuilesTresor.add( new Tuile("Le jardin de murmures", Tresor.statueDeZephir));
     }
 
 }

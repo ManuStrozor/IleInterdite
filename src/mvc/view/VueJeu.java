@@ -8,6 +8,7 @@ package mvc.view;
 import aventuriers.Aventurier;
 import enumerations.TypeMessage;
 import game.Carte;
+import game.CarteTresor;
 import game.Grille;
 import game.Tuile;
 import mvc.Message;
@@ -100,7 +101,7 @@ public class VueJeu extends Vue {
             JPanel cartes = new JPanel(new GridLayout(1, 5));
 
             ////// ZONE DES CARTES DU JOUEUR //////
-            for(Carte c : aventurier.getInventaire()){
+            for(CarteTresor c : aventurier.getInventaire()){
                 if(c != null) cartes.add(new JLabel(c.getNom()));
                 else cartes.add(new JLabel());
             }

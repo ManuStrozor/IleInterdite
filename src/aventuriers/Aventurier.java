@@ -15,7 +15,7 @@ import java.util.HashSet;
 public abstract class Aventurier {
     private Color couleurPion;
     private Tuile tuile;
-    private Carte[] inventaire;
+    private ArrayList<CarteTresor> inventaire;
     private double nbActions;
     private Roles role;
     private String nomJoueur;
@@ -25,13 +25,13 @@ public abstract class Aventurier {
         setNbActions(3);
         role = null;
         setNomJoueur(nomJoueur);
-        inventaire = new Carte[5];
+        inventaire = new ArrayList<>();
         tuile = getTuileSpawn(grille);
         couleurPion = null;
         aventurierAccessibles = new ArrayList<>();
     }
 
-    public Carte[] getInventaire() {
+    public ArrayList<CarteTresor> getInventaire() {
         return inventaire;
     }
 
@@ -43,14 +43,25 @@ public abstract class Aventurier {
 
     public int getNombreCarte(){
         int nb = 0;
-        for (int i = 0 ; i < inventaire.length; i++) {
-            if (inventaire[i] != null){
+        for (int i = 0 ; i < inventaire.size(); i++) {
+            if (inventaire.get(i) != null){
                 nb++;
             }
         }
         return nb;
     }
-
+    public CarteTresor getCarteSacDeSable(){
+        CarteTresor carte = null;
+        for(int i=0;i<=getInventaire().size();i++){
+            if (getInventaire().get(i).getNom()=="Sac de sable"){
+                carte = getInventaire().get(i);
+            }
+            else {
+                carte = null;
+            }
+        }
+        return carte;
+    }
     public Roles getRole() {
         return role;
     }
@@ -67,26 +78,17 @@ public abstract class Aventurier {
         return nbActions;
     }
 
-    public boolean ajouterCarte(Carte carte){
-        int i = 0;
-        while (i < inventaire.length && inventaire[i] != null ){
-            i++;
+    public void ajouterCarte(CarteTresor carte){
+        getInventaire().add(carte);
+
         }
-        if (i >= inventaire.length){
-            System.out.println("L'inventaire de l'aventurier est plein");
-            return false;
-        }else{
-            this.inventaire[i] = carte;
-            return true;
-        }
-    }
+
 
     public void defausseCarte(){
-        int i = inventaire.length;
-        while (i>0 && inventaire[i] != null){
+        int i = inventaire.size();
+        while (i>0 && getInventaire().get(i) != null){
             i= i-1;
         }
-
     }
 
     public Tuile getTuile() {
@@ -155,6 +157,7 @@ public abstract class Aventurier {
             case navigateur:
             case pilote:
             case explorateur:
+            case plongeur:
                 tuiles.removeIf(t -> t.getEtatTuile() == EtatTuile.coulee);
                 tuiles.removeIf(t -> t.getEtatTuile() == EtatTuile.assechee);
                 break;
