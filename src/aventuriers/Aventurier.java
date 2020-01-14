@@ -6,7 +6,6 @@ import game.*;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  *
@@ -19,7 +18,6 @@ public abstract class Aventurier {
     private double nbActions;
     private Roles role;
     private String nomJoueur;
-    private ArrayList<Aventurier> aventurierAccessibles;
 
     public Aventurier(String nomJoueur, Grille grille) {
         setNbActions(3);
@@ -27,8 +25,8 @@ public abstract class Aventurier {
         setNomJoueur(nomJoueur);
         inventaire = new ArrayList<>();
         tuile = getTuileSpawn(grille);
+        tuile.addAventurier(this);
         couleurPion = null;
-        aventurierAccessibles = new ArrayList<>();
     }
 
     public ArrayList<CarteTresor> getInventaire() {
@@ -103,14 +101,10 @@ public abstract class Aventurier {
         this.nomJoueur = nomJoueur;
     }
 
-    public ArrayList<Aventurier> aventurierAccessibles(Aventurier donneur) {
-        if (donneur.getRole() == Roles.messager) {
-            //aventurierAccessibles(donneur).addAll(aventuriers);
-        }
-        else {
-            aventurierAccessibles.addAll(donneur.getTuile().getAventuriers());
-        }
-        return aventurierAccessibles;
+    public ArrayList<Aventurier> aventuriersAccessible(ArrayList<Aventurier> aventuriers) {
+        ArrayList<Aventurier> av = new ArrayList<>(this.getRole() == Roles.messager ? aventuriers : tuile.getAventuriers());
+        av.remove(this);
+        return av;
     }
     
     public ArrayList<Tuile> peutAssecher(Grille grille){
@@ -217,15 +211,14 @@ public abstract class Aventurier {
         return tuiles;
     }
 
-    public void seDeplacer(Tuile nouvelle) {
-        tuile.getAventuriers().remove(this);
-        nouvelle.getAventuriers().add(this);
-        tuile = nouvelle;
+    public void seDeplacer(Tuile tuile) {
+        this.tuile.delAventurier(this);
+        this.tuile = tuile;
+        tuile.addAventurier(this);
     }
 
-    public void moinsUneAction(Aventurier aventurier){
-        double nbActions = aventurier.getNbActions();
-        aventurier.setNbActions(nbActions - 1);
+    public void consommerAction(double n) {
+        nbActions -= n;
         // si plus d'actions....finir tour ou bloquer les boutons d'actions
     }
 

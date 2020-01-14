@@ -45,12 +45,13 @@ public class VueConfig extends Vue {
 
         inscrire.addActionListener(e -> {
             Message m = new Message(TypeMessage.JOUER);
-            m.vue = "jeu";
             m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
             m.niveauEau = groupeBouton.getSelection().getActionCommand();
+
             int i = 0;
             nomJoueurs = new String[4];
             for(JTextField text : saisieNomJoueurs) nomJoueurs[i++] = text.getText();
+
             m.nomsJoueurs = nomJoueurs;
             ihm.notifierObservateur(m);
         });

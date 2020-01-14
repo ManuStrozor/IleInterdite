@@ -24,7 +24,7 @@ public class IleInterdite extends Observe {
     private Grille grille;
     private List<Tresor> tresorsDispo;
     private List<Tresor> tresorsRecuperes;
-    private int niveauEau = 0, nbJoueurs = 0, currentAventurier = 0, cartesAPiocher = 0;
+    private int niveauEau = 0, nbJoueurs = 0, joueur = 0, cartesAPiocher = 0;
     private ArrayList<CarteTresor> pileCartesTresor;
     private ArrayList<CarteTresor> defausseCartesTresor;
     private ArrayList<CarteInondation> pileCartesInondation;
@@ -153,30 +153,21 @@ public class IleInterdite extends Observe {
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
         aventurier.seDeplacer(tuileDest);
-        aventurier.moinsUneAction(aventurier);
+        aventurier.consommerAction(1);
     }
 
-    public void assecher(Tuile tuile) {
-        //if (aventurier.peutAcceder(tuile)== true ) { tuile.assecher();}
+    public void assecher(Aventurier aventurier, Tuile tuile) {
         tuile.assecher();
-        if(getCurrentAventurier().getRole() == Roles.ingenieur){
-            getCurrentAventurier().setNbActions(getCurrentAventurier().getNbActions()-0.5);
-        }
-        else {
-            getCurrentAventurier().setNbActions(getCurrentAventurier().getNbActions()-0.5);
-        }
-        Message m = new Message(TypeMessage.UPDATE_GRILLE);
-        m.grille = grille;
-        notifierObservateur(m);
+        aventurier.consommerAction((aventurier.getRole() == Roles.ingenieur) ? 0.5 : 1);
     }
 
     public void donnerCarte(Aventurier donneur, Aventurier receveur, CarteTresor carte) {
-        if (donneur.aventurierAccessibles(donneur).contains(receveur)) {
+        if (donneur.aventuriersAccessible(aventuriers).contains(receveur)) {
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
         }
-        donneur.moinsUneAction(donneur);
-// il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
+        donneur.consommerAction(1);
+        // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 
     public void recupererTresor(Tresor tresor) {
@@ -216,8 +207,8 @@ public class IleInterdite extends Observe {
         return grille;
     }
 
-    public Aventurier getCurrentAventurier() {
-        return aventuriers.get(currentAventurier);
+    public Aventurier getJoueur() {
+        return aventuriers.get(joueur);
     }
 
     public ArrayList<Aventurier> getAventuriers() {
@@ -254,8 +245,8 @@ public class IleInterdite extends Observe {
 
     public void useCarteSacDeSable(Tuile tuile){ // Montrer les tuiles inondées AVANT quand carte cliquée !
         tuile.assecher();
-        defausseCartesTresor.add(getCurrentAventurier().getCarteSacDeSable());
-        getCurrentAventurier().getInventaire().remove(getCurrentAventurier().getCarteSacDeSable());
+        defausseCartesTresor.add(getJoueur().getCarteSacDeSable());
+        getJoueur().getInventaire().remove(getJoueur().getCarteSacDeSable());
     }
 
     public boolean estRecuperable(Aventurier aventurier) { // Déplacer dans Tuile.java

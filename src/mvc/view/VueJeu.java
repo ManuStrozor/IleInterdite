@@ -27,7 +27,6 @@ import java.util.Objects;
  */
 public class VueJeu extends Vue {
 
-    private int nbJoueurs;
     private JPanel grille, dashBoard;
     private JButton deplacer, assecher, donnerCarteTresor, recupererTresor;
 
@@ -35,25 +34,14 @@ public class VueJeu extends Vue {
         super(name, ihm, width, height);
         this.initComponents();
 
+        /*
+        * LES 4 BOUTONS DU MENU
+        */
+
         deplacer.addActionListener(e -> {
             Message m = new Message(TypeMessage.DEPLACEMENT);
             ihm.notifierObservateur(m);
         });
-
-        int pos = 0;
-        for (int i = 0; i < this.grille.getComponentCount(); i++) {
-            TilePanel t = (TilePanel)this.grille.getComponent(i);
-            JButton btn = (JButton)t.getComponent(0);
-            if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
-                int finalPos = pos;
-                btn.addActionListener(e -> {
-                    Message m = new Message(TypeMessage.BOUGER); // Il ne faut pas forcement bouger !!!!
-                    m.tuileIndex = finalPos;
-                    ihm.notifierObservateur(m);
-                });
-                pos++;
-            }
-        }
 
         assecher.addActionListener(e -> {
             Message m = new Message(TypeMessage.ASSECHER_TUILE);
@@ -71,6 +59,25 @@ public class VueJeu extends Vue {
             Message m = new Message(TypeMessage.RECUPERER_TRESOR);
             ihm.notifierObservateur(m);
         });
+
+        /*
+         * LES BOUTONS DE LA GRILLE
+         */
+
+        int pos = 0;
+        for (int i = 0; i < this.grille.getComponentCount(); i++) {
+            TilePanel t = (TilePanel)this.grille.getComponent(i);
+            JButton btn = (JButton)t.getComponent(0);
+            if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
+                int finalPos = pos;
+                btn.addActionListener(e -> {
+                    Message m = new Message(TypeMessage.CLIK_TUILE);
+                    m.tuileIndex = finalPos;
+                    ihm.notifierObservateur(m);
+                });
+                pos++;
+            }
+        }
     }
 
     public void updateGrille(Grille grille) {
@@ -186,9 +193,9 @@ public class VueJeu extends Vue {
 
         ////// MENU //////
         deplacer = new JButton("Se déplacer");
-        assecher = new JButton("Assécher");
-        donnerCarteTresor = new JButton("Donner une carte Trésor");
-        recupererTresor = new JButton("Recuperer le Tresor");
+        assecher = new JButton("Assécher la tuile");
+        donnerCarteTresor = new JButton("Donner une carte");
+        recupererTresor = new JButton("Récupérer le Trésor");
 
         menu.add(deplacer);
         menu.add(assecher);
