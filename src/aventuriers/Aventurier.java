@@ -93,6 +93,16 @@ public abstract class Aventurier {
     public void setNomJoueur(String nomJoueur){
         this.nomJoueur = nomJoueur;
     }
+
+    public ArrayList<Aventurier> aventurierAccessibles(Aventurier donneur) {
+        if (donneur.getRole() == Roles.messager) {
+            //aventurierAccessibles(donneur).addAll(aventuriers);
+        }
+        else {
+            aventurierAccessibles(donneur).addAll(donneur.getTuile().getAventuriers());
+        }
+        return aventurierAccessibles(donneur);
+    }
     
     public boolean peutAssecher(Tuile tuileInnondee){
 
