@@ -134,7 +134,7 @@ public class VueJeu extends Vue {
 
         ////// ZONE DE MENU //////
         deplacer = new JButton("Se déplacer");
-        assecher = new JButton("Dessécher");
+        assecher = new JButton("Assécher");
         donnerCarteTresor = new JButton("Donner une carte Trésor");
         recupererTresor = new JButton("Recuperer le Tresor");
         menu.add(deplacer);

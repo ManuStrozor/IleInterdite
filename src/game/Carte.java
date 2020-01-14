@@ -19,4 +19,5 @@ public abstract class Carte {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
 }

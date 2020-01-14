@@ -31,5 +31,6 @@ public class Main {
         new Controlleur(ihm, ileInterdite); // Controleur
 
         ileInterdite.start();
+
     }
 }
