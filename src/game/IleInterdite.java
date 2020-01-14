@@ -132,17 +132,19 @@ public class IleInterdite extends Observe {
         }
     }
 
-    private void distribuerCarteTresor(Aventurier aventurier) { // Ne fonctionne pas correctement !
+    private void distribuerCarteTresor(Aventurier aventurier) {
         for (int k = 1; k <= 2; k++) {
             int i = pileCartesTresor.size() - 1;
             CarteTresor carte = pileCartesTresor.get(i);
+
             while(carte.getNom().equals("Montée des eaux")) {
                 i--;
                 carte = pileCartesTresor.get(i);
             }
-            Carte c = pileCartesTresor.get(pileCartesTresor.size()-1);
-            if(aventurier.ajouterCarte(c)) {
-                pileCartesTresor.remove(c);
+
+
+            if(aventurier.ajouterCarte(carte)) {
+                pileCartesTresor.remove(carte);
             }
         }
     }
