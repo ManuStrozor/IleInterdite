@@ -28,7 +28,7 @@ import java.util.Objects;
 public class VueJeu extends Vue {
 
     private JPanel grille, dashBoard;
-    private JButton deplacer, assecher, donnerCarteTresor, recupererTresor;
+    private JButton deplacer, assecher, donnerCarteTresor, recupererTresor, passertour;
 
     public VueJeu(String name, IHM ihm, int width, int height) {
         super(name, ihm, width, height);
@@ -60,6 +60,11 @@ public class VueJeu extends Vue {
             ihm.notifierObservateur(m);
         });
 
+        passertour.addActionListener(e -> {
+            Message m = new Message(TypeMessage.PASSERTOUR);
+            ihm.notifierObservateur(m);
+        });
+
         /*
          * LES BOUTONS DE LA GRILLE
          */
@@ -78,6 +83,8 @@ public class VueJeu extends Vue {
                 pos++;
             }
         }
+
+
     }
 
     public void updateGrille(Grille grille) {
@@ -196,11 +203,13 @@ public class VueJeu extends Vue {
         assecher = new JButton("Assécher la tuile");
         donnerCarteTresor = new JButton("Donner une carte");
         recupererTresor = new JButton("Récupérer le Trésor");
+        passertour = new JButton("passerTouur");
 
         menu.add(deplacer);
         menu.add(assecher);
         menu.add(donnerCarteTresor);
         menu.add(recupererTresor);
+        menu.add(passertour);
         ////// MENU //////
 
         JPanel menuPanel = new JPanel(new BorderLayout());

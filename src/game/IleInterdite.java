@@ -10,10 +10,7 @@ import enumerations.*;
 import mvc.Message;
 import mvc.Observe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -24,7 +21,7 @@ public class IleInterdite extends Observe {
     private Grille grille;
     private List<Tresor> tresorsDispo;
     private List<Tresor> tresorsRecuperes;
-    private int niveauEau = 0, nbJoueurs = 0, joueur = 0, cartesAPiocher = 0;
+    private int niveauEau = 0, nbJoueurs = 0, currentAventurier = 0, cartesAPiocher = 2;
     private ArrayList<CarteTresor> pileCartesTresor;
     private ArrayList<CarteTresor> defausseCartesTresor;
     private ArrayList<CarteInondation> pileCartesInondation;
@@ -33,6 +30,7 @@ public class IleInterdite extends Observe {
     private List<Roles> lesRoles;
     private ArrayList<Tuile> tuilesTresor;
 
+    Random random = new Random();
 
     public IleInterdite() {
         grille = new Grille(); //initialisation grille
@@ -129,7 +127,7 @@ public class IleInterdite extends Observe {
                     throw new IllegalStateException("[InitiateAventuriers] Unexpected value: " + lesRoles.get(i));
             }
             aventuriers.add(newAventurier);
-            distribuerCarteTresor(newAventurier);
+           //piocherCarteTresor();
         }
     }
 
@@ -176,6 +174,45 @@ public class IleInterdite extends Observe {
         //aventurier.moinsUneAction(aventurier); erreur
     }
 
+    public void passerTour(){ //passe le tour du joueur et fais piocher les cartes
+            piocherCarteTresor();
+            piocherCarteInnondation();
+            if(currentAventurier==aventuriers.size()-1){
+                currentAventurier=0;
+            }
+            else{
+                currentAventurier+=1;
+            }
+    }
+
+   public void piocherCarteTresor(){ //Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
+        CarteTresor c;
+        for(int i=0; i<2; i++){
+            c = pileCartesTresor.get(random.nextInt(pileCartesTresor.size()-1));
+            if(c.getNom() == "Montée des eaux" ){
+                useCarteMonteeDesEaux();
+            }
+            else {
+                getJoueur().ajouterCarte(c);
+                pileCartesTresor.remove(c);
+                defausseCartesTresor.add(c);
+            }
+        }
+
+    }
+
+    public void piocherCarteInnondation(){ // fais piocher le nombre de carte innondation en fonction du niveau eau
+        CarteInondation c;
+        for(int i=0; i<=cartesAPiocher; i++){
+            c = pileCartesInondation.get(random.nextInt(pileCartesInondation.size()-1));
+            pileCartesInondation.add(c);
+            defausseCartesInondation.add(c);
+            grille.getTuilesMap().get(c.getNom()).innonder();
+        }
+    }
+
+
+
     public void setNbJoueurs(int nbJoueurs) {
         this.nbJoueurs = nbJoueurs;
     }
@@ -208,7 +245,7 @@ public class IleInterdite extends Observe {
     }
 
     public Aventurier getJoueur() {
-        return aventuriers.get(joueur);
+        return aventuriers.get(currentAventurier);
     }
 
     public ArrayList<Aventurier> getAventuriers() {
@@ -218,29 +255,13 @@ public class IleInterdite extends Observe {
     public void useCarteMonteeDesEaux() { // Déclenché automatiquement...ne pas oublier de defausser !
         niveauEau = niveauEau + 1;
 
-        if (niveauEau <= 2) {
-                cartesAPiocher = 2;
+        if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) {
+                cartesAPiocher+=1;
         }
 
-        if (niveauEau > 2 && niveauEau <= 5) {
-                cartesAPiocher = 3;
-        }
-
-        if (niveauEau > 5 && niveauEau <= 7) {
-            for (int i = 0; i <= 4; i++) {
-                cartesAPiocher = 4;
-            }
-        }
-
-        if (niveauEau > 5 && niveauEau <= 7) {
-            for (int i = 0; i <= 4; i++) {
-               cartesAPiocher = 5;
-            }
-        }
-
-        if (niveauEau <= 10){
-            //perdrePartie();
-        }
+        /*if (niveauEau = 10){
+            perdrePartie();
+        }*/
     }
 
     public void useCarteSacDeSable(Tuile tuile){ // Montrer les tuiles inondées AVANT quand carte cliquée !

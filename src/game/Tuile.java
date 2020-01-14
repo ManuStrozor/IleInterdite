@@ -107,8 +107,13 @@ public class Tuile implements Comparable<Tuile> {
         setImage(EtatTuile.coulee);
     }
     public void innonder() {
-        setEtatTuile(EtatTuile.innondee);
-        setImage(EtatTuile.innondee);
+        if (this.getEtatTuile() == EtatTuile.innondee){
+            this.couler();
+        }
+        else{
+            setEtatTuile(EtatTuile.innondee);
+            setImage(EtatTuile.innondee);
+        }
     }
 
     public HashSet<Aventurier> getAventuriers() {

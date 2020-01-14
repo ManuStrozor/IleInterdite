@@ -17,9 +17,11 @@ public enum TypeMessage {
     ASSECHER_TUILE,
     RECUPERER_TRESOR,
     DEPLACEMENT,
-    CLIK_TUILE,
+    BOUGER,
     ECHANGE_CARTE,
     NIVEAU_EAU,
+    PASSERTOUR,
+    CLIK_TUILE,
     HELICO,
-    SABLE,
+    SABLE
 }

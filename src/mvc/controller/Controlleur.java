@@ -38,6 +38,7 @@ public class Controlleur implements IControlleur {
         Grille grille = ile.getGrille();
 
         switch (msg.type) {
+
             case JOUER:
                 ihm.setVue("jeu");
                 ihm.getVue("jeu").initBoards(msg.nbJoueur);
@@ -86,6 +87,11 @@ public class Controlleur implements IControlleur {
 
             case RECUPERER_TRESOR:
                 System.out.println("recupererTresor()");
+                break;
+            case PASSERTOUR:
+                ile.passerTour();
+                ihm.getVue("jeu").updateGrille(ile.getGrille());
+                ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 break;
 
             case NIVEAU_EAU:
