@@ -141,8 +141,6 @@ public class IleInterdite extends Observe {
                 i--;
                 carte = pileCartesTresor.get(i);
             }
-
-
             if(aventurier.ajouterCarte(carte)) {
                 pileCartesTresor.remove(carte);
             }
