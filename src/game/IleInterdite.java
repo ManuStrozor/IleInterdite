@@ -224,7 +224,7 @@ public class IleInterdite extends Observe {
         return aventuriers;
     }
 
-    public void useCarteMonteeDesEaux() {
+    public void useCarteMonteeDesEaux() { // Déclenché automatiquement...ne pas oublier de defausser !
         niveauEau = niveauEau + 1;
 
         if (niveauEau <= 2) {
