@@ -48,12 +48,12 @@ public class Grille {
     }
 
     private void creerTuiles() {
-        tuiles.put("La Porte de Bronze", new Tuile("La Porte de Bronze"));
-        tuiles.put("La Porte d'Argent", new Tuile("La Porte d'Argent"));
-        tuiles.put("La Porte de Fer", new Tuile("La Porte de Fer"));
-        tuiles.put("La porte d'or", new Tuile("La porte d'or"));
-        tuiles.put("Heliport", new Tuile("Heliport"));
-        tuiles.put("La porte de cuivre", new Tuile("La porte de cuivre"));
+        tuiles.put("La Porte de Bronze", new Tuile("La Porte de Bronze")); //ingenieur
+        tuiles.put("La Porte d'Argent", new Tuile("La Porte d'Argent"));    //messager
+        tuiles.put("La Porte de Fer", new Tuile("La Porte de Fer"));    // plongeur
+        tuiles.put("La porte d'or", new Tuile("La porte d'or"));    //navigateur
+        tuiles.put("Heliport", new Tuile("Heliport"));  //pilote
+        tuiles.put("La porte de cuivre", new Tuile("La porte de cuivre"));  //explorateur
         tuiles.put("Les falaises de l'oubli", new Tuile("Les falaises de l'oubli"));
         tuiles.put("Les dunes de l'illusion", new Tuile("Les dunes de l'illusion"));
         tuiles.put("Le pont des abimes", new Tuile("Le pont des abimes"));

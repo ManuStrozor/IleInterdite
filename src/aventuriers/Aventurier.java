@@ -221,9 +221,9 @@ public abstract class Aventurier {
         // si plus d'actions....finir tour ou bloquer les boutons d'actions
     }
 
-    public boolean mort(Aventurier aventurier, Tuile tuile, Grille grille) {
-        if (aventurier.getRole() != Roles.plongeur){
-            if ( tuile.getEtatTuile()== EtatTuile.coulee && aventurier.getTuilesAccessibles(grille)== null){
+    public boolean mort(Grille grille) {
+        if ( getRole() != Roles.plongeur){
+            if ( tuile.getEtatTuile() == EtatTuile.coulee && getTuilesAccessibles(grille) == null){
                 return true;
             }
             else { return false;}

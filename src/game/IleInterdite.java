@@ -39,7 +39,6 @@ public class IleInterdite extends Observe {
         Collections.shuffle(lesRoles);
         tresorsDispo=Arrays.asList(Tresor.values()); //initialisation tresors
         tuilesTresor = new ArrayList<>();
-        setTuilesTresor();
     }
 
     public void start() {
@@ -299,34 +298,43 @@ public class IleInterdite extends Observe {
         return conditionOK;
     }
 
-    public void perdrePartie(Aventurier aventurier, Grille grille){
+    public boolean perdrePartie(Aventurier aventurier, Grille grille){
+        boolean partieperdue = false;
 
-        if (aventurier.mort(aventurier, aventurier.getTuile(), grille) == true ) {
-            System.out.println(" vous avez perdu ! ");
-        }
-        else if (grille.getTuilesMap().get("Heliport").getEtatTuile() == EtatTuile.coulee ){
-            System.out.println(" vous avez perdu ! ");
-        }
-        else if (getNiveauEau() == 10){
-            System.out.println(" vous avez perdu ! ");
-        }
-        int nbcartecoule = 0;
-
-        for(Tresor t : Tresor.values()){    //pour tout les tresors
-            for (int i = 0; i < tresorsDispo.size(); i++){  //pour les tresors disponibles
-                if(tresorsDispo.get(i) == t){   // si le tresor t est disponible on verifie ses tuiles tresor
-                    for (Tuile tuileT : tuilesTresor){  // pour toutes les tuiles tresor
-                       if (tuileT.getTresor()== t ){
-                           if(tuileT.getEtatTuile() == EtatTuile.coulee){  //si la tuile est coulée
-                               nbcartecoule++;
-                           }
-                       }
-                    }
-                    if (nbcartecoule==2){
-                        System.out.println(" vous avez perdu ! ");
-                    }
-                }
+        for(Aventurier a : aventuriers){    //si un aventurier est mort, la partie est perdue
+            if (aventurier.mort(grille)) {
+                partieperdue = true;
+                break;
             }
+        }
+
+        if (grille.getTuilesMap().get("Heliport").getEtatTuile() == EtatTuile.coulee ){ // si la tuile Helicoptere coule, la partie est perdue
+            partieperdue = true;
+        }
+        else if (getNiveauEau() == 10){ // si le niveau d'eau atteint son maximum, la partie est perdue
+            partieperdue = true;
+        }
+
+        for (int i = 0 ; i < tresorsDispo.size() ; i++){    // pour chaque tresor que l'on a pas encore recuperé
+            if( getTuileTresor(tresorsDispo.get(i))[0].getEtatTuile() == EtatTuile.coulee && getTuileTresor(tresorsDispo.get(i))[1].getEtatTuile() == EtatTuile.coulee ){
+                partieperdue = true; // Si les tuiles permettants de recuperer ce tresor sont toutes les deux coulées, on retourne true
+            }
+        }
+        return partieperdue;
+    }
+
+    public Tuile[] getTuileTresor(Tresor t){
+        if (t == Tresor.cristalArdent ){
+            return new Tuile[]{grille.getTuilesMap().get("La caverne des ombres"), grille.getTuilesMap().get("La caverne du brasier")};
+        }
+        else if (t == Tresor.caliceDelombre){
+            return new Tuile[]{grille.getTuilesMap().get("Le palais de corail"), grille.getTuilesMap().get("Le palais des marees")};
+        }
+        else if (t == Tresor.pierreSacree){
+            return new Tuile[]{grille.getTuilesMap().get("Le temple de la lune"), grille.getTuilesMap().get("Le temple du soleil")};
+        }
+        else{
+            return new Tuile[]{grille.getTuilesMap().get("Le jardin des hurlements"), grille.getTuilesMap().get("Le jardin de murmures")};
         }
     }
 
@@ -335,17 +343,6 @@ public class IleInterdite extends Observe {
         if (aventuriers.size()==grille.getTuilesMap().get("Heliport").getAventuriers().size() && tresorsRecuperes.size()==4){
             System.out.println("Vous avez gagné !");
         }
-    }
-
-    public void setTuilesTresor(){
-        tuilesTresor.add( new Tuile("La caverne des ombres", Tresor.cristalArdent));
-        tuilesTresor.add( new Tuile("La caverne du brasier", Tresor.cristalArdent));
-        tuilesTresor.add( new Tuile("Le palais de corail", Tresor.caliceDelombre));
-        tuilesTresor.add( new Tuile("Le palais des marees", Tresor.caliceDelombre));
-        tuilesTresor.add( new Tuile("Le temple de la lune", Tresor.pierreSacree));
-        tuilesTresor.add( new Tuile("Le temple du soleil", Tresor.pierreSacree));
-        tuilesTresor.add( new Tuile("Le jardin des hurlements",Tresor.statueDeZephir));
-        tuilesTresor.add( new Tuile("Le jardin de murmures", Tresor.statueDeZephir));
     }
 
 }
