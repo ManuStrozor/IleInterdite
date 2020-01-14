@@ -284,8 +284,6 @@ public class IleInterdite extends Observe {
 
     public void perdrePartie(Aventurier aventurier, Grille grille){
 
-
-
         if (aventurier.mort(aventurier, aventurier.getTuile(), grille) == true ) {
             System.out.println(" vous avez perdu ! ");
         }
@@ -306,7 +304,6 @@ public class IleInterdite extends Observe {
                                nbcartecoule++;
                            }
                        }
-
                     }
                     if (nbcartecoule==2){
                         System.out.println(" vous avez perdu ! ");
@@ -314,9 +311,13 @@ public class IleInterdite extends Observe {
                 }
             }
         }
+    }
 
-
-
+    public void gagnerPartie(){
+        //mettre un truc qui fera en sorte que cette méthode se déclenche dès que quelqu'un utilise l'hélico'
+        if (aventuriers.size()==grille.getTuilesMap().get("Heliport").getAventuriers().size() && tresorsRecuperes.size()==4){
+            System.out.println("Vous avez gagné !");
+        }
     }
 
     public void setTuilesTresor(){
