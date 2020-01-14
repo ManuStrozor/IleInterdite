@@ -175,7 +175,7 @@ public class IleInterdite extends Observe {
     }
 
     public void donnerCarte(Aventurier donneur , Aventurier receveur, Carte carte ) {
-        if(donneur.getTuile()== receveur.getTuile()&& receveur.getNombreCarte()<4){
+        if (donneur.aventurierAccessibles(donneur).contains(receveur)){
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
         }

@@ -28,7 +28,7 @@ public class Main {
         ihm.addVue(new VueConfig("config", ihm));
         ihm.addVue(new VueJeu("jeu", ihm, 1250, 800));
 
-        new Controlleur(ihm, ileInterdite); // Controlleur
+        new Controlleur(ihm, ileInterdite); // Controleur
 
         ileInterdite.start();
     }
