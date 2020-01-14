@@ -4,6 +4,7 @@ package aventuriers;
 import enumerations.*;
 import game.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -11,8 +12,7 @@ import java.util.ArrayList;
  * @author estevmat
  */
 public abstract class Aventurier {
-    private Couleur couleurPion;
-    private double actionsRestantes;
+    private Color couleurPion;
     private Tuile tuile;
     private Carte[] inventaire;
     private double nbActions;
@@ -20,13 +20,16 @@ public abstract class Aventurier {
     private String nomJoueur;
 
     public Aventurier(String nomJoueur, Grille grille) {
-        actionsRestantes = 3;
-        nbActions = 0;
+        setNbActions(3);
         role = null;
         setNomJoueur(nomJoueur);
         inventaire = new Carte[5];
         tuile = getTuileSpawn(grille);
-        //couleurPion = null;
+        couleurPion = null;
+    }
+
+    public Color getCouleurPion() {
+        return couleurPion;
     }
 
     protected abstract Tuile getTuileSpawn(Grille grille);
@@ -47,7 +50,7 @@ public abstract class Aventurier {
 
     public void setRole(Roles role) { this.role = role;  }
 
-    public void setCouleurPion(Couleur couleur) { this.couleurPion = couleur;}
+    public void setCouleurPion(Color couleur) { this.couleurPion = couleur;}
 
     public void setNbActions(double nbActions) {
         this.nbActions = nbActions;

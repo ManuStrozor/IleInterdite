@@ -1,11 +1,11 @@
 package aventuriers;
 
 
-import enumerations.Couleur;
-import enumerations.EtatTuile;
 import enumerations.Roles;
 import game.Grille;
 import game.Tuile;
+
+import java.awt.*;
 
 /**
  *
@@ -16,7 +16,7 @@ public class Pilote extends Aventurier {
     public Pilote(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
         setRole(Roles.pilote);
-        setCouleurPion(Couleur.bleu);
+        setCouleurPion(Color.BLUE);
     }
 
     @Override

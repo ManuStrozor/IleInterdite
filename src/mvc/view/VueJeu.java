@@ -24,10 +24,7 @@ import java.util.Objects;
  */
 public class VueJeu extends Vue {
 
-    private JPanel grille;
-    private int nbJoueurs;
-    private Aventurier[] aventuriers;
-
+    private JPanel grille, dashBoard;
     private JButton deplacer, assecher, donnerCarteTresor, recupererTresor;
 
     public VueJeu(String name, IHM ihm, int width, int height) {
@@ -74,6 +71,48 @@ public class VueJeu extends Vue {
         }
     }
 
+    public void updateDashboard(ArrayList<Aventurier> aventuriers) {
+        for (Aventurier aventurier : aventuriers) {
+            JPanel playerPanel = new JPanel(new BorderLayout());
+            playerPanel.setOpaque(false);
+
+            JPanel rolePlayer = new JPanel(new BorderLayout());
+
+            ////// ZONE DE ROLE DU JOUEUR //////
+            JLabel role = new JLabel(String.valueOf(aventurier.getRole()));
+            rolePlayer.add(role);
+            ////// ZONE DE ROLE DU JOUEUR //////
+
+            rolePlayer.setPreferredSize(new Dimension(100, 0));
+            rolePlayer.setBackground(aventurier.getCouleurPion());
+            if(aventurier.getCouleurPion() == Color.YELLOW) {
+                role.setForeground(Color.BLACK);
+            } else {
+                role.setForeground(Color.WHITE);
+            }
+
+            JPanel description = new JPanel(new BorderLayout());
+
+            ////// ZONE DE DESCRIPTION DU JOUEUR //////
+            description.add(new JLabel("Joueur: ["+aventurier.getNomJoueur() + "]  Actions: " + aventurier.getNbActions()));
+            ////// ZONE DE DESCRIPTION DU JOUEUR //////
+
+            JPanel cartes = new JPanel(new GridLayout(1, 5));
+
+            ////// ZONE DES CARTES DU JOUEUR //////
+
+            ////// ZONE DES CARTES DU JOUEUR //////
+
+            cartes.setPreferredSize(new Dimension(0, 100));
+
+            playerPanel.add(rolePlayer, BorderLayout.WEST);
+            playerPanel.add(description, BorderLayout.CENTER);
+            playerPanel.add(cartes, BorderLayout.SOUTH);
+
+            dashBoard.add(playerPanel);
+        }
+    }
+
     @Override
     public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {
         System.out.println("Tuiles accessibles :");
@@ -88,18 +127,16 @@ public class VueJeu extends Vue {
 
         JPanel menu = new JPanel( new GridLayout(4,1, 0 ,10));
         menu.setOpaque(false);
-        ////// ZONE DE MENU //////
 
+        ////// ZONE DE MENU //////
         deplacer = new JButton("Se déplacer");
         assecher = new JButton("Dessécher");
         donnerCarteTresor = new JButton("Donner une carte Trésor");
         recupererTresor = new JButton("Recuperer le Tresor");
-
         menu.add(deplacer);
         menu.add(assecher);
         menu.add(donnerCarteTresor);
         menu.add(recupererTresor);
-
         ////// ZONE DE MENU //////
 
         JPanel menuPanel = new JPanel(new BorderLayout());
@@ -148,46 +185,9 @@ public class VueJeu extends Vue {
         boardPanel.add(marginBot2, BorderLayout.SOUTH);
         boardPanel.add(board, BorderLayout.CENTER);
 
-        JPanel dashBoard = new JPanel(new GridLayout(1, 4, 10, 0));
+        dashBoard = new JPanel(new GridLayout(1, 4, 10, 0));
         dashBoard.setPreferredSize(new Dimension(0, 200));
         dashBoard.setOpaque(false);
-
-        for (int i = 0; i < 2; i++) {
-            JPanel playerPanel = new JPanel(new BorderLayout());
-            playerPanel.setOpaque(false);
-
-            JPanel rolePlayer = new JPanel(null);
-
-            ////// ZONE DE ROLE DU JOUEUR //////
-
-            ////// ZONE DE ROLE DU JOUEUR //////
-
-            rolePlayer.setPreferredSize(new Dimension(100,0));
-            rolePlayer.setBackground(Color.RED);
-
-            JPanel description = new JPanel(null);
-
-            ////// ZONE DE DESCRIPTION DU JOUEUR //////
-
-            ////// ZONE DE DESCRIPTION DU JOUEUR //////
-
-            description.setBackground(Color.GREEN);
-
-            JPanel cartes = new JPanel(new GridLayout(1, 5));
-
-            ////// ZONE DES CARTES DU JOUEUR //////
-
-            ////// ZONE DES CARTES DU JOUEUR //////
-
-            cartes.setPreferredSize(new Dimension(0, 100));
-            cartes.setBackground(Color.BLUE);
-
-            playerPanel.add(rolePlayer, BorderLayout.WEST);
-            playerPanel.add(description, BorderLayout.CENTER);
-            playerPanel.add(cartes, BorderLayout.SOUTH);
-
-            dashBoard.add(playerPanel);
-        }
 
         this.add(menuPanel, BorderLayout.WEST);
         this.add(boardPanel, BorderLayout.CENTER);

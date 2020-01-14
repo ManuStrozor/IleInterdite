@@ -1,5 +1,6 @@
 package mvc.view;
 
+import aventuriers.Aventurier;
 import game.Grille;
 import game.Tuile;
 import mvc.Message;
@@ -55,6 +56,8 @@ public class VueConfig extends Vue {
         });
     }
 
+    @Override
+    public void updateDashboard(ArrayList<Aventurier> aventuriers) {}
     @Override
     public void updateGrille(Grille grille) {}
     @Override
