@@ -176,6 +176,17 @@ public class IleInterdite extends Observe {
             }
     }
 
+    public void sauverJoueur(Tuile tuileDest){
+        for( int i =0; i<aventuriers.size(); i++){
+            if(aventuriers.get(i).getTuile().getEtatTuile()== EtatTuile.coulee){
+                if(aventuriers.get(i).getTuilesAccessibles(grille)!= null){
+                    System.out.println("Sauvez vous");
+                    aventuriers.get(i).seDeplacer(tuileDest);
+                }
+            }
+        }
+    }
+
    public void piocherCarteTresor(){ //Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
         CarteTresor c;
         for(int i=0; i<2; i++){
