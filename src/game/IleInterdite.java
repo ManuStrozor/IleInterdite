@@ -15,6 +15,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static enumerations.Tresor.*;
+import static enumerations.Tresor.statueDeZephir;
+
 /**
  *
  * @author turbetde,estevmat
@@ -31,6 +34,7 @@ public class IleInterdite extends Observe {
     private ArrayList<CarteInondation> defausseCartesInondation;
     private ArrayList<Aventurier> aventuriers;
     private List<Roles> lesRoles;
+    private ArrayList<Tuile> tuilesTresor;
 
 
     public IleInterdite() {
@@ -39,6 +43,8 @@ public class IleInterdite extends Observe {
         lesRoles = Arrays.asList(Roles.values());
         Collections.shuffle(lesRoles);
         tresorsDispo=Arrays.asList(Tresor.values()); //initialisation tresors
+        tuilesTresor = new ArrayList<>();
+        setTuilesTresor();
     }
 
     public void start() {
@@ -255,11 +261,52 @@ public class IleInterdite extends Observe {
         return conditionOK;
     }
 
-    public void perdrePartie(Aventurier aventurier, Grille grille, Tuile tuile ){
+    public void perdrePartie(Aventurier aventurier, Grille grille){
+
+
+
         if (aventurier.mort(aventurier, aventurier.getTuile(), grille) == true ) {
             System.out.println(" vous avez perdu ! ");
         }
+        else if (grille.getTuilesMap().get("Heliport").getEtatTuile() == EtatTuile.coulee ){
+            System.out.println(" vous avez perdu ! ");
+        }
+        else if (getNiveauEau() == 10){
+            System.out.println(" vous avez perdu ! ");
+        }
+        int nbcartecoule = 0;
 
+        for(Tresor t : Tresor.values()){    //pour tout les tresors
+            for (int i = 0; i < tresorsDispo.size(); i++){  //pour les tresors disponibles
+                if(tresorsDispo.get(i) == t){   // si le tresor t est disponible on verifie ses tuiles tresor
+                    for (Tuile tuileT : tuilesTresor){  // pour toutes les tuiles tresor
+                       if (tuileT.getTresor()== t ){
+                           if(tuileT.getEtatTuile() == EtatTuile.coulee){  //si la tuile est coulée
+                               nbcartecoule++;
+                           }
+                       }
+
+                    }
+                    if (nbcartecoule==2){
+                        System.out.println(" vous avez perdu ! ");
+                    }
+                }
+            }
+        }
+
+
+
+    }
+
+    public void setTuilesTresor(){
+        tuilesTresor.add( new Tuile("La caverne des ombres", cristalArdent));
+        tuilesTresor.add( new Tuile("La caverne du brasier", cristalArdent));
+        tuilesTresor.add( new Tuile("Le palais de corail", caliceDelombre));
+        tuilesTresor.add( new Tuile("Le palais des marees", caliceDelombre));
+        tuilesTresor.add( new Tuile("Le temple de la lune", pierreSacree));
+        tuilesTresor.add( new Tuile("Le temple du soleil", pierreSacree));
+        tuilesTresor.add( new Tuile("Le jardin des hurlements", statueDeZephir));
+        tuilesTresor.add( new Tuile("Le jardin de murmures", statueDeZephir));
     }
 
 }
