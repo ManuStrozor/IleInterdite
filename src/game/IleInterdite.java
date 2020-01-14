@@ -29,6 +29,7 @@ public class IleInterdite extends Observe {
     private ArrayList<Aventurier> aventuriers;
     private List<Roles> lesRoles;
     private ArrayList<Tuile> tuilesTresor;
+    private Aventurier joueurASauver;
 
     Random random = new Random();
 
@@ -176,16 +177,19 @@ public class IleInterdite extends Observe {
             }
     }
 
-    public void sauverJoueur(Tuile tuileDest){
-        for( int i =0; i<aventuriers.size(); i++){
-            if(aventuriers.get(i).getTuile().getEtatTuile()== EtatTuile.coulee){
-                if(aventuriers.get(i).getTuilesAccessibles(grille)!= null){
-                    System.out.println("Sauvez vous");
-                    aventuriers.get(i).seDeplacer(tuileDest);
-                }
+    public void sauverJoueur() {
+        for (Aventurier a : aventuriers) {
+
+            if (a.getTuile().getEtatTuile() == EtatTuile.coulee && a.getTuilesAccessibles(grille) != null) {
+                // si la tuile sur laquelle est l'aventurier coule et qu'il y a des tuiles accessibles autour de lui , alors il y va
+               joueurASauver= a;
+               Message m = new Message(TypeMessage.SAUVER);
+               m.a=a;
+               this.notifierObservateur(m);
             }
         }
     }
+
 
    public void piocherCarteTresor(){ //Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
         CarteTresor c;
@@ -366,4 +370,7 @@ public class IleInterdite extends Observe {
         }
     }
 
+    public Aventurier getJoueurASauver() {
+        return joueurASauver;
+    }
 }
