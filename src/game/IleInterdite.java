@@ -203,14 +203,14 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public void defausseCarteInnondation(CarteInondation c){
+    /*public void defausseCarteInnondation(CarteInondation c){
         defausseCartesInondation.add(c);
         if(defausseCartesInondation.size()==0){
             for(){
                 //dezdezdzedzedzedze
             }
         };
-    }
+    }*/
 
 
 
