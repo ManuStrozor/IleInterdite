@@ -6,8 +6,11 @@ package mvc;
  */
 
 
+import aventuriers.Aventurier;
 import enumerations.TypeMessage;
 import game.Grille;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -25,4 +28,5 @@ public class Message {
     public Grille grille;
     public String niveauEau;
     public String[] nomsJoueurs;
+    public ArrayList<Aventurier> aventuriers;
 }

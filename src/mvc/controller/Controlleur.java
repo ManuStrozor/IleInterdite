@@ -40,6 +40,9 @@ public class Controlleur implements IControlleur {
             case UPDATE_GRILLE:
                 ihm.getVue("jeu").updateGrille(msg.grille);
                 break;
+            case UPDATE_DASHBOARD:
+                ihm.getVue("jeu").updateDashboard(msg.aventuriers);
+                break;
             case QUITTER:
                 ileInterdite.quitter();
                 break;

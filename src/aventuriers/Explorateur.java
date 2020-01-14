@@ -1,11 +1,12 @@
 package aventuriers;
 
 
-import enumerations.Couleur;
 import enumerations.EtatTuile;
 import enumerations.Roles;
 import game.Grille;
 import game.Tuile;
+
+import java.awt.*;
 
 /**
  *
@@ -16,7 +17,7 @@ public class Explorateur extends Aventurier {
     public Explorateur(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
         setRole(Roles.explorateur);
-        setCouleurPion(Couleur.vert);
+        setCouleurPion(Color.GREEN);
     }
 
     @Override

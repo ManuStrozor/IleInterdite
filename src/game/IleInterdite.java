@@ -25,9 +25,10 @@ public class IleInterdite extends Observe {
     private List<Tresor> tresorsDispo;
     private List<Tresor> tresorsRecuperes;
     private int niveauEau = 0, nbJoueurs = 0, currentAventurier = 0;
-    private ArrayList<CarteTresor> cartesTresor;
-    private ArrayList<NomsTuiles> pileCarteInnondation;
-    private ArrayList<NomsTuiles> defausseCarteInnondation;
+    private ArrayList<CarteTresor> pileCartesTresor;
+    private ArrayList<CarteTresor> defausseCartesTresor;
+    private ArrayList<CarteInondation> pileCartesInondation;
+    private ArrayList<CarteInondation> defausseCartesInondation;
     private ArrayList<Aventurier> aventuriers;
     private List<Roles> lesRoles;
 
@@ -50,36 +51,56 @@ public class IleInterdite extends Observe {
         setNbJoueurs(nbJoueurs);
         setNiveauEau(level);
         grille.melangerTuiles();
-        initiateInondation();
         initiateTresorCards();
         initiateAventuriers(nomJoueurs);
-        Message m = new Message(TypeMessage.UPDATE_GRILLE);
+
+        Message m = new Message(TypeMessage.UPDATE_DASHBOARD);
+        m.aventuriers = aventuriers;
+        notifierObservateur(m);
+
+        initiateInondation();
+        tirerCartesIondation(6);
+
+        m = new Message(TypeMessage.UPDATE_GRILLE);
         m.grille = grille;
         notifierObservateur(m);
     }
 
     private void initiateTresorCards() {
-        cartesTresor = new ArrayList<>();
-
+        pileCartesTresor = new ArrayList<>();
+        defausseCartesTresor = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            cartesTresor.add(new CarteTresor("Le Cristal ardent"));
-            cartesTresor.add(new CarteTresor("La Pierre sacrée"));
-            cartesTresor.add(new CarteTresor("La Statue du zéphyr"));
-            cartesTresor.add(new CarteTresor("Le Calice de l’onde"));
+            pileCartesTresor.add(new CarteTresor("Le Cristal ardent"));
+            pileCartesTresor.add(new CarteTresor("La Pierre sacrée"));
+            pileCartesTresor.add(new CarteTresor("La Statue du zéphyr"));
+            pileCartesTresor.add(new CarteTresor("Le Calice de l’onde"));
         }
-
         for (int i = 0; i < 3; i++) {
-            cartesTresor.add(new CarteTresor("Montée des eaux"));
-            cartesTresor.add(new CarteTresor("Helicoptere"));
+            pileCartesTresor.add(new CarteTresor("Montée des eaux"));
+            pileCartesTresor.add(new CarteTresor("Helicoptere"));
         }
-
         for (int i = 0; i < 2; i++) {
-            cartesTresor.add(new CarteTresor("Sac de sable"));
+            pileCartesTresor.add(new CarteTresor("Sac de sable"));
         }
-
-        Collections.shuffle(cartesTresor);
+        Collections.shuffle(pileCartesTresor);
     }
 
+    private void initiateInondation() {
+        pileCartesInondation = new ArrayList<>();
+        defausseCartesInondation = new ArrayList<>();
+        for(Tuile t : grille.getTuiles()){
+            pileCartesInondation.add(new CarteInondation(t.getNom()));
+        }
+        Collections.shuffle(pileCartesInondation);
+    }
+
+    public void tirerCartesIondation(int nb) {
+        for(int i = 0; i < nb; i++) {
+            grille.getTuilesMap().get(pileCartesInondation.get(0).getNom()).innonder();
+            defausseCartesInondation.add(pileCartesInondation.get(0));
+            pileCartesInondation.remove(0);
+        }
+    }
 
     private void initiateAventuriers(String[] nomJoueurs) throws IllegalStateException {
         for (int i = 0; i < nbJoueurs; i++) {
@@ -107,12 +128,23 @@ public class IleInterdite extends Observe {
                     throw new IllegalStateException("[InitiateAventuriers] Unexpected value: " + lesRoles.get(i));
             }
             aventuriers.add(newAventurier);
-            System.out.println("Role: " + aventuriers.get(i).getRole() + " Nom: " +aventuriers.get(i).getNomJoueur());
+            distribuerCarteTresor(newAventurier);
         }
     }
 
-    private void initiateInondation() {
-
+    private void distribuerCarteTresor(Aventurier aventurier) { // Ne fonctionne pas correctement !
+        for (int k = 1; k <= 2; k++) {
+            int i = pileCartesTresor.size() - 1;
+            CarteTresor carte = pileCartesTresor.get(i);
+            while(carte.getNom().equals("Montée des eaux")) {
+                i--;
+                carte = pileCartesTresor.get(i);
+            }
+            Carte c = pileCartesTresor.get(pileCartesTresor.size()-1);
+            if(aventurier.ajouterCarte(c)) {
+                pileCartesTresor.remove(c);
+            }
+        }
     }
 
     public void quitter(){

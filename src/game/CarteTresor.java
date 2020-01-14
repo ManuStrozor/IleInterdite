@@ -3,18 +3,13 @@ package game;
  *
  * @author estevmat
  */
-public class CarteTresor {
-    private String nomCarteTresor;
+public class CarteTresor extends Carte {
 
     CarteTresor(String nom){
-        nom = nomCarteTresor;
-    }
-    public String getNomCarteTresor() {
-        return nomCarteTresor;
+        super(nom);
     }
 
-    public void setNomCarteTresor(String nomCarte) {
-        this.nomCarteTresor = nomCarte;
-    }
+    public void defausser() {
 
+    }
 }

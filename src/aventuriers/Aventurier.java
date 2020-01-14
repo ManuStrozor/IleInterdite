@@ -1,10 +1,10 @@
 package aventuriers;
 
-import enumerations.Couleur;
-import enumerations.EtatTuile;
-import enumerations.Roles;
+
+import enumerations.*;
 import game.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -12,8 +12,7 @@ import java.util.ArrayList;
  * @author estevmat
  */
 public abstract class Aventurier {
-    private Couleur couleurPion;
-    private double actionsRestantes;
+    private Color couleurPion;
     private Tuile tuile;
     private Carte[] inventaire;
     private double nbActions;
@@ -21,13 +20,20 @@ public abstract class Aventurier {
     private String nomJoueur;
 
     public Aventurier(String nomJoueur, Grille grille) {
-        actionsRestantes = 3;
-        nbActions = 0;
+        setNbActions(3);
         role = null;
         setNomJoueur(nomJoueur);
-        inventaire = new Carte[4];
+        inventaire = new Carte[5];
         tuile = getTuileSpawn(grille);
-        //couleurPion = null;
+        couleurPion = null;
+    }
+
+    public Carte[] getInventaire() {
+        return inventaire;
+    }
+
+    public Color getCouleurPion() {
+        return couleurPion;
     }
 
     protected abstract Tuile getTuileSpawn(Grille grille);
@@ -48,7 +54,7 @@ public abstract class Aventurier {
 
     public void setRole(Roles role) { this.role = role;  }
 
-    public void setCouleurPion(Couleur couleur) { this.couleurPion = couleur;}
+    public void setCouleurPion(Color couleur) { this.couleurPion = couleur;}
 
     public void setNbActions(double nbActions) {
         this.nbActions = nbActions;
@@ -58,8 +64,18 @@ public abstract class Aventurier {
         return nbActions;
     }
 
-    public void ajouterCarte(Carte carte){
-
+    public boolean ajouterCarte(Carte carte){
+        int i = 0;
+        while (i < inventaire.length && inventaire[i] != null ){
+            i++;
+        }
+        if (i >= inventaire.length){
+            System.out.println("L'inventaire de l'aventurier est plein");
+            return false;
+        }else{
+            this.inventaire[i] = carte;
+            return true;
+        }
     }
 
     public void defausseCarte(){
@@ -78,7 +94,7 @@ public abstract class Aventurier {
         this.nomJoueur = nomJoueur;
     }
     
-    public boolean peutAssecher(game.Tuile tuileInnondee){
+    public boolean peutAssecher(Tuile tuileInnondee){
 
         if ( tuileInnondee.getEtatTuile() == EtatTuile.innondee){
             if (tuileInnondee.getColonne() == this.getTuile().getColonne() + 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {

@@ -5,6 +5,7 @@
  */
 package mvc.view;
 
+import aventuriers.Aventurier;
 import game.Grille;
 import game.Tuile;
 
@@ -69,6 +70,7 @@ public abstract class Vue extends JPanel implements IVue {
         g.drawImage(background, 0, 0, (int)getSize().getWidth(), (int)getSize().getHeight(), null);
     }
 
+    public abstract void updateDashboard(ArrayList<Aventurier> aventuriers);
     public abstract void updateGrille(Grille grille);
 
     public abstract void afficherTuilesAccessibles(ArrayList<Tuile> tuiles);
