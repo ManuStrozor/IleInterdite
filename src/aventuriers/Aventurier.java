@@ -111,27 +111,55 @@ public abstract class Aventurier {
         return aventurierAccessibles;
     }
     
-    public boolean peutAssecher(Tuile tuileInnondee){
+    public ArrayList<Tuile> peutAssecher(Grille grille){
+        ArrayList<Tuile> tuiles = new ArrayList<>();
 
-        if ( tuileInnondee.getEtatTuile() == EtatTuile.innondee){
-            if (tuileInnondee.getColonne() == this.getTuile().getColonne() + 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
-                return true;
-            }
-            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() - 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {
-                return true;
-            }
-            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() + 1) {
-                return true;
-            }
-            else if (tuileInnondee.getColonne() == this.getTuile().getColonne() && tuileInnondee.getLigne() == this.getTuile().getLigne() - 1) {
-                return true;
-            } else {
-                return false;
-            }
+        switch(getRole()) {
+            case ingenieur:
+            case messager:
+            case navigateur:
+            case explorateur:
+            case plongeur:
+            case pilote:
+                Tuile newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()-1);
+                if(newTuile != null) tuiles.add(newTuile);
+
+                newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()+1);
+                if(newTuile != null) tuiles.add(newTuile);
+
+                newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne());
+                if(newTuile != null) tuiles.add(newTuile);
+
+                newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne());
+                if(newTuile != null) tuiles.add(newTuile);
+                break;
         }
-        else{
-            return false;
+
+        if (getRole() == Roles.explorateur) {
+            Tuile newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()+1);
+            if(newTuile != null) tuiles.add(newTuile);
+
+            newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne()-1);
+            if(newTuile != null) tuiles.add(newTuile);
+
+            newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne()+1);
+            if(newTuile != null) tuiles.add(newTuile);
+
+            newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()-1);
+            if(newTuile != null) tuiles.add(newTuile);
         }
+
+        switch(getRole()) {
+            case ingenieur:
+            case messager:
+            case navigateur:
+            case pilote:
+            case explorateur:
+                tuiles.removeIf(t -> t.getEtatTuile() == EtatTuile.coulee);
+                tuiles.removeIf(t -> t.getEtatTuile() == EtatTuile.assechee);
+                break;
+        }
+        return tuiles;
     }
 
     public ArrayList<Tuile> getTuilesAccessibles(Grille grille) {
