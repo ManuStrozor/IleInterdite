@@ -60,7 +60,10 @@ public class Controlleur implements IControlleur {
                 ihm.getVue("jeu").afficherAventurierAccessibles(aventuriers);
                 break;
             case ASSECHER_TUILE:
-                //ileInterdite.assecher();
+
+                ileInterdite.assecher(ileInterdite.getCurrentAventurier().getTuile(), ileInterdite.getCurrentAventurier());
+                System.out.println(" assécher la tuile choisie par le joueur"); // ici la tuile ou se trouve le joueur
+
                 break;
             case RECUPERER_TRESOR:
                 System.out.println("recupererTresor()");

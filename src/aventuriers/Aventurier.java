@@ -82,6 +82,10 @@ public abstract class Aventurier {
     }
 
     public void defausseCarte(){
+        int i = inventaire.length;
+        while (i>0 && inventaire[i] != null){
+            i= i-1;
+        }
 
     }
 
@@ -186,5 +190,21 @@ public abstract class Aventurier {
         this.getTuile().getAventuriers().remove(this);
         nouvelle.getAventuriers().add(this);
         this.setNbActions(this.getNbActions() - 1);
+    }
+
+    public void moinsUneAction(Aventurier aventurier){
+        double nbActions = aventurier.getNbActions();
+        aventurier.setNbActions(nbActions - 1);
+    }
+
+    public boolean mort(Aventurier aventurier, Tuile tuile, Grille grille) {
+        if (aventurier.getRole() != Roles.plongeur){
+            if ( tuile.getEtatTuile()== EtatTuile.coulee && aventurier.getTuilesAccessibles(grille)== null){
+                return true;
+            }
+            else { return false;}
+        }
+        else {return false ; }
+
     }
 }

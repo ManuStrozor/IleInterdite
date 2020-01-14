@@ -156,6 +156,7 @@ public class IleInterdite extends Observe {
         Message m = new Message(TypeMessage.UPDATE_GRILLE);
         m.grille = grille;
         notifierObservateur(m);
+        aventurier.moinsUneAction(aventurier);
     }
 
     public void assecher(Tuile tuile, Aventurier aventurier) {
@@ -167,7 +168,7 @@ public class IleInterdite extends Observe {
         if (aventurier.getRole() == Roles.ingenieur){
             aventurier.setNbActions(nbActions - 0.5);
         }else{
-            aventurier.setNbActions(nbActions - 1);
+            aventurier.moinsUneAction(aventurier);
         }
         Message m = new Message(TypeMessage.UPDATE_GRILLE);
         m.grille = grille;
@@ -179,15 +180,15 @@ public class IleInterdite extends Observe {
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
         }
-        double nbaction=donneur.getNbActions()-1;
-
+        donneur.moinsUneAction(donneur);
 // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 
-    public void recupererTresor(Tresor tresor) {
+    public void recupererTresor(Aventurier aventurier, Tresor tresor) {
+
         tresorsDispo.remove(tresor);
         tresorsRecuperes.add(tresor);
-
+        aventurier.moinsUneAction(aventurier);
     }
 
     public void setNbJoueurs(int nbJoueurs){
@@ -224,4 +225,41 @@ public class IleInterdite extends Observe {
     public Aventurier getCurrentAventurier() {
         return aventuriers.get(currentAventurier);
     }
+
+    public boolean estRecuperable(Aventurier aventurier) {
+
+        boolean conditionOK = false;
+        int nbcarte = 0;
+        Carte[] inventaire = aventurier.getInventaire();    //inventaire de l'aventurier
+        Tresor tresorTuile = aventurier.getTuile().getTresor(); //Type de la tuile où est l'aventurier
+
+        //si le tresor n'est pas deja recup
+        for (Tresor t : tresorsDispo) {
+            if (t == tresorTuile) {
+                conditionOK = true;
+                break;
+            }
+        }
+
+        //si l'aventurier a le bon nombre de carte du meme type que la tuile où il se situe
+        for (int i = 0; i < inventaire.length; i++) {
+            if (inventaire[i].getTresor() == tresorTuile) {
+                nbcarte++;
+            }
+        }
+        if (nbcarte >= 4) {
+            conditionOK = true;
+        } else {
+            conditionOK = false;
+        }
+        return conditionOK;
+    }
+
+    public void perdrePartie(Aventurier aventurier, Grille grille, Tuile tuile ){
+        if (aventurier.mort(aventurier, aventurier.getTuile(), grille) == true ) {
+            System.out.println(" vous avez perdu ! ");
+        }
+
+    }
+
 }
