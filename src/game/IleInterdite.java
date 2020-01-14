@@ -24,7 +24,7 @@ public class IleInterdite extends Observe {
     private Grille grille;
     private List<Tresor> tresorsDispo;
     private List<Tresor> tresorsRecuperes;
-    private int niveauEau = 0, nbJoueurs = 0, currentAventurier = 0;
+    private int niveauEau = 0, nbJoueurs = 0, currentAventurier = 0, cartesAPiocher = 0;
     private ArrayList<CarteTresor> pileCartesTresor;
     private ArrayList<CarteTresor> defausseCartesTresor;
     private ArrayList<CarteInondation> pileCartesInondation;
@@ -38,7 +38,7 @@ public class IleInterdite extends Observe {
         aventuriers = new ArrayList<>(); //initialisation aventuriers
         lesRoles = Arrays.asList(Roles.values());
         Collections.shuffle(lesRoles);
-        tresorsDispo=Arrays.asList(Tresor.values()); //initialisation tresors
+        tresorsDispo = Arrays.asList(Tresor.values()); //initialisation tresors
     }
 
     public void start() {
@@ -88,14 +88,14 @@ public class IleInterdite extends Observe {
     private void initiateInondation() {
         pileCartesInondation = new ArrayList<>();
         defausseCartesInondation = new ArrayList<>();
-        for(Tuile t : grille.getTuiles()){
+        for (Tuile t : grille.getTuiles()) {
             pileCartesInondation.add(new CarteInondation(t.getNom()));
         }
         Collections.shuffle(pileCartesInondation);
     }
 
     public void tirerCartesIondation(int nb) {
-        for(int i = 0; i < nb; i++) {
+        for (int i = 0; i < nb; i++) {
             grille.getTuilesMap().get(pileCartesInondation.get(0).getNom()).innonder();
             defausseCartesInondation.add(pileCartesInondation.get(0));
             pileCartesInondation.remove(0);
@@ -105,7 +105,7 @@ public class IleInterdite extends Observe {
     private void initiateAventuriers(String[] nomJoueurs) throws IllegalStateException {
         for (int i = 0; i < nbJoueurs; i++) {
             Aventurier newAventurier;
-            switch(lesRoles.get(i)) {
+            switch (lesRoles.get(i)) {
                 case explorateur:
                     newAventurier = new Explorateur(nomJoueurs[i], grille);
                     break;
@@ -137,17 +137,17 @@ public class IleInterdite extends Observe {
             int i = pileCartesTresor.size() - 1;
             CarteTresor carte = pileCartesTresor.get(i);
 
-            while(carte.getNom().equals("Montée des eaux")) {
+            while (carte.getNom().equals("Montée des eaux")) {
                 i--;
                 carte = pileCartesTresor.get(i);
             }
-            if(aventurier.ajouterCarte(carte)) {
+            if (aventurier.ajouterCarte(carte)) {
                 pileCartesTresor.remove(carte);
             }
         }
     }
 
-    public void quitter(){
+    public void quitter() {
         System.exit(0);
     }
 
@@ -164,9 +164,9 @@ public class IleInterdite extends Observe {
 
         double nbActions = aventurier.getNbActions();
 
-        if (aventurier.getRole() == Roles.ingenieur){
+        if (aventurier.getRole() == Roles.ingenieur) {
             aventurier.setNbActions(nbActions - 0.5);
-        }else{
+        } else {
             aventurier.setNbActions(nbActions - 1);
         }
         Message m = new Message(TypeMessage.UPDATE_GRILLE);
@@ -174,8 +174,8 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
     }
 
-    public void donnerCarte(Aventurier donneur , Aventurier receveur, Carte carte ) {
-        if (donneur.aventurierAccessibles(donneur).contains(receveur)){
+    public void donnerCarte(Aventurier donneur, Aventurier receveur, Carte carte) {
+        if (donneur.aventurierAccessibles(donneur).contains(receveur)) {
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
         }
@@ -188,12 +188,12 @@ public class IleInterdite extends Observe {
 
     }
 
-    public void setNbJoueurs(int nbJoueurs){
+    public void setNbJoueurs(int nbJoueurs) {
         this.nbJoueurs = nbJoueurs;
     }
 
-    public void setNiveauEau(String niveauEau){
-        switch(niveauEau) {
+    public void setNiveauEau(String niveauEau) {
+        switch (niveauEau) {
             case "Novice":
                 this.niveauEau = 1;
                 break;
@@ -222,4 +222,32 @@ public class IleInterdite extends Observe {
     public Aventurier getCurrentAventurier() {
         return aventuriers.get(currentAventurier);
     }
+
+    public void useCarteMonteeDesEaux() {
+        niveauEau = niveauEau + 1;
+        if (niveauEau <= 2) {
+                cartesAPiocher = 2;
+        }
+        if (niveauEau > 2 && niveauEau <= 5) {
+                cartesAPiocher = 3;
+        }
+
+        if (niveauEau > 5 && niveauEau <= 7) {
+            for (int i = 0; i <= 4; i++) {
+                cartesAPiocher = 4;
+            }
+        }
+
+        if (niveauEau > 5 && niveauEau <= 7) {
+            for (int i = 0; i <= 4; i++) {
+               cartesAPiocher = 5;
+            }
+        }
+
+        if (niveauEau <= 10){
+            //perdrePartie();
+        }
+    }
+
 }
+
