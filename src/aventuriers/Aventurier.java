@@ -60,6 +60,20 @@ public abstract class Aventurier {
         }
         return carte;
     }
+
+    public CarteTresor getCarteHelico(){
+        CarteTresor carte = null;
+        for(int i=0;i<=getInventaire().size();i++){
+            if (getInventaire().get(i).getNom()=="Helicoptere"){
+                carte = getInventaire().get(i);
+            }
+            else {
+                carte = null;
+            }
+        }
+        return carte;
+    }
+
     public Roles getRole() {
         return role;
     }

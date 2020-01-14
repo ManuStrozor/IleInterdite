@@ -184,9 +184,9 @@ public class VueJeu extends Vue {
     }
 
     @Override
-    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers) {
+    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventurierAccessibles) {
         System.out.println("Aventuriers qui peuvent recevoir :");
-        for(Aventurier a : aventuriers) {
+        for(Aventurier a : aventurierAccessibles) {
             System.out.println("\t" + a.getNomJoueur());
         }
     }
