@@ -258,11 +258,11 @@ public class IleInterdite extends Observe {
         getCurrentAventurier().getInventaire().remove(getCurrentAventurier().getCarteSacDeSable());
     }
 
-    public boolean estRecuperable(Aventurier aventurier) {
+    public boolean estRecuperable(Aventurier aventurier) { // Déplacer dans Tuile.java
 
         boolean conditionOK = false;
         int nbcarte = 0;
-        ArrayList<CarteTresor>  inventaire = aventurier.getInventaire();    //inventaire de l'aventurier
+        ArrayList<CarteTresor> inventaire = aventurier.getInventaire(); //inventaire de l'aventurier
         Tresor tresorTuile = aventurier.getTuile().getTresor(); //Type de la tuile où est l'aventurier
 
         //si le tresor n'est pas deja recup

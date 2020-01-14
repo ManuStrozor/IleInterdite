@@ -226,6 +226,7 @@ public abstract class Aventurier {
     public void moinsUneAction(Aventurier aventurier){
         double nbActions = aventurier.getNbActions();
         aventurier.setNbActions(nbActions - 1);
+        // si plus d'actions....finir tour ou bloquer les boutons d'actions
     }
 
     public boolean mort(Aventurier aventurier, Tuile tuile, Grille grille) {
