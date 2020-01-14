@@ -38,6 +38,8 @@ public class VueMenu extends Vue {
     public void updateGrille(Grille grille) {}
     @Override
     public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {}
+    @Override
+    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers) {}
 
     @Override
     public void initComponents() {

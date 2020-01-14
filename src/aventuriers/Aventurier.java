@@ -6,6 +6,7 @@ import game.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -18,6 +19,7 @@ public abstract class Aventurier {
     private double nbActions;
     private Roles role;
     private String nomJoueur;
+    private ArrayList<Aventurier> aventurierAccessibles;
 
     public Aventurier(String nomJoueur, Grille grille) {
         setNbActions(3);
@@ -26,6 +28,7 @@ public abstract class Aventurier {
         inventaire = new Carte[5];
         tuile = getTuileSpawn(grille);
         couleurPion = null;
+        aventurierAccessibles = new ArrayList<>();
     }
 
     public Carte[] getInventaire() {
@@ -99,9 +102,9 @@ public abstract class Aventurier {
             //aventurierAccessibles(donneur).addAll(aventuriers);
         }
         else {
-            aventurierAccessibles(donneur).addAll(donneur.getTuile().getAventuriers());
+            aventurierAccessibles.addAll(donneur.getTuile().getAventuriers());
         }
-        return aventurierAccessibles(donneur);
+        return aventurierAccessibles;
     }
     
     public boolean peutAssecher(Tuile tuileInnondee){

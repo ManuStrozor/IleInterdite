@@ -5,6 +5,7 @@ package mvc.controller;
  * and open the template in the editor.
  */
 
+import aventuriers.Aventurier;
 import game.IleInterdite;
 import game.Tuile;
 import mvc.Message;
@@ -55,6 +56,8 @@ public class Controlleur implements IControlleur {
                 break;
             case ECHANGE_CARTE:
                 System.out.println("echangerCarte()");
+                ArrayList<Aventurier> aventuriers = ileInterdite.getCurrentAventurier().aventurierAccessibles(ileInterdite.getCurrentAventurier());
+                ihm.getVue("jeu").afficherAventurierAccessibles(aventuriers);
                 break;
             case ASSECHER_TUILE:
                 //ileInterdite.assecher();

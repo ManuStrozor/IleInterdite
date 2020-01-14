@@ -72,6 +72,7 @@ public class VueJeu extends Vue {
         }
     }
 
+
     public void updateDashboard(ArrayList<Aventurier> aventuriers) {
         for (Aventurier aventurier : aventuriers) {
             JPanel playerPanel = new JPanel(new BorderLayout());
@@ -126,6 +127,14 @@ public class VueJeu extends Vue {
     }
 
     @Override
+    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers) {
+        System.out.println("Aventuriers qui peuvent recevoir :");
+        for(Aventurier a : aventuriers) {
+            System.out.println("\t" + a.getNomJoueur());
+        }
+    }
+
+    @Override
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundJeu.jpg"))).getImage());
 
@@ -137,10 +146,13 @@ public class VueJeu extends Vue {
         assecher = new JButton("Dessécher");
         donnerCarteTresor = new JButton("Donner une carte Trésor");
         recupererTresor = new JButton("Recuperer le Tresor");
+
         menu.add(deplacer);
         menu.add(assecher);
         menu.add(donnerCarteTresor);
         menu.add(recupererTresor);
+        // deplacer.setContentAreaFilled(false);  rendre le fond transparent
+        // deplacer.setBorderPainted(false);  rendre la bordure transparente
         ////// ZONE DE MENU //////
 
         JPanel menuPanel = new JPanel(new BorderLayout());

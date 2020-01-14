@@ -179,6 +179,8 @@ public class IleInterdite extends Observe {
             donneur.defausseCarte();
             receveur.ajouterCarte(carte);
         }
+        double nbaction=donneur.getNbActions()-1;
+
 // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 
