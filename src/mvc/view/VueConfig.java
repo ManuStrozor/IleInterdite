@@ -61,7 +61,9 @@ public class VueConfig extends Vue {
     @Override
     public void updateGrille(Grille grille) {}
     @Override
-    public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {}
+    public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {}
+    @Override
+    public void initBoards(int nbJoueur) {}
     @Override
     public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers) {}
 

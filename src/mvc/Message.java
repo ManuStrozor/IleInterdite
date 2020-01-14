@@ -9,6 +9,7 @@ package mvc;
 import aventuriers.Aventurier;
 import enumerations.TypeMessage;
 import game.Grille;
+import game.Tuile;
 
 import java.util.ArrayList;
 
@@ -29,5 +30,5 @@ public class Message {
     public String niveauEau;
     public String[] nomsJoueurs;
     public ArrayList<Aventurier> aventuriers;
-
+    public int tuileIndex;
 }

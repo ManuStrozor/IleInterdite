@@ -218,9 +218,9 @@ public abstract class Aventurier {
     }
 
     public void seDeplacer(Tuile nouvelle) {
-        this.getTuile().getAventuriers().remove(this);
+        tuile.getAventuriers().remove(this);
         nouvelle.getAventuriers().add(this);
-        this.setNbActions(this.getNbActions() - 1);
+        tuile = nouvelle;
     }
 
     public void moinsUneAction(Aventurier aventurier){

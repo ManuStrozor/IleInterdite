@@ -36,13 +36,14 @@ public class Controlleur implements IControlleur {
 
             case JOUER:
                 ihm.setVue(msg.vue);
+                ihm.getVue("jeu").initBoards(msg.nbJoueur);
                 ileInterdite.commencerPartie(msg.nbJoueur, msg.niveauEau, msg.nomsJoueurs);
                 break;
             case UPDATE_GRILLE:
-                ihm.getVue("jeu").updateGrille(msg.grille);
+                ihm.getVue("jeu").updateGrille(ileInterdite.getGrille());
                 break;
             case UPDATE_DASHBOARD:
-                ihm.getVue("jeu").updateDashboard(msg.aventuriers);
+                ihm.getVue("jeu").updateDashboard(ileInterdite.getAventuriers());
                 break;
             case QUITTER:
                 ileInterdite.quitter();
@@ -52,7 +53,12 @@ public class Controlleur implements IControlleur {
                 break;
             case DEPLACEMENT:
                 ArrayList<Tuile> tuiles = ileInterdite.getCurrentAventurier().getTuilesAccessibles(ileInterdite.getGrille());
-                ihm.getVue("jeu").afficherTuilesAccessibles(tuiles);
+                ihm.getVue("jeu").afficherTuilesAccessibles(ileInterdite.getGrille(), tuiles);
+                break;
+            case BOUGER:
+                ileInterdite.seDeplacer(ileInterdite.getCurrentAventurier(), ileInterdite.getGrille().getTuile(msg.tuileIndex));
+                ihm.getVue("jeu").updateGrille(ileInterdite.getGrille());
+                ihm.getVue("jeu").updateDashboard(ileInterdite.getAventuriers());
                 break;
             case ECHANGE_CARTE:
                 System.out.println("echangerCarte()");
@@ -64,7 +70,7 @@ public class Controlleur implements IControlleur {
                 //System.out.println(" assécher la tuile choisie par le joueur"); // ici la tuile ou se trouve le joueur
 
                 ArrayList<Tuile> tuiless = ileInterdite.getCurrentAventurier().peutAssecher(ileInterdite.getGrille());
-                ihm.getVue("jeu").afficherTuilesAccessibles(tuiless);
+                ihm.getVue("jeu").afficherTuilesAccessibles(ileInterdite.getGrille(), tuiless);
                 break;
             case RECUPERER_TRESOR:
                 System.out.println("recupererTresor()");

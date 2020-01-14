@@ -72,7 +72,7 @@ public abstract class Vue extends JPanel implements IVue {
 
     public abstract void updateDashboard(ArrayList<Aventurier> aventuriers);
     public abstract void updateGrille(Grille grille);
-
-    public abstract void afficherTuilesAccessibles(ArrayList<Tuile> tuiles);
+    public abstract void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles);
+    public abstract void initBoards(int nbJoueur);
     public abstract void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers);
 }

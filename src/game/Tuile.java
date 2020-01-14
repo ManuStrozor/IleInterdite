@@ -49,7 +49,7 @@ public class Tuile implements Comparable<Tuile> {
     public Image getImage() {
         return this.image;
     }
-    private void setImage(EtatTuile etat) {
+    public void setImage(EtatTuile etat) {
         String filename = Utils.getImageFromName(this.nom);
         URL url = getClass().getClassLoader().getResource("images/tuiles/" + filename + ".png");
         if (url != null) {
@@ -58,8 +58,10 @@ public class Tuile implements Comparable<Tuile> {
                 this.image = img;
             } else if(etat == EtatTuile.innondee) {
                 this.image = Utils.createColorImage( Utils.toBufferedImage(img), 0xFF0000FF);
-            } else {
+            } else if(etat == EtatTuile.coulee) {
                 this.image = Utils.createColorImage( Utils.toBufferedImage(img), 0xFFFF0000);
+            } else {
+                this.image = Utils.createColorImage( Utils.toBufferedImage(img), 0x66FFFFFF);
             }
         }
     }

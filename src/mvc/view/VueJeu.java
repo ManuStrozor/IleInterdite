@@ -6,6 +6,7 @@
 package mvc.view;
 
 import aventuriers.Aventurier;
+import enumerations.EtatTuile;
 import enumerations.TypeMessage;
 import game.Carte;
 import game.CarteTresor;
@@ -26,6 +27,7 @@ import java.util.Objects;
  */
 public class VueJeu extends Vue {
 
+    private int nbJoueurs;
     private JPanel grille, dashBoard;
     private JButton deplacer, assecher, donnerCarteTresor, recupererTresor;
 
@@ -37,6 +39,21 @@ public class VueJeu extends Vue {
             Message m = new Message(TypeMessage.DEPLACEMENT);
             ihm.notifierObservateur(m);
         });
+
+        int pos = 0;
+        for (int i = 0; i < this.grille.getComponentCount(); i++) {
+            TilePanel t = (TilePanel)this.grille.getComponent(i);
+            JButton btn = (JButton)t.getComponent(0);
+            if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
+                int finalPos = pos;
+                btn.addActionListener(e -> {
+                    Message m = new Message(TypeMessage.BOUGER); // Il ne faut pas forcement bouger !!!!
+                    m.tuileIndex = finalPos;
+                    ihm.notifierObservateur(m);
+                });
+                pos++;
+            }
+        }
 
         assecher.addActionListener(e -> {
             Message m = new Message(TypeMessage.ASSECHER_TUILE);
@@ -52,77 +69,104 @@ public class VueJeu extends Vue {
 
         recupererTresor.addActionListener(e -> {
             Message m = new Message(TypeMessage.RECUPERER_TRESOR);
-
             ihm.notifierObservateur(m);
-
         });
     }
 
     public void updateGrille(Grille grille) {
-        int pos = 0;
-        for (int i = 0; i < 36; i++) {
-            TilePanel tile = new TilePanel(null);
+        int i = 0, pos = 0;
+        for (Component tile : this.grille.getComponents()) {
+            TilePanel t = (TilePanel)tile;
+
+            JButton btn = (JButton)t.getComponent(0);
+            btn.setEnabled(false);
+            btn.setOpaque(false);
+
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
-                tile.setBackground(grille.getTuile(pos).getImage());
+                t.setBackground(grille.getTuile(pos).getImage());
                 pos++;
             }
-            tile.setOpaque(false);
-            this.grille.add(tile);
+            i++;
         }
-    }
-
-
-    public void updateDashboard(ArrayList<Aventurier> aventuriers) {
-        for (Aventurier aventurier : aventuriers) {
-            JPanel playerPanel = new JPanel(new BorderLayout());
-            playerPanel.setOpaque(false);
-
-            JPanel rolePlayer = new JPanel(new BorderLayout());
-
-            ////// ZONE DE ROLE DU JOUEUR //////
-            JLabel role = new JLabel(String.valueOf(aventurier.getRole()));
-            rolePlayer.add(role);
-            ////// ZONE DE ROLE DU JOUEUR //////
-
-            rolePlayer.setPreferredSize(new Dimension(100, 0));
-            rolePlayer.setBackground(aventurier.getCouleurPion());
-            if(aventurier.getCouleurPion() == Color.YELLOW) {
-                role.setForeground(Color.BLACK);
-            } else {
-                role.setForeground(Color.WHITE);
-            }
-
-            JPanel description = new JPanel(new BorderLayout());
-
-            ////// ZONE DE DESCRIPTION DU JOUEUR //////
-            description.add(new JLabel("Joueur: ["+aventurier.getNomJoueur() + "]  Actions: " + aventurier.getNbActions()));
-            ////// ZONE DE DESCRIPTION DU JOUEUR //////
-
-            JPanel cartes = new JPanel(new GridLayout(1, 5));
-
-            ////// ZONE DES CARTES DU JOUEUR //////
-            for(CarteTresor c : aventurier.getInventaire()){
-                if(c != null) cartes.add(new JLabel(c.getNom()));
-                else cartes.add(new JLabel());
-            }
-            ////// ZONE DES CARTES DU JOUEUR //////
-
-            cartes.setPreferredSize(new Dimension(0, 100));
-
-            playerPanel.add(rolePlayer, BorderLayout.WEST);
-            playerPanel.add(description, BorderLayout.CENTER);
-            playerPanel.add(cartes, BorderLayout.SOUTH);
-
-            dashBoard.add(playerPanel);
-        }
+        this.updateUI();
     }
 
     @Override
-    public void afficherTuilesAccessibles(ArrayList<Tuile> tuiles) {
-        System.out.println("Tuiles accessibles :");
-        for(Tuile t : tuiles) {
-            System.out.println("\t" + t.getNom());
+    public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {
+        int i = 0, pos = 0;
+        for (Component tile : this.grille.getComponents()) {
+            if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
+                TilePanel t = (TilePanel)tile;
+                JButton btn = (JButton)t.getComponent(0);
+                if(!tuiles.contains(grille.getTuile(pos))) {
+                    grille.getTuile(pos).setImage(EtatTuile.cachee);
+                } else {
+                    btn.setEnabled(true);
+                    btn.setContentAreaFilled(false);
+                }
+                t.setBackground(grille.getTuile(pos).getImage());
+                grille.getTuile(pos).setImage(grille.getTuile(pos).getEtatTuile());
+                pos++;
+            }
+            i++;
         }
+        this.updateUI();
+    }
+
+    public void initBoards(int nb) {
+        for (int i = 0; i < nb; i++) {
+            JPanel dashPanel = new JPanel(new BorderLayout());
+            dashPanel.setOpaque(false);
+
+            JPanel rolePanel = new JPanel(new BorderLayout());
+            rolePanel.setPreferredSize(new Dimension(100, 0));
+            rolePanel.add(new JLabel());
+
+            JPanel descPanel = new JPanel(new BorderLayout());
+            descPanel.add(new JLabel());
+
+            JPanel cartesPanel = new JPanel(new GridLayout(1, 8)); // 8 = Un joueur n'aura jamais plus de 8 cartes en main
+            cartesPanel.setPreferredSize(new Dimension(0, 100));
+            for(int c = 0; c < 8; c++) {
+                cartesPanel.add(new JLabel());
+            }
+
+            dashPanel.add(rolePanel, BorderLayout.WEST);
+            dashPanel.add(descPanel, BorderLayout.CENTER);
+            dashPanel.add(cartesPanel, BorderLayout.SOUTH);
+            dashBoard.add(dashPanel);
+        }
+    }
+
+    public void updateDashboard(ArrayList<Aventurier> aventuriers) {
+        int i = 0;
+        for(Component comp : dashBoard.getComponents()) {
+            JPanel dashPanel = (JPanel)comp;
+
+            JPanel rolePanel = (JPanel)dashPanel.getComponent(0);
+            JPanel descPanel = (JPanel)dashPanel.getComponent(1);
+            JPanel cartesPanel = (JPanel)dashPanel.getComponent(2);
+
+            rolePanel.setBackground(aventuriers.get(i).getCouleurPion());
+            JLabel role = (JLabel)rolePanel.getComponent(0);
+            role.setText(String.valueOf(aventuriers.get(i).getRole()));
+            role.setForeground((aventuriers.get(i).getCouleurPion() == Color.YELLOW) ? Color.BLACK : Color.WHITE);
+
+            JLabel desc = (JLabel)descPanel.getComponent(0);
+            desc.setText("Joueur: ["+aventuriers.get(i).getNomJoueur() + "]  Actions: " + aventuriers.get(i).getNbActions());
+
+            int j = 0;
+            for(Carte c : aventuriers.get(i).getInventaire()){
+                if(c != null) {
+                    JLabel carte = (JLabel)cartesPanel.getComponent(j);
+                    carte.setText(c.getNom());
+                }
+                j++;
+            }
+
+            i++;
+        }
+        this.updateUI();
     }
 
     @Override
@@ -140,7 +184,7 @@ public class VueJeu extends Vue {
         JPanel menu = new JPanel( new GridLayout(4,1, 0 ,10));
         menu.setOpaque(false);
 
-        ////// ZONE DE MENU //////
+        ////// MENU //////
         deplacer = new JButton("Se déplacer");
         assecher = new JButton("Assécher");
         donnerCarteTresor = new JButton("Donner une carte Trésor");
@@ -150,9 +194,7 @@ public class VueJeu extends Vue {
         menu.add(assecher);
         menu.add(donnerCarteTresor);
         menu.add(recupererTresor);
-        // deplacer.setContentAreaFilled(false);  rendre le fond transparent
-        // deplacer.setBorderPainted(false);  rendre la bordure transparente
-        ////// ZONE DE MENU //////
+        ////// MENU //////
 
         JPanel menuPanel = new JPanel(new BorderLayout());
         menuPanel.setOpaque(false);
@@ -174,6 +216,18 @@ public class VueJeu extends Vue {
         board.setOpaque(false);
         grille = new JPanel(new GridLayout(6, 6, 5, 5));
         grille.setOpaque(false);
+
+        /////// GRILLE ///////
+        for (int i = 0; i < 36; i++) {
+            TilePanel tile = new TilePanel(new BorderLayout());
+            JButton btn = new JButton();
+            btn.setEnabled(false);
+            btn.setOpaque(false);
+            tile.add(btn);
+            tile.setOpaque(false);
+            this.grille.add(tile);
+        }
+        /////// GRILLE ///////
 
         JPanel leftSide = new JPanel();
         leftSide.setPreferredSize(new Dimension(100, 0)); leftSide.setOpaque(false);

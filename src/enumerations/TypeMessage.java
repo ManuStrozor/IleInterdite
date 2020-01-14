@@ -17,6 +17,7 @@ public enum TypeMessage {
     ASSECHER_TUILE,
     RECUPERER_TRESOR,
     DEPLACEMENT,
+    BOUGER,
     ECHANGE_CARTE,
     NIVEAU_EAU,
 }

@@ -58,14 +58,12 @@ public class IleInterdite extends Observe {
         initiateAventuriers(nomJoueurs);
 
         Message m = new Message(TypeMessage.UPDATE_DASHBOARD);
-        m.aventuriers = aventuriers;
         notifierObservateur(m);
 
         initiateInondation();
         tirerCartesIondation(6);
 
         m = new Message(TypeMessage.UPDATE_GRILLE);
-        m.grille = grille;
         notifierObservateur(m);
     }
 
@@ -155,9 +153,6 @@ public class IleInterdite extends Observe {
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
         aventurier.seDeplacer(tuileDest);
-        Message m = new Message(TypeMessage.UPDATE_GRILLE);
-        m.grille = grille;
-        notifierObservateur(m);
         aventurier.moinsUneAction(aventurier);
     }
 
@@ -223,6 +218,10 @@ public class IleInterdite extends Observe {
 
     public Aventurier getCurrentAventurier() {
         return aventuriers.get(currentAventurier);
+    }
+
+    public ArrayList<Aventurier> getAventuriers() {
+        return aventuriers;
     }
 
     public void useCarteMonteeDesEaux() {
