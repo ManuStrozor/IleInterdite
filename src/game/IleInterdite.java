@@ -252,7 +252,7 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public void useCarteSacDeSable(Tuile tuile){
+    public void useCarteSacDeSable(Tuile tuile){ // Montrer les tuiles inondées AVANT quand carte cliquée !
         tuile.assecher();
         defausseCartesTresor.add(getCurrentAventurier().getCarteSacDeSable());
         getCurrentAventurier().getInventaire().remove(getCurrentAventurier().getCarteSacDeSable());
