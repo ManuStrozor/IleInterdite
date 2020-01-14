@@ -226,10 +226,40 @@ public class IleInterdite extends Observe {
         return aventuriers.get(currentAventurier);
     }
 
+    public boolean estRecuperable(Aventurier aventurier) {
+
+        boolean conditionOK = false;
+        int nbcarte = 0;
+        Carte[] inventaire = aventurier.getInventaire();    //inventaire de l'aventurier
+        Tresor tresorTuile = aventurier.getTuile().getTresor(); //Type de la tuile où est l'aventurier
+
+        //si le tresor n'est pas deja recup
+        for (Tresor t : tresorsDispo) {
+            if (t == tresorTuile) {
+                conditionOK = true;
+                break;
+            }
+        }
+
+        //si l'aventurier a le bon nombre de carte du meme type que la tuile où il se situe
+        for (int i = 0; i < inventaire.length; i++) {
+            if (inventaire[i].getTresor() == tresorTuile) {
+                nbcarte++;
+            }
+        }
+        if (nbcarte >= 4) {
+            conditionOK = true;
+        } else {
+            conditionOK = false;
+        }
+        return conditionOK;
+    }
+
     public void perdrePartie(Aventurier aventurier, Grille grille, Tuile tuile ){
         if (aventurier.mort(aventurier, aventurier.getTuile(), grille) == true ) {
-           System.out.println(" vous avez perdu ! ");
+            System.out.println(" vous avez perdu ! ");
         }
 
     }
+
 }

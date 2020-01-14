@@ -41,10 +41,6 @@ public class VueJeu extends Vue {
             Message m = new Message(TypeMessage.ASSECHER_TUILE);
             //m.currentplayer = currentplayer();
             ihm.notifierObservateur(m);
-            for (int i = 0; i < 5 ; i++){
-                grille.add(new JButton("test"));
-            }
-
         });
 
         donnerCarteTresor.addActionListener(e -> {
@@ -55,7 +51,9 @@ public class VueJeu extends Vue {
 
         recupererTresor.addActionListener(e -> {
             Message m = new Message(TypeMessage.RECUPERER_TRESOR);
+
             ihm.notifierObservateur(m);
+
         });
     }
 
