@@ -28,6 +28,10 @@ public abstract class Aventurier {
         couleurPion = null;
     }
 
+    public Carte[] getInventaire() {
+        return inventaire;
+    }
+
     public Color getCouleurPion() {
         return couleurPion;
     }
@@ -60,7 +64,7 @@ public abstract class Aventurier {
         return nbActions;
     }
 
-    public boolean ajouterCarte(game.Carte carte){
+    public boolean ajouterCarte(Carte carte){
         int i = 0;
         while (i < inventaire.length && inventaire[i] != null ){
             i++;
@@ -90,7 +94,7 @@ public abstract class Aventurier {
         this.nomJoueur = nomJoueur;
     }
     
-    public boolean peutAssecher(game.Tuile tuileInnondee){
+    public boolean peutAssecher(Tuile tuileInnondee){
 
         if ( tuileInnondee.getEtatTuile() == EtatTuile.innondee){
             if (tuileInnondee.getColonne() == this.getTuile().getColonne() + 1 && tuileInnondee.getLigne() == this.getTuile().getLigne()) {

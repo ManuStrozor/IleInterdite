@@ -128,12 +128,11 @@ public class IleInterdite extends Observe {
                     throw new IllegalStateException("[InitiateAventuriers] Unexpected value: " + lesRoles.get(i));
             }
             aventuriers.add(newAventurier);
-            System.out.println("\nNom: " + aventuriers.get(i).getNomJoueur() + " Role: " + aventuriers.get(i).getRole());
             distribuerCarteTresor(newAventurier);
         }
     }
 
-    private void distribuerCarteTresor(Aventurier aventurier){
+    private void distribuerCarteTresor(Aventurier aventurier) { // Ne fonctionne pas correctement !
         for (int k = 1; k <= 2; k++) {
             int i = pileCartesTresor.size() - 1;
             CarteTresor carte = pileCartesTresor.get(i);
@@ -141,11 +140,9 @@ public class IleInterdite extends Observe {
                 i--;
                 carte = pileCartesTresor.get(i);
             }
-            boolean ajoutok;
-            ajoutok = aventurier.ajouterCarte(pileCartesTresor.get(pileCartesTresor.size()-1));
-            if(ajoutok) { // On ajoute à l'inventaire de l'aventurier la derniere carte de l'arraylist pilecarteTresor
-                pileCartesTresor.remove(pileCartesTresor.get(pileCartesTresor.size()-1)); //et on l'enleve de la pile de carte tresor
-                System.out.println("\tCarte \"" + carte.getNom() + "\" pioché");
+            Carte c = pileCartesTresor.get(pileCartesTresor.size()-1);
+            if(aventurier.ajouterCarte(c)) {
+                pileCartesTresor.remove(c);
             }
         }
     }
