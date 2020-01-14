@@ -59,7 +59,7 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
 
         initiateInondation();
-        tirerCartesIondation(6);
+        //tirerCartesIondation(6);
 
         m = new Message(TypeMessage.UPDATE_GRILLE);
         notifierObservateur(m);
@@ -91,14 +91,6 @@ public class IleInterdite extends Observe {
             pileCartesInondation.add(new CarteInondation(t.getNom()));
         }
         Collections.shuffle(pileCartesInondation);
-    }
-
-    public void tirerCartesIondation(int nb) {
-        for (int i = 0; i < nb; i++) {
-            grille.getTuilesMap().get(pileCartesInondation.get(0).getNom()).innonder();
-            defausseCartesInondation.add(pileCartesInondation.get(0));
-            pileCartesInondation.remove(0);
-        }
     }
 
     private void initiateAventuriers(String[] nomJoueurs) throws IllegalStateException {
@@ -209,6 +201,13 @@ public class IleInterdite extends Observe {
             defausseCartesInondation.add(c);
             grille.getTuilesMap().get(c.getNom()).innonder();
         }
+    }
+
+    public void defausseCarteInnondation(CarteInondation c){
+        defausseCartesInondation.add(c);
+        if(defausseCartesInondation.size()==0){
+            for(){}
+        };
     }
 
 

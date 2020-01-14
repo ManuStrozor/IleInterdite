@@ -78,8 +78,7 @@ public abstract class Aventurier {
 
     public void ajouterCarte(CarteTresor carte){
         getInventaire().add(carte);
-
-        }
+    }
 
 
     public void defausseCarte(){
