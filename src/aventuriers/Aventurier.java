@@ -89,9 +89,10 @@ public abstract class Aventurier {
     }
 
 
-    public void defausseCarte(){
+    public void defausseCarte(CarteTresor c){
         int i = inventaire.size();
         while (i>0 && getInventaire().get(i) != null){
+            inventaire.remove(c);
             i--;
         }
     }

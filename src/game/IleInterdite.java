@@ -167,7 +167,7 @@ public class IleInterdite extends Observe {
     public void donnerCarte(CarteTresor carte, Aventurier receveur) {
         System.out.println(getJoueur().getInventaire() + " " + receveur.getInventaire());
         if (getJoueur().aventuriersAccessible(aventuriers).contains(receveur)) {
-            getJoueur().defausseCarte();
+            getJoueur().defausseCarte(carte);
             receveur.ajouterCarte(carte);
         }
         System.out.println(getJoueur().getInventaire() + " " + receveur.getInventaire());
