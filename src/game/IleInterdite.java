@@ -386,25 +386,38 @@ public class IleInterdite extends Observe {
             System.out.print(tresorsRecupere.name() + " | ");
         }
 
-        System.out.print("\n\n\tLes cartes de la pile innondation : ");
+
+        System.out.print("\n\n\tCartes pile inond : ");
         for (CarteInondation carteInondation : pileInond) {
             System.out.print(carteInondation.getName() + " | ");
         }
+        System.out.print("\n\tNb " + pileInond.size());
 
-        System.out.print("\n\tLes cartes de la defausse innondation : ");
+        System.out.print("\n\tCartes defausse inond : ");
         for (CarteInondation carteInondation : defausseInond) {
             System.out.print(carteInondation.getName() + " | ");
         }
 
-        System.out.print("\n\n\tLes cartes de la pile trésor : ");
+        int totalInond=pileInond.size()+defausseInond.size();
+        System.out.print("\n\tNb " + defausseInond.size() + "\n\tTotal inond : " + totalInond + "/24");
+
+        System.out.print("\n\n\tCartes pile trésor : ");
         for (CarteTresor carteTresor : pileTresor) {
             System.out.print(carteTresor.getName() + " | ");
         }
+        System.out.print("\n\tNb " + pileTresor.size());
 
-        System.out.print("\n\tLes cartes de la defausse trésor : ");
+        System.out.print("\n\tCartes defausse trésor : ");
         for (CarteTresor carteTresor : defausseTresor) {
             System.out.print(carteTresor.getName() + " | ");
         }
+
+        int somme=0;
+        for(Aventurier a: aventuriers){
+            somme +=a.getInventaire().size();
+        }
+        int totalTresor=pileTresor.size()+defausseTresor.size()+somme;
+        System.out.print("\n\tNb " + defausseTresor.size() + "\n\tTotal tresor : " + totalTresor+ "/28");
 
         System.out.print("\n\nInformations sur les autres joueurs : \n\n");
         for (Aventurier aventurier : aventuriers) {
