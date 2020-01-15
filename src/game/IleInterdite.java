@@ -152,12 +152,14 @@ public class IleInterdite extends Observe {
         aventurier.consommerAction((aventurier.getRole() == Role.ingenieur) ? 0.5 : 1);
     }
 
-    public void donnerCarte(Aventurier donneur, Aventurier receveur, CarteTresor carte) {
-        if (donneur.aventuriersAccessible(aventuriers).contains(receveur)) {
-            donneur.defausseCarte();
+    public void donnerCarte(CarteTresor carte, Aventurier receveur) {
+        System.out.println(getJoueur().getInventaire() + " " + receveur.getInventaire());
+        if (getJoueur().aventuriersAccessible(aventuriers).contains(receveur)) {
+            getJoueur().defausseCarte();
             receveur.ajouterCarte(carte);
         }
-        donneur.consommerAction(1);
+        System.out.println(getJoueur().getInventaire() + " " + receveur.getInventaire());
+        getJoueur().consommerAction(1);
         // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 

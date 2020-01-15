@@ -127,6 +127,9 @@ public abstract class Aventurier {
                 Tuile newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()-1);
                 if(newTuile != null) tuiles.add(newTuile);
 
+                newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()); // la tuile ou il est
+                if(newTuile != null) tuiles.add(newTuile);
+
                 newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()+1);
                 if(newTuile != null) tuiles.add(newTuile);
 
@@ -139,16 +142,21 @@ public abstract class Aventurier {
         }
 
         if (getRole() == Role.explorateur) {
-            Tuile newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()+1);
+
+
+            Tuile newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()+1); // tuile en haut a droite
             if(newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne() - 1);
+            newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()); // la tuile ou il est
+            if(newTuile != null) tuiles.add(newTuile);
+
+            newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne() - 1); //tuile en bas a gauche
             if (newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne() + 1);
+            newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne() + 1); // tuile en bas a droite
             if (newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne() + 1, tuile.getColonne() - 1);
+            newTuile = grille.getTuile(tuile.getLigne() + 1, tuile.getColonne() - 1); // tuile en haut à gauche
             if (newTuile != null) tuiles.add(newTuile);
         }
 

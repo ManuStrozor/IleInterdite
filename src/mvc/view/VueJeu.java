@@ -7,6 +7,7 @@ package mvc.view;
 
 import aventuriers.Aventurier;
 import enumerations.EtatTuile;
+import enumerations.Role;
 import enumerations.TypeMessage;
 import game.Carte;
 import game.CarteTresor;
@@ -18,7 +19,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ImageObserver;
+import java.awt.image.RenderedImage;
+import java.awt.image.renderable.RenderableImage;
+import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -87,6 +98,7 @@ public class VueJeu extends Vue {
 
     }
 
+
     public void updateGrille(Grille grille) {
         int i = 0, pos = 0;
         for (Component tile : this.grille.getComponents()) {
@@ -98,6 +110,7 @@ public class VueJeu extends Vue {
 
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
                 t.setBackground(grille.getTuile(pos).getImage());
+
                 pos++;
             }
             i++;
@@ -118,6 +131,7 @@ public class VueJeu extends Vue {
                     btn.setEnabled(true);
                     btn.setContentAreaFilled(false);
                 }
+
                 t.setBackground(grille.getTuile(pos).getImage());
                 grille.getTuile(pos).setImage(grille.getTuile(pos).getEtatTuile());
                 pos++;
@@ -269,6 +283,7 @@ public class VueJeu extends Vue {
         JPanel marginBot2 = new JPanel();
         marginBot2.setPreferredSize(new Dimension(0, 10)); marginBot2.setOpaque(false);
 
+
         boardPanel.add(marginTop2, BorderLayout.NORTH);
         boardPanel.add(marginLeft2, BorderLayout.WEST);
         boardPanel.add(marginRight2, BorderLayout.EAST);
@@ -283,5 +298,7 @@ public class VueJeu extends Vue {
         this.add(boardPanel, BorderLayout.CENTER);
         this.add(dashBoard, BorderLayout.SOUTH);
     }
+
+
 
 }
