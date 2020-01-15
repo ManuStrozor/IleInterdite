@@ -147,8 +147,8 @@ public abstract class Aventurier {
             case pilote:
             case explorateur:
             case plongeur:
-                tuiles.removeIf(t -> t.getEtatTuile() == EtatTuile.coulee);
-                tuiles.removeIf(t -> t.getEtatTuile() == EtatTuile.assechee);
+                tuiles.removeIf(t -> t.getEtat() == Etat.coulee);
+                tuiles.removeIf(t -> t.getEtat() == Etat.assechee);
                 break;
         }
         return tuiles;
@@ -201,7 +201,7 @@ public abstract class Aventurier {
             case navigateur:
             case pilote:
             case explorateur:
-                tuiles.removeIf(t -> t.getEtatTuile() == EtatTuile.coulee);
+                tuiles.removeIf(t -> t.getEtat() == Etat.coulee);
                 break;
         }
         return tuiles;
@@ -219,7 +219,7 @@ public abstract class Aventurier {
     }
 
     public boolean mort(Grille grille) {
-        return getRole() != Role.plongeur && tuile.getEtatTuile() == EtatTuile.coulee && getTuilesAccessibles(grille) == null;
+        return getRole() != Role.plongeur && tuile.getEtat() == Etat.coulee && getTuilesAccessibles(grille) == null;
     }
 
     public void defaussetoi(ArrayList<CarteTresor> cs){

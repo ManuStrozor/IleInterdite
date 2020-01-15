@@ -8,7 +8,7 @@ package enumerations;/*
  *
  * @author estevmat
  */
-public enum EtatTuile {
+public enum Etat {
     assechee,
     innondee,
     coulee,

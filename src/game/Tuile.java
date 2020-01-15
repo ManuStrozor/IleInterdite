@@ -1,7 +1,7 @@
 package game;
 
 import aventuriers.Aventurier;
-import enumerations.EtatTuile;
+import enumerations.Etat;
 import enumerations.Nom;
 import enumerations.Tresor;
 
@@ -19,14 +19,14 @@ public class Tuile implements Comparable<Tuile> {
     private Nom nom;
     private Image image;
     private Tresor tresor;
-    private EtatTuile etatTuile;
+    private Etat etat;
     private int ligne, colonne;
     private HashSet<Aventurier> aventuriers;
 
     Tuile(Nom nom){
         setNom(nom);
         this.assecher();
-        setImage(etatTuile);
+        setImage(etat);
         aventuriers = new HashSet<>();
         setTresor(null);
     }
@@ -44,17 +44,17 @@ public class Tuile implements Comparable<Tuile> {
     public Image getImage() {
         return this.image;
     }
-    public void setImage(EtatTuile etat) {
+    public void setImage(Etat etat) {
         String filename = Utils.toCamelCase(getName());
-        if(etat == EtatTuile.innondee) {
+        if(etat == Etat.innondee) {
             filename += "2";
-        } else if(etat == EtatTuile.coulee) {
+        } else if(etat == Etat.coulee) {
             filename = "EauSombree";
         }
         URL url = getClass().getClassLoader().getResource("tuiles/" + filename + ".png");
         if (url != null) {
             Image img = new ImageIcon(url).getImage();
-            this.image = etat == EtatTuile.cachee ? Utils.createColorImage(Utils.toBufferedImage(img), 0x66FFFFFF) : img;
+            this.image = etat == Etat.cachee ? Utils.createColorImage(Utils.toBufferedImage(img), 0x66FFFFFF) : img;
         } else {
             System.out.println("Erreur nom image : " + getName() + " " + filename);
         }
@@ -85,26 +85,26 @@ public class Tuile implements Comparable<Tuile> {
         setColonne(colonne);
     }
 
-    public EtatTuile getEtatTuile() {
-        return etatTuile;
+    public Etat getEtat() {
+        return etat;
     }
-    private void setEtatTuile(EtatTuile etatTuile) {
-        this.etatTuile = etatTuile;
+    private void setEtat(Etat etat) {
+        this.etat = etat;
     }
 
     public void assecher() {
-        setEtatTuile(EtatTuile.assechee);
-        setImage(EtatTuile.assechee);
+        setEtat(Etat.assechee);
+        setImage(Etat.assechee);
     }
 
     public void innonder() {
-        if (getEtatTuile() == EtatTuile.innondee){
-            setEtatTuile(EtatTuile.coulee);
-            setImage(EtatTuile.coulee);
+        if (getEtat() == Etat.innondee){
+            setEtat(Etat.coulee);
+            setImage(Etat.coulee);
         }
-        else if (getEtatTuile() == EtatTuile.assechee){
-            setEtatTuile(EtatTuile.innondee);
-            setImage(EtatTuile.innondee);
+        else if (getEtat() == Etat.assechee){
+            setEtat(Etat.innondee);
+            setImage(Etat.innondee);
         }
     }
 

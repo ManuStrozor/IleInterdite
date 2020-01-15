@@ -5,12 +5,11 @@ package game;
  * and open the template in the editor.
  */
 
+import java.util.*;
 import aventuriers.*;
 import enumerations.*;
 import mvc.Message;
 import mvc.Observe;
-
-import java.util.*;
 
 /**
  *
@@ -19,13 +18,12 @@ import java.util.*;
 public class IleInterdite extends Observe {
 
     private Grille grille;
-    private ArrayList<Tresor> tresorsDispo, tresorsRecuperes;
-    private int niveauEau = 0, nbJoueurs = 0, joueur = 0, cartesAPiocher = 2, tourjeu=0;
-    private ArrayList<CarteTresor> pileCartesTresor, defausseCartesTresor;
-    private ArrayList<CarteInondation> pileCartesInondation, defausseCartesInondation;
+    private ArrayList<Tresor> tresorsDispo;
+    private int niveauEau = 0, nbJoueurs = 0, joueur = 0, cartesAPiocher = 2, tourjeu = 0;
+    private ArrayList<CarteTresor> pileTresor, defausseTresor;
+    private ArrayList<CarteInondation> pileInond, defausseInond;
 
     private ArrayList<Aventurier> aventuriers;
-    private ArrayList<Tuile> tuilesTresor;
     private Aventurier joueurASauver;
 
     Random random = new Random();
@@ -33,10 +31,11 @@ public class IleInterdite extends Observe {
     public IleInterdite() {
         grille = new Grille(); //initialisation grille
         aventuriers = new ArrayList<>(); //initialisation aventuriers
-        tresorsDispo= new ArrayList<>();
+        tresorsDispo = new ArrayList<>();
         Collections.addAll(tresorsDispo, Tresor.values());
-        tresorsRecuperes= new ArrayList<>(); //initialisation tresors
-        tuilesTresor = new ArrayList<>();
+        tresorsDispo.remove(Tresor.Montee_Des_Eaux);
+        tresorsDispo.remove(Tresor.Helicoptere);
+        tresorsDispo.remove(Tresor.Sac_De_Sable);
     }
 
     public int getNbJoueurs() {
@@ -48,34 +47,34 @@ public class IleInterdite extends Observe {
         initiateTresorCards();
         initiateInondation();
         initiateAventuriers(names);
-        tirerCartesIondation();
+        tirerCartesIondation(6);
         DEBUGILEINTERDITE();
         this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
     }
 
     private void initiateTresorCards() {
-        pileCartesTresor = new ArrayList<>();
-        defausseCartesTresor = new ArrayList<>();
+        pileTresor = new ArrayList<>();
+        defausseTresor = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            pileCartesTresor.add(new CarteTresor(Tresor.Le_Cristal_Ardent));
-            pileCartesTresor.add(new CarteTresor(Tresor.La_Pierre_Sacree));
-            pileCartesTresor.add(new CarteTresor(Tresor.La_Statue_Du_Zephyr));
-            pileCartesTresor.add(new CarteTresor(Tresor.Le_Calice_De_L_Onde));
+            pileTresor.add(new CarteTresor(Tresor.Le_Cristal_Ardent));
+            pileTresor.add(new CarteTresor(Tresor.La_Pierre_Sacree));
+            pileTresor.add(new CarteTresor(Tresor.La_Statue_Du_Zephyr));
+            pileTresor.add(new CarteTresor(Tresor.Le_Calice_De_L_Onde));
         }
         for (int i = 0; i < 3; i++) {
-            pileCartesTresor.add(new CarteTresor(Tresor.Montee_Des_Eaux));
-            pileCartesTresor.add(new CarteTresor(Tresor.Helicoptere));
+            pileTresor.add(new CarteTresor(Tresor.Montee_Des_Eaux));
+            pileTresor.add(new CarteTresor(Tresor.Helicoptere));
         }
         for (int i = 0; i < 2; i++) {
-            pileCartesTresor.add(new CarteTresor(Tresor.Sac_De_Sable));
+            pileTresor.add(new CarteTresor(Tresor.Sac_De_Sable));
         }
     }
 
     private void initiateInondation() {
-        pileCartesInondation = new ArrayList<>();
-        defausseCartesInondation = new ArrayList<>();
+        pileInond = new ArrayList<>();
+        defausseInond = new ArrayList<>();
         for (Tuile t : grille.getTuiles()) {
-            pileCartesInondation.add(new CarteInondation(t.getNom()));
+            pileInond.add(new CarteInondation(t.getNom()));
         }
     }
 
@@ -114,7 +113,7 @@ public class IleInterdite extends Observe {
     private void distribuerCarteTresor(Aventurier aventurier) { // Distribue 2 carte trésor au début sauf montée eaux
         CarteTresor c;
         for(int i=0; i<2; i++){
-            c = pileCartesTresor.get(random.nextInt(pileCartesTresor.size()-1));
+            c = pileTresor.get(random.nextInt(pileTresor.size()-1));
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
                 defausserCartesTresor(c);
                 i--;
@@ -125,10 +124,9 @@ public class IleInterdite extends Observe {
         }
     }
 
-    private void tirerCartesIondation(){ // Distribue 6 carte inondation au début du jeu
-        for(int i = 0; i < 6; i++) {
-            CarteInondation c;
-            c = pileCartesInondation.get(random.nextInt(pileCartesInondation.size()));
+    private void tirerCartesIondation(int n) {
+        for(int i = 0; i < n; i++) {
+            CarteInondation c = pileInond.get(random.nextInt(pileInond.size()));
             grille.getTuilesMap().get(c.getNom()).innonder();
             defausserCarteInnondation(c);
         }
@@ -158,11 +156,10 @@ public class IleInterdite extends Observe {
         if(estRecuperable(getJoueur())) { // methode avant
 
             tresorsDispo.remove(tresor);
-            tresorsRecuperes.add(tresor);
 
             System.out.println(getJoueur().getInventaire().size());
 
-            ArrayList<Carte> cartesADegager = new ArrayList<>();
+            ArrayList<CarteTresor> cartesADegager = new ArrayList<>();
             for (CarteTresor c : getJoueur().getInventaire()) {
                 if(c.getTresor() == tresor) {
                     defausserCartesTresor(c);
@@ -175,36 +172,35 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public void passerTour() { //passe le tour du joueur et fais piocher les cartes
+    public void passerTour() {
         piocherCarteTresor();
-        piocherCarteInnondation();
+        tirerCartesIondation(cartesAPiocher);
         getJoueur().setNbActions(3);
+
         if(joueur == aventuriers.size()-1){
             joueur = 0;
         } else {
             joueur++;
         }
 
-        if(perdrePartie(grille)== true) {
-            System.out.println("VOUS AVEZ PERDU");
+        if(isGameover()) {
             Message msg = new Message(TypeMessage.CHANGER_VUE);
             msg.vue = "perdu";
             this.notifierObservateur(msg);
+        } else {
+            tourjeu++;
+            DEBUGILEINTERDITE();
+            this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
         }
-        tourjeu++;
-        DEBUGILEINTERDITE();
-
-        this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
     }
 
     public void sauverJoueur() {
         for (Aventurier a : aventuriers) {
-
-            if (a.getTuile().getEtatTuile() == EtatTuile.coulee && a.getTuilesAccessibles(grille) != null) {
+            if (a.getTuile().getEtat() == Etat.coulee && a.getTuilesAccessibles(grille) != null) {
                 // si la tuile sur laquelle est l'aventurier coule et qu'il y a des tuiles accessibles autour de lui , alors il y va
-               joueurASauver= a;
+               joueurASauver = a;
                Message m = new Message(TypeMessage.SAUVER);
-               m.a=a;
+               m.a = a;
                this.notifierObservateur(m);
             }
         }
@@ -213,40 +209,32 @@ public class IleInterdite extends Observe {
     public void piocherCarteTresor() { //Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
         CarteTresor c;
         for(int i=0; i<2; i++){
-            c = pileCartesTresor.get(random.nextInt(pileCartesTresor.size()-1));
+            c = pileTresor.get(random.nextInt(pileTresor.size()-1));
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
                 useCarteMonteeDesEaux();
             } else {
                 getJoueur().getInventaire().add(c);
-                pileCartesTresor.remove(c);
+                pileTresor.remove(c);
                 defausserCartesTresor(c);
             }
         }
     }
 
-    public void piocherCarteInnondation(){ // fais piocher le nombre de carte innondation en fonction du niveau eau
-        CarteInondation c;
-        for(int i=0; i<cartesAPiocher; i++){
-            c = pileCartesInondation.get(random.nextInt(pileCartesInondation.size()-1));
-            pileCartesInondation.add(c);
-            defausserCarteInnondation(c);
-            grille.getTuilesMap().get(c.getNom()).innonder();
-        }
-    }
-
     public void defausserCarteInnondation(CarteInondation c){
-        defausseCartesInondation.add(c);
-        pileCartesInondation.remove(c);
-        if(pileCartesInondation.isEmpty()){
-            defausseCartesInondation.addAll(pileCartesInondation);
+        defausseInond.add(c);
+        pileInond.remove(c);
+        if(pileInond.isEmpty()){
+            defausseInond.addAll(pileInond);
+            defausseInond.clear();
         }
     }
 
     public void defausserCartesTresor(CarteTresor c){
-        defausseCartesTresor.add(c);
-        pileCartesTresor.remove(c);
-        if(pileCartesTresor.isEmpty()){
-            defausseCartesTresor.addAll(pileCartesTresor);
+        defausseTresor.add(c);
+        pileTresor.remove(c);
+        if(pileTresor.isEmpty()){
+            defausseTresor.addAll(pileTresor);
+            defausseTresor.clear();
         }
     }
 
@@ -290,22 +278,23 @@ public class IleInterdite extends Observe {
     }
 
     public void useCarteMonteeDesEaux() { // Déclenché automatiquement...ne pas oublier de defausser !
-        niveauEau = niveauEau + 1;
-        if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) {
-                cartesAPiocher+=1;
-        }
+        niveauEau++;
+        if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) cartesAPiocher++;
     }
 
     public void useCarteSacDeSable(Tuile tuile) { // Montrer les tuiles inondées AVANT quand carte cliquée !
         tuile.assecher();
-        defausseCartesTresor.add(getJoueur().getCarteSacDeSable());
+        defausseTresor.add(getJoueur().getCarteSacDeSable());
         getJoueur().getInventaire().remove(getJoueur().getCarteSacDeSable());
     }
 
     public void utiliserHelico() {
-        gagnerPartie();
-        Message m = new Message(TypeMessage.HELICO);
-        this.notifierObservateur(m);
+        if(isWon()) {
+            System.out.println("Vous avez gagné !!!");
+        } else {
+            Message m = new Message(TypeMessage.HELICO);
+            this.notifierObservateur(m);
+        }
     }
 
     public boolean estRecuperable(Aventurier aventurier) { // Déplacer dans Tuile.java
@@ -343,25 +332,22 @@ public class IleInterdite extends Observe {
         return conditionOK;
     }
 
-    public boolean perdrePartie(Grille grille) {
-
-        for (Aventurier a : aventuriers) { //si un aventurier est mort, la partie est perdue
-            if ( a.mort(grille)){
-                return a.mort(grille);
+    public boolean isGameover() {
+        for (Aventurier a : aventuriers) {
+            // si un aventurier est mort
+            if(a.mort(grille)) {
+                return true;
             }
         }
-
-        for (Tresor t : tresorsDispo) { // pour chaque tresor que l'on a pas encore recuperé
-            // Si les tuiles permettants de recuperer ce tresor sont toutes les deux coulées, on retourne true
-            if (getTuileTresor(t).get(0).getEtatTuile() == EtatTuile.coulee
-                    && getTuileTresor(t).get(1).getEtatTuile() == EtatTuile.coulee){
-                return getTuileTresor(t).get(0).getEtatTuile() == EtatTuile.coulee
-                        && getTuileTresor(t).get(1).getEtatTuile() == EtatTuile.coulee;
+        for (Tresor t : tresorsDispo) {
+            ArrayList<Tuile> tuiles = getTuileTresor(t);
+            // Si deux tuiles d'un même trésor sont coulées
+            if (tuiles.get(0).getEtat() == Etat.coulee && tuiles.get(1).getEtat() == Etat.coulee) {
+                return true;
             }
-
         }
-
-        return grille.getTuilesMap().get(Nom.Heliport).getEtatTuile() == EtatTuile.coulee || getNiveauEau() >= 10; // marche pas
+        Tuile heliport = grille.getTuilesMap().get(Nom.Heliport);
+        return heliport.getEtat() == Etat.coulee || getNiveauEau() >= 10;
     }
 
     public ArrayList<Tuile> getTuileTresor(Tresor t) {
@@ -381,10 +367,20 @@ public class IleInterdite extends Observe {
         return tuiles;
     }
 
-    public void gagnerPartie(){
-        if (aventuriers.size() == grille.getTuilesMap().get(Nom.Heliport).getAventuriers().size() && tresorsRecuperes.size()==4){
-            System.out.println("Vous avez gagné !");
+    public boolean isWon() {
+        Tuile heliport = grille.getTuilesMap().get(Nom.Heliport);
+        if (aventuriers.size() == heliport.getAventuriers().size() && tresorsDispo.isEmpty()) {
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    private ArrayList<Tresor> getRecup() {
+        ArrayList<Tresor> recup = new ArrayList<>();
+        Collections.addAll(recup, Tresor.values());
+        recup.removeAll(tresorsDispo);
+        return recup;
     }
 
     public Aventurier getJoueurASauver() {
@@ -415,50 +411,50 @@ public class IleInterdite extends Observe {
             System.out.print(getJoueur().getTuilesAccessibles(grille).get(i).getName() + ", ");
         }
 
-        System.out.print("\n\nInformations pour la partie : \n\n\t" + "Le niveau d'eau est : " + niveauEau + "\n\tLe nombre de carte à piocher est : " + cartesAPiocher);
+        System.out.print("\n\nInformations pour la partie : \n\n\t"
+                + "Le niveau d'eau est : " + niveauEau
+                + "\n\tLe nombre de carte à piocher est : " + cartesAPiocher);
 
         System.out.print("\n\tTrésors dispo : ");
-        for (int i = 0; i < tresorsDispo.size(); i++) {
-            System.out.print(tresorsDispo.get(i).name() + " | ");
+        for (Tresor tresor : tresorsDispo) {
+            System.out.print(tresor.name() + " | ");
         }
 
         System.out.print("\n\tTrésors récupérés : ");
-        for (int i = 0; i < tresorsRecuperes.size(); i++) {
-            System.out.print(tresorsRecuperes.get(i).name() + " | ");
+        for (Tresor tresorsRecupere : getRecup()) {
+            System.out.print(tresorsRecupere.name() + " | ");
         }
 
-        System.out.print("\n\tLes cartes de la pile innondation : ");
-        for (int i = 0; i < pileCartesInondation.size(); i++) {
-            System.out.print(pileCartesInondation.get(i).getName() + " | ");
-        }
-
-        System.out.print("\n\tLes cartes de la pile trésor : ");
-        for (int i = 0; i < pileCartesTresor.size(); i++) {
-            System.out.print(pileCartesTresor.get(i).getName() + " | ");
+        System.out.print("\n\n\tLes cartes de la pile innondation : ");
+        for (CarteInondation carteInondation : pileInond) {
+            System.out.print(carteInondation.getName() + " | ");
         }
 
         System.out.print("\n\tLes cartes de la defausse innondation : ");
-        for (int i = 0; i < defausseCartesInondation.size(); i++) {
-            System.out.print(defausseCartesInondation.get(i).getName() + " | ");
+        for (CarteInondation carteInondation : defausseInond) {
+            System.out.print(carteInondation.getName() + " | ");
+        }
+
+        System.out.print("\n\n\tLes cartes de la pile trésor : ");
+        for (CarteTresor carteTresor : pileTresor) {
+            System.out.print(carteTresor.getName() + " | ");
         }
 
         System.out.print("\n\tLes cartes de la defausse trésor : ");
-        for (int i = 0; i < defausseCartesTresor.size(); i++) {
-            System.out.print(defausseCartesTresor.get(i).getName() + " | ");
+        for (CarteTresor carteTresor : defausseTresor) {
+            System.out.print(carteTresor.getName() + " | ");
         }
 
         System.out.print("\n\nInformations sur les autres joueurs : \n\n");
-        for (int i = 0; i < aventuriers.size(); i++) {
-            if (aventuriers.get(i) == getJoueur()) {
-
-            } else {
-                System.out.print("\tNom du joueur : " + aventuriers.get(i).getNomJoueur() +
-                        "\n\tRole du joueur : " + aventuriers.get(i).getRole() +
-                        "\n\tTuile où se trouve le joueur : " + aventuriers.get(i).getTuile().getNom() +
+        for (Aventurier aventurier : aventuriers) {
+            if (aventurier != getJoueur()) {
+                System.out.print("\tNom du joueur : " + aventurier.getNomJoueur() +
+                        "\n\tRole du joueur : " + aventurier.getRole() +
+                        "\n\tTuile où se trouve le joueur : " + aventurier.getTuile().getNom() +
                         "\n\tActions; " + getJoueur().getNbActions() +
                         "\n\tLes cartes du joueurs : ");
-                for (int j = 0; j < aventuriers.get(i).getInventaire().size(); j++) {
-                    System.out.print(aventuriers.get(i).getInventaire().get(j).getName() + ", ");
+                for (int j = 0; j < aventurier.getInventaire().size(); j++) {
+                    System.out.print(aventurier.getInventaire().get(j).getName() + ", ");
                 }
                 System.out.println("\n");
             }

@@ -6,7 +6,7 @@
 package mvc.view;
 
 import aventuriers.Aventurier;
-import enumerations.EtatTuile;
+import enumerations.Etat;
 import enumerations.Tresor;
 import enumerations.TypeMessage;
 import game.CarteTresor;
@@ -114,14 +114,14 @@ public class VueJeu extends Vue {
                 JButton btn = (JButton)t.getComponent(0);
 
                 if(!tuiles.contains(grille.getTuile(pos))) {
-                    grille.getTuile(pos).setImage(EtatTuile.cachee);
+                    grille.getTuile(pos).setImage(Etat.cachee);
                 } else {
                     btn.setEnabled(true);
                     btn.setContentAreaFilled(false);
                 }
 
                 t.setBackground(grille.getTuile(pos).getImage());
-                grille.getTuile(pos).setImage(grille.getTuile(pos).getEtatTuile());
+                grille.getTuile(pos).setImage(grille.getTuile(pos).getEtat());
                 pos++;
             }
             i++;
