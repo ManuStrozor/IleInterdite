@@ -47,7 +47,7 @@ public class VueGameOver extends Vue {
 
     @Override
     public void initComponents() {
-        this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundMenu.png"))).getImage());
+        this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("gameOver.png"))).getImage());
 
 
 
@@ -61,10 +61,13 @@ public class VueGameOver extends Vue {
         JPanel marginRight = new JPanel(); marginRight.setPreferredSize(new Dimension(200, 0)); marginRight.setOpaque(false);
         JPanel marginBot = new JPanel(); marginBot.setPreferredSize(new Dimension(0, 50)); marginBot.setOpaque(false);
 
-        JLabel perdu = new JLabel("VOUS AVEZ PERDU!  ");
+        JLabel perdu = new JLabel("VOUS AVEZ PERDU!  ", SwingConstants.CENTER);
         Font font = new Font("Arial",Font.BOLD,48);
         perdu.setFont(font);
         perdu.setForeground(Color.white);
+
+
+
 
         buttonsPanel.add(quitter, BorderLayout.SOUTH);
 

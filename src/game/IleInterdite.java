@@ -190,8 +190,6 @@ public class IleInterdite extends Observe {
             Message msg = new Message(TypeMessage.CHANGER_VUE);
             msg.vue = "perdu";
             this.notifierObservateur(msg);
-        } else{
-            System.out.println("Vous avez pas encore perdu");
         }
         tourjeu++;
         DEBUGILEINTERDITE();
