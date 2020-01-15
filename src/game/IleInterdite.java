@@ -20,7 +20,7 @@ public class IleInterdite extends Observe {
 
     private Grille grille;
     private ArrayList<Tresor> tresorsDispo, tresorsRecuperes;
-    private int niveauEau = 0, nbJoueurs = 0, joueur = 0, cartesAPiocher = 2;
+    private int niveauEau = 0, nbJoueurs = 0, joueur = 0, cartesAPiocher = 2, tourjeu=0;
     private ArrayList<CarteTresor> pileCartesTresor, defausseCartesTresor;
     private ArrayList<CarteInondation> pileCartesInondation, defausseCartesInondation;
 
@@ -49,6 +49,7 @@ public class IleInterdite extends Observe {
         initiateInondation();
         initiateAventuriers(names);
         tirerCartesIondation();
+        DEBUGILEINTERDITE();
         this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
     }
 
@@ -192,6 +193,9 @@ public class IleInterdite extends Observe {
         } else{
             System.out.println("Vous avez pas encore perdu");
         }
+        tourjeu++;
+        DEBUGILEINTERDITE();
+
         this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
     }
 
@@ -396,4 +400,70 @@ public class IleInterdite extends Observe {
         }
     }
 
+    public void DEBUGILEINTERDITE() { //DEBUGGER CONSOLE
+        System.out.print("\n--------------------------------------Tour de jeu numéro " + tourjeu + " : ------------------------------------\n");
+        System.out.print("\nInformations joueur en cours : \n\n\t" +
+                "Nom joueur : " + getJoueur().getNomJoueur() +
+                "\n\tRole : " + getJoueur().getRole().name() +
+                "\n\tActions; " + getJoueur().getNbActions() +
+                "\n\tCartes Inventaire : ");
+        for (int j = 0; j < getJoueur().getInventaire().size(); j++) {
+            System.out.print(getJoueur().getInventaire().get(j).getName() + ", ");
+        }
+
+        System.out.print("\n\tTuiles accessibles : ");
+
+        for (int i = 0; i < getJoueur().getTuilesAccessibles(grille).size(); i++) {
+            System.out.print(getJoueur().getTuilesAccessibles(grille).get(i).getName() + ", ");
+        }
+
+        System.out.print("\n\nInformations pour la partie : \n\n\t" + "Le niveau d'eau est : " + niveauEau + "\n\tLe nombre de carte à piocher est : " + cartesAPiocher);
+
+        System.out.print("\n\tTrésors dispo : ");
+        for (int i = 0; i < tresorsDispo.size(); i++) {
+            System.out.print(tresorsDispo.get(i).name() + " | ");
+        }
+
+        System.out.print("\n\tTrésors récupérés : ");
+        for (int i = 0; i < tresorsRecuperes.size(); i++) {
+            System.out.print(tresorsRecuperes.get(i).name() + " | ");
+        }
+
+        System.out.print("\n\tLes cartes de la pile innondation : ");
+        for (int i = 0; i < pileCartesInondation.size(); i++) {
+            System.out.print(pileCartesInondation.get(i).getName() + " | ");
+        }
+
+        System.out.print("\n\tLes cartes de la pile trésor : ");
+        for (int i = 0; i < pileCartesTresor.size(); i++) {
+            System.out.print(pileCartesTresor.get(i).getName() + " | ");
+        }
+
+        System.out.print("\n\tLes cartes de la defausse innondation : ");
+        for (int i = 0; i < defausseCartesInondation.size(); i++) {
+            System.out.print(defausseCartesInondation.get(i).getName() + " | ");
+        }
+
+        System.out.print("\n\tLes cartes de la defausse trésor : ");
+        for (int i = 0; i < defausseCartesTresor.size(); i++) {
+            System.out.print(defausseCartesTresor.get(i).getName() + " | ");
+        }
+
+        System.out.print("\n\nInformations sur les autres joueurs : \n\n");
+        for (int i = 0; i < aventuriers.size(); i++) {
+            if (aventuriers.get(i) == getJoueur()) {
+
+            } else {
+                System.out.print("\tNom du joueur : " + aventuriers.get(i).getNomJoueur() +
+                        "\n\tRole du joueur : " + aventuriers.get(i).getRole() +
+                        "\n\tTuile où se trouve le joueur : " + aventuriers.get(i).getTuile().getNom() +
+                        "\n\tActions; " + getJoueur().getNbActions() +
+                        "\n\tLes cartes du joueurs : ");
+                for (int j = 0; j < aventuriers.get(i).getInventaire().size(); j++) {
+                    System.out.print(aventuriers.get(i).getInventaire().get(j).getName() + ", ");
+                }
+                System.out.println("\n");
+            }
+        }
+    }
 }
