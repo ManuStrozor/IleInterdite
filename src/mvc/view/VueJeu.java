@@ -117,7 +117,9 @@ public class VueJeu extends Vue {
         }
         this.updateUI();
     }
-
+    public void rendreBoutonsClicables(boolean bool){
+        recupererTresor.setEnabled(bool);
+    }
     @Override
     public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {
         int i = 0, pos = 0;
@@ -233,13 +235,14 @@ public class VueJeu extends Vue {
 
         JPanel menuPanel = new JPanel(new BorderLayout());
         menuPanel.setOpaque(false);
-
         JPanel marginLeft = new JPanel();
         marginLeft.setPreferredSize(new Dimension(100, 0)); marginLeft.setOpaque(false);
         JPanel marginTop = new JPanel();
         marginTop.setPreferredSize(new Dimension(0, 50)); marginTop.setOpaque(false);
         JPanel marginBot = new JPanel();
         marginBot.setPreferredSize(new Dimension(0, 100)); marginBot.setOpaque(false);
+
+
 
         menuPanel.add(marginTop, BorderLayout.NORTH);
         menuPanel.add(marginLeft, BorderLayout.WEST);

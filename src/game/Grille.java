@@ -50,13 +50,13 @@ public class Grille {
         for (Nom nom : Nom.values()) {
             Tuile newTuile = new Tuile(nom);
             tuiles.put(nom, newTuile);
-            if(newTuile.getName().contains("caverne")) {
+            if(newTuile.getName().contains("Caverne")) {
                 newTuile.setTresor(Tresor.Le_Cristal_Ardent);
-            } if(newTuile.getName().contains("palais")) {
+            } if(newTuile.getName().contains("Palais")) {
                 newTuile.setTresor(Tresor.Le_Calice_De_L_Onde);
-            } if(newTuile.getName().contains("temple")) {
+            } if(newTuile.getName().contains("Temple")) {
                 newTuile.setTresor(Tresor.La_Pierre_Sacree);
-            } if(newTuile.getName().contains("jardin")) {
+            } if(newTuile.getName().contains("Jardin")) {
                 newTuile.setTresor(Tresor.La_Statue_Du_Zephyr);
             }
         }

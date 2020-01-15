@@ -84,6 +84,8 @@ public class VueConfig extends Vue {
 
         });
     }
+    @Override
+    public void rendreBoutonsClicables(boolean bool){};
 
     public int entreeNomValide(){
         int indexErreur = 5;

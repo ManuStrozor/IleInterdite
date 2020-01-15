@@ -31,7 +31,8 @@ public class VueMenu extends Vue {
             ihm.notifierObservateur(m);
         });
     }
-
+    @Override
+    public void rendreBoutonsClicables(boolean bool){}
     @Override
     public void updateDashboard(ArrayList<Aventurier> aventuriers) {}
     @Override

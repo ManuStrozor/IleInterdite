@@ -6,6 +6,7 @@ package mvc.controller;
  */
 
 import enumerations.Role;
+import enumerations.Tresor;
 import enumerations.TypeMessage;
 import game.Grille;
 import game.IleInterdite;
@@ -110,12 +111,14 @@ public class Controlleur implements IControlleur {
                 break;
 
             case RECUPERER_TRESOR:
-                System.out.println("recupererTresor()");
+                ile.recupererTresor(ile.getJoueur().getTuile().getTresor());
+
                 break;
             case PASSERTOUR:
                 ile.passerTour();
                 ihm.getVue("jeu").updateGrille(ile.getGrille());
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
+
                 break;
 
             case CHANGER_VUE:
@@ -128,6 +131,14 @@ public class Controlleur implements IControlleur {
         }
         lastAction = msg.type;
 
+        if(ile.getJoueur() !=null&&ile.getJoueur().getNbActions()>0){
+            if(ile.estRecuperable(ile.getJoueur())){
+                ihm.getVue("jeu").rendreBoutonsClicables(true);
+            }
+            else {
+                ihm.getVue("jeu").rendreBoutonsClicables(false);
+            }
+        }
         if (ile.getJoueur() != null && ile.getJoueur().getNbActions() == 0) {
             ile.passerTour();
             ihm.getVue("jeu").updateGrille(ile.getGrille());
