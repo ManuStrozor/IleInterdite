@@ -2,6 +2,7 @@ package mvc.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class TilePanel extends JPanel {
 

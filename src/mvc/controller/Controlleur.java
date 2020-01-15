@@ -41,6 +41,10 @@ public class Controlleur implements IControlleur {
 
         Grille grille = ile.getGrille();
 
+        if(lastAction == TypeMessage.CLIK_CARTE && msg.type != TypeMessage.CLIK_CARTE) {
+            ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
+        }
+
         switch (msg.type) {
 
             case JOUER:
@@ -117,15 +121,20 @@ public class Controlleur implements IControlleur {
 
                 if(c.getTresor() != Tresor.Helicoptere && c.getTresor() != Tresor.Sac_De_Sable) {
                     ile.donnerCarte(ile.getJoueur().getInventaire().get(msg.index), ile.getAventuriers().get(indexCible));
-
                 } else if(c.getTresor() == Tresor.Helicoptere) {
                     System.out.println("Helicoptere");
                 } else if(c.getTresor() == Tresor.Sac_De_Sable) {
                     System.out.println("Sac de sable");
-                } else {
-
                 }
+
+                System.out.println("///// APRES AVOIR DONNE /////");
+                for(CarteTresor carte : av.getInventaire()) {
+                    System.out.println(carte.getName());
+                }
+                System.out.println("/////////////////////////////");
+
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
+                ihm.getVue("jeu").afficherCartesAccessibles(ile.getAventuriers(), ile.getJoueur());
                 break;
 
             case CLIK_JOUEUR:

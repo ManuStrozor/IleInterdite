@@ -126,6 +126,7 @@ public class VueJeu extends Vue {
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
                 TilePanel t = (TilePanel)tile;
                 JButton btn = (JButton)t.getComponent(0);
+
                 if(!tuiles.contains(grille.getTuile(pos))) {
                     grille.getTuile(pos).setImage(EtatTuile.cachee);
                 } else {
@@ -156,6 +157,7 @@ public class VueJeu extends Vue {
                 JButton btn = (JButton)carte.getComponent(0);
 
                 CarteTresor c = a.getInventaire().get(i);
+
                 if(a == joueur && c.getTresor() != Tresor.Helicoptere && c.getTresor() != Tresor.Sac_De_Sable) {
 
                     btn.setEnabled(true);
@@ -166,11 +168,9 @@ public class VueJeu extends Vue {
                     btn.setEnabled(true);
                     btn.setContentAreaFilled(false);
 
-                } else {
-                    // cacher pour update background
                 }
 
-                carte.setBackground(a.getInventaire().get(i).getTresor().getImage());
+                carte.setBackground(c.getTresor().getImage());
             }
             j++;
         }
@@ -231,6 +231,7 @@ public class VueJeu extends Vue {
 
     public void updateDashboard(ArrayList<Aventurier> aventuriers) {
         int i = 0;
+        JButton btn;
         for(Component comp : dashBoard.getComponents()) {
             JPanel dashPanel = (JPanel)comp;
 
@@ -239,20 +240,25 @@ public class VueJeu extends Vue {
             JPanel cartesPanel = (JPanel)dashPanel.getComponent(2);
 
             rolePanel.setBackground(aventuriers.get(i).getRole().getImage());
+            btn = (JButton)rolePanel.getComponent(0);
+            btn.setEnabled(false);
+            btn.setOpaque(false);
 
             JLabel desc = (JLabel)descPanel.getComponent(0);
             desc.setText("Joueur: ["+aventuriers.get(i).getNomJoueur() + "]  Actions: " + aventuriers.get(i).getNbActions());
 
             int j = 0;
-            for(Carte c : aventuriers.get(i).getInventaire()){
-                if(c != null) {
-                    TilePanel carte = (TilePanel)cartesPanel.getComponent(j);
-                    JButton btn = (JButton)carte.getComponent(0);
-                    btn.setEnabled(false);
-                    btn.setOpaque(false);
-                    carte.setBackground(c.getTresor().getImage());
-                }
+            for (Carte c : aventuriers.get(i).getInventaire()) {
+                TilePanel carte = (TilePanel)cartesPanel.getComponent(j);
+                btn = (JButton)carte.getComponent(0);
+                btn.setEnabled(false);
+                btn.setOpaque(false);
+                carte.setBackground(c.getTresor().getImage());
                 j++;
+            }
+
+            for(TilePanel carte : (TilePanel)cartesPanel.getComponent(j)) {
+
             }
 
             i++;
