@@ -7,10 +7,8 @@ package mvc.view;
 
 import aventuriers.Aventurier;
 import enumerations.EtatTuile;
-import enumerations.Role;
 import enumerations.Tresor;
 import enumerations.TypeMessage;
-import game.Carte;
 import game.CarteTresor;
 import game.Grille;
 import game.Tuile;
@@ -18,19 +16,7 @@ import mvc.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ImageObserver;
-import java.awt.image.RenderedImage;
-import java.awt.image.renderable.RenderableImage;
-import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -73,7 +59,7 @@ public class VueJeu extends Vue {
         });
 
         passertour.addActionListener(e -> {
-            Message m = new Message(TypeMessage.PASSERTOUR);
+            Message m = new Message(TypeMessage.PASSER_TOUR);
             ihm.notifierObservateur(m);
         });
 
@@ -248,19 +234,18 @@ public class VueJeu extends Vue {
             desc.setText("Joueur: ["+aventuriers.get(i).getNomJoueur() + "]  Actions: " + aventuriers.get(i).getNbActions());
 
             int j = 0;
-            for (Carte c : aventuriers.get(i).getInventaire()) {
-                TilePanel carte = (TilePanel)cartesPanel.getComponent(j);
+            for(Component c : cartesPanel.getComponents()) {
+                TilePanel carte = (TilePanel)c;
                 btn = (JButton)carte.getComponent(0);
                 btn.setEnabled(false);
                 btn.setOpaque(false);
-                carte.setBackground(c.getTresor().getImage());
+                if(j < aventuriers.get(i).getInventaire().size()) {
+                    carte.setBackground(aventuriers.get(i).getInventaire().get(j).getTresor().getImage());
+                } else {
+                    carte.delBackground();
+                }
                 j++;
             }
-
-            for(TilePanel carte : (TilePanel)cartesPanel.getComponent(j)) {
-
-            }
-
             i++;
         }
         this.updateUI();

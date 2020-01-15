@@ -19,14 +19,12 @@ import java.util.*;
 public class IleInterdite extends Observe {
 
     private Grille grille;
-    private List<Tresor> tresorsDispo ;
-    private ArrayList<Tresor> tresorsRecuperes;
+    private ArrayList<Tresor> tresorsDispo, tresorsRecuperes;
     private int niveauEau = 0, nbJoueurs = 0, joueur = 0, cartesAPiocher = 2;
     private ArrayList<CarteTresor> pileCartesTresor, defausseCartesTresor;
     private ArrayList<CarteInondation> pileCartesInondation, defausseCartesInondation;
 
     private ArrayList<Aventurier> aventuriers;
-    private List<Role> lesRoles;
     private ArrayList<Tuile> tuilesTresor;
     private Aventurier joueurASauver;
 
@@ -35,30 +33,22 @@ public class IleInterdite extends Observe {
     public IleInterdite() {
         grille = new Grille(); //initialisation grille
         aventuriers = new ArrayList<>(); //initialisation aventuriers
-        lesRoles = Arrays.asList(Role.values());
-        Collections.shuffle(lesRoles);
         tresorsDispo= new ArrayList<>();
-        Collections.addAll(tresorsDispo,Tresor.values());
-        tresorsRecuperes= new ArrayList<>();
-        //initialisation tresors
+        Collections.addAll(tresorsDispo, Tresor.values());
+        tresorsRecuperes= new ArrayList<>(); //initialisation tresors
         tuilesTresor = new ArrayList<>();
     }
 
-    public void start() {
-        Message m = new Message(TypeMessage.CHANGER_VUE);
-        m.vue = "menu";
-        notifierObservateur(m);
+    public int getNbJoueurs() {
+        return nbJoueurs;
     }
 
-    public void commencerPartie(int nbJoueurs, String level, String[] nomJoueurs) {
-        setNbJoueurs(nbJoueurs);
-        setNiveauEau(level);
+    public void commencerPartie(String[] names) {
         grille.melangerTuiles();
         initiateTresorCards();
-        initiateAventuriers(nomJoueurs);
         initiateInondation();
+        initiateAventuriers(names);
         tirerCartesIondation();
-
         this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
     }
 
@@ -78,7 +68,6 @@ public class IleInterdite extends Observe {
         for (int i = 0; i < 2; i++) {
             pileCartesTresor.add(new CarteTresor(Tresor.Sac_De_Sable));
         }
-        //Collections.shuffle(pileCartesTresor);
     }
 
     private void initiateInondation() {
@@ -87,36 +76,37 @@ public class IleInterdite extends Observe {
         for (Tuile t : grille.getTuiles()) {
             pileCartesInondation.add(new CarteInondation(t.getNom()));
         }
-        //Collections.shuffle(pileCartesInondation);
     }
 
-    private void initiateAventuriers(String[] nomJoueurs) throws IllegalStateException {
-        for (int i = 0; i < nbJoueurs; i++) {
-            Aventurier newAventurier;
-            switch (lesRoles.get(i)) {
+    private void initiateAventuriers(String[] names) throws IllegalStateException {
+        ArrayList<Role> roles = new ArrayList<>(Arrays.asList(Role.values()));
+        Collections.shuffle(roles);
+        for (int i = 0; i < getNbJoueurs(); i++) {
+            Aventurier newA;
+            switch (roles.get(i)) {
                 case explorateur:
-                    newAventurier = new Explorateur(nomJoueurs[i], grille);
+                    newA = new Explorateur(names[i], grille);
                     break;
                 case navigateur:
-                    newAventurier = new Navigateur(nomJoueurs[i], grille);
+                    newA = new Navigateur(names[i], grille);
                     break;
                 case plongeur:
-                    newAventurier = new Plongeur(nomJoueurs[i], grille);
+                    newA = new Plongeur(names[i], grille);
                     break;
                 case messager:
-                    newAventurier = new Messager(nomJoueurs[i], grille);
+                    newA = new Messager(names[i], grille);
                     break;
                 case pilote:
-                    newAventurier = new Pilote(nomJoueurs[i], grille);
+                    newA = new Pilote(names[i], grille);
                     break;
                 case ingenieur:
-                    newAventurier = new Ingenieur(nomJoueurs[i], grille);
+                    newA = new Ingenieur(names[i], grille);
                     break;
                 default:
-                    throw new IllegalStateException("[InitiateAventuriers] Unexpected value: " + lesRoles.get(i));
+                    throw new IllegalStateException("[InitiateAventuriers] Unexpected value: " + roles.get(i));
             }
-            aventuriers.add(newAventurier);
-           distribuerCarteTresor(newAventurier);
+            aventuriers.add(newA);
+           distribuerCarteTresor(newA);
         }
     }
 
@@ -135,7 +125,7 @@ public class IleInterdite extends Observe {
     }
 
     private void tirerCartesIondation(){ // Distribue 6 carte inondation au début du jeu
-        for(int i=0; i<6; i++) {
+        for(int i = 0; i < 6; i++) {
             CarteInondation c;
             c = pileCartesInondation.get(random.nextInt(pileCartesInondation.size()));
             grille.getTuilesMap().get(c.getNom()).innonder();
@@ -148,13 +138,6 @@ public class IleInterdite extends Observe {
     }
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
-
-//        getJoueur().getInventaire().clear();
-//        getJoueur().getInventaire().add(new CarteTresor(Tresor.La_Statue_Du_Zephyr));
-//        getJoueur().getInventaire().add(new CarteTresor(Tresor.La_Statue_Du_Zephyr));
-//        getJoueur().getInventaire().add(new CarteTresor(Tresor.La_Statue_Du_Zephyr));
-//        getJoueur().getInventaire().add(new CarteTresor(Tresor.La_Statue_Du_Zephyr));
-
         aventurier.seDeplacer(tuileDest);
         aventurier.consommerAction(1);
     }
@@ -171,33 +154,25 @@ public class IleInterdite extends Observe {
     }
 
     public void recupererTresor(Tresor tresor) {
+        if(estRecuperable(getJoueur())) { // methode avant
 
+            tresorsDispo.remove(tresor);
+            tresorsRecuperes.add(tresor);
 
-            if(estRecuperable(getJoueur())){ // methode avant
+            System.out.println(getJoueur().getInventaire().size());
 
-                tresorsDispo.remove(tresor);
-                tresorsRecuperes.add(tresor);
-
-                System.out.println(getJoueur().getInventaire().size());
-
-                ArrayList<Carte> cartesADegager = new ArrayList<>();
-                for(CarteTresor c : getJoueur().getInventaire()) {
-                    if(c.getTresor() == tresor) {
-                        defausserCartesTresor(c);
-                        cartesADegager.add(c);
-                    }
+            ArrayList<Carte> cartesADegager = new ArrayList<>();
+            for (CarteTresor c : getJoueur().getInventaire()) {
+                if(c.getTresor() == tresor) {
+                    defausserCartesTresor(c);
+                    cartesADegager.add(c);
                 }
-                getJoueur().getInventaire().removeAll(cartesADegager);
-                getJoueur().consommerAction(1);
-                System.out.println(getJoueur().getNomJoueur()+ " recupere le tresor "+tresor.name());
             }
-            else{
-                System.out.println("MarchePas");
-            }
+            getJoueur().getInventaire().removeAll(cartesADegager);
+            getJoueur().consommerAction(1);
+            System.out.println(getJoueur().getNomJoueur()+ " recupere le tresor "+tresor.name());
+        }
     }
-
-
-
 
     public void passerTour() { //passe le tour du joueur et fais piocher les cartes
         piocherCarteTresor();

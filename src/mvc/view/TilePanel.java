@@ -2,7 +2,6 @@ package mvc.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 
 public class TilePanel extends JPanel {
 
@@ -11,6 +10,10 @@ public class TilePanel extends JPanel {
 
     public TilePanel(LayoutManager layout) {
         super(layout);
+    }
+
+    public void delBackground() {
+        this.background = null;
     }
 
     public void setBackground(Image background) {
@@ -22,6 +25,8 @@ public class TilePanel extends JPanel {
         super.paintComponent(g);
         w = (int) getSize().getWidth();
         h = (int) getSize().getHeight();
-        g.drawImage(background, 0, 0, Math.min(w, h), Math.min(w, h), null);
+        if(background != null) {
+            g.drawImage(background, 0, 0, Math.min(w, h), Math.min(w, h), null);
+        }
     }
 }

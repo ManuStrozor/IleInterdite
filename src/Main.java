@@ -5,7 +5,9 @@
  */
 
 
+import enumerations.TypeMessage;
 import game.IleInterdite;
+import mvc.Message;
 import mvc.controller.Controlleur;
 import mvc.view.*;
 
@@ -27,8 +29,5 @@ public class Main {
         ihm.addVue(new VueGameOver("perdu", ihm));
 
         new Controlleur(ihm, ileInterdite); // Controleur
-
-        ileInterdite.start();
-
     }
 }

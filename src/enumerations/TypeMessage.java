@@ -17,7 +17,7 @@ public enum TypeMessage {
     ASSECHER_TUILE,
     ECHANGE_CARTE,
     RECUPERER_TRESOR,
-    PASSERTOUR,
+    PASSER_TOUR,
     CLIK_TUILE,
     CLIK_CARTE,
     CLIK_JOUEUR,

@@ -36,8 +36,9 @@ public class Controlleur implements IControlleur {
         ihm.setObservateur(this);
         this.ile = ile;
         ile.setObservateur(this);
+        ihm.setVue("menu");
     }
-    
+
     @Override
     public void traiterMessage(Message msg) {
 
@@ -52,7 +53,10 @@ public class Controlleur implements IControlleur {
             case JOUER:
                 ihm.setVue("jeu");
                 ihm.getVue("jeu").initBoards(msg.nbJoueur);
-                ile.commencerPartie(msg.nbJoueur, msg.niveauEau, msg.nomsJoueurs);
+                ile.setNbJoueurs(msg.nbJoueur);
+                ile.setNiveauEau(msg.niveauEau);
+
+                ile.commencerPartie(msg.nomsJoueurs);
                 break;
 
             case UPDATE_GRILLE:
@@ -129,12 +133,6 @@ public class Controlleur implements IControlleur {
                     System.out.println("Sac de sable");
                 }
 
-                System.out.println("///// APRES AVOIR DONNE /////");
-                for(CarteTresor carte : av.getInventaire()) {
-                    System.out.println(carte.getName());
-                }
-                System.out.println("/////////////////////////////");
-
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 ihm.getVue("jeu").afficherCartesAccessibles(ile.getAventuriers(), ile.getJoueur());
                 break;
@@ -147,7 +145,7 @@ public class Controlleur implements IControlleur {
                 ile.recupererTresor(ile.getJoueur().getTuile().getTresor());
                 break;
 
-            case PASSERTOUR:
+            case PASSER_TOUR:
                 ile.passerTour();
                 break;
 
@@ -165,8 +163,7 @@ public class Controlleur implements IControlleur {
         if(ile.getJoueur() !=null&&ile.getJoueur().getNbActions()>0){
             if(ile.estRecuperable(ile.getJoueur())){
                 ihm.getVue("jeu").rendreBoutonsClicables(true);
-            }
-            else {
+            } else {
                 ihm.getVue("jeu").rendreBoutonsClicables(false);
             }
         }
