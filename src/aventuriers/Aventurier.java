@@ -39,10 +39,10 @@ public abstract class Aventurier {
 
     protected abstract Tuile getTuileSpawn(Grille grille);
 
-    public int getNombreCarte(){
+    public int getNombreCarte() {
         int nb = 0;
-        for (int i = 0 ; i < inventaire.size(); i++) {
-            if (inventaire.get(i) != null){
+        for (int i = 0; i < inventaire.size(); i++) {
+            if (inventaire.get(i) != null) {
                 nb++;
             }
         }
@@ -78,9 +78,7 @@ public abstract class Aventurier {
 
     public void setCouleurPion(Color couleur) { this.couleurPion = couleur;}
 
-    public void setNbActions(double nbActions) {
-        this.nbActions = nbActions;
-    }
+    public void setNbActions(double nbActions) { this.nbActions = nbActions;}
 
     public double getNbActions() {
         return nbActions;
@@ -144,17 +142,17 @@ public abstract class Aventurier {
             Tuile newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()+1);
             if(newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne()-1);
-            if(newTuile != null) tuiles.add(newTuile);
+            newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne() - 1);
+            if (newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne()+1);
-            if(newTuile != null) tuiles.add(newTuile);
+            newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne() + 1);
+            if (newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()-1);
-            if(newTuile != null) tuiles.add(newTuile);
+            newTuile = grille.getTuile(tuile.getLigne() + 1, tuile.getColonne() - 1);
+            if (newTuile != null) tuiles.add(newTuile);
         }
 
-        switch(getRole()) {
+        switch (getRole()) {
             case ingenieur:
             case messager:
             case navigateur:
@@ -171,23 +169,23 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille grille) {
         ArrayList<Tuile> tuiles = new ArrayList<>();
 
-        switch(getRole()) {
+        switch (getRole()) {
             case ingenieur:
             case messager:
             case navigateur:
             case explorateur:
             case plongeur:
-                Tuile newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()-1);
-                if(newTuile != null) tuiles.add(newTuile);
+                Tuile newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne() - 1);
+                if (newTuile != null) tuiles.add(newTuile);
 
-                newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne()+1);
-                if(newTuile != null) tuiles.add(newTuile);
+                newTuile = grille.getTuile(tuile.getLigne(), tuile.getColonne() + 1);
+                if (newTuile != null) tuiles.add(newTuile);
 
-                newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne());
-                if(newTuile != null) tuiles.add(newTuile);
+                newTuile = grille.getTuile(tuile.getLigne() + 1, tuile.getColonne());
+                if (newTuile != null) tuiles.add(newTuile);
 
-                newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne());
-                if(newTuile != null) tuiles.add(newTuile);
+                newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne());
+                if (newTuile != null) tuiles.add(newTuile);
                 break;
             case pilote:
                 tuiles.addAll(grille.getTuiles());
@@ -198,17 +196,17 @@ public abstract class Aventurier {
             Tuile newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()+1);
             if(newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne()-1);
-            if(newTuile != null) tuiles.add(newTuile);
+            newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne() - 1);
+            if (newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne()-1, tuile.getColonne()+1);
-            if(newTuile != null) tuiles.add(newTuile);
+            newTuile = grille.getTuile(tuile.getLigne() - 1, tuile.getColonne() + 1);
+            if (newTuile != null) tuiles.add(newTuile);
 
-            newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()-1);
-            if(newTuile != null) tuiles.add(newTuile);
+            newTuile = grille.getTuile(tuile.getLigne() + 1, tuile.getColonne() - 1);
+            if (newTuile != null) tuiles.add(newTuile);
         }
 
-        switch(getRole()) {
+        switch (getRole()) {
             case ingenieur:
             case messager:
             case navigateur:

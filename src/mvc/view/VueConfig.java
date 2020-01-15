@@ -22,10 +22,17 @@ public class VueConfig extends Vue {
     private final JButton inscrire = new JButton("OKAY");
     private final JButton retour = new JButton("RETOUR");
     private String[] nomJoueurs;
+    private JLabel erreurJ1, erreurJ2, erreurJ3 , erreurJ4;
 
     public VueConfig(String name, IHM ihm) {
 
         super(name, ihm);
+
+        erreurJ1 = new JLabel();
+        erreurJ2 = new JLabel();
+        erreurJ3 = new JLabel();
+        erreurJ4 = new JLabel();
+
         this.initComponents();
 
         choixNbJoueurs.addItemListener(e -> {
@@ -43,17 +50,50 @@ public class VueConfig extends Vue {
             ihm.notifierObservateur(m);
         });
 
-        inscrire.addActionListener(e -> {
-            Message m = new Message(TypeMessage.JOUER);
-            m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
-            m.niveauEau = groupeBouton.getSelection().getActionCommand();
+        inscrire.addActionListener(e -> {       // A OPTIMISER EN METTANT LES ERREURJ DANS UN TABLEAU
+            erreurJ1.setText("");
+            erreurJ2.setText("");
+            erreurJ3.setText("");
+            erreurJ4.setText("");
 
-            int i = 0;
-            nomJoueurs = new String[4];
-            for(JTextField text : saisieNomJoueurs) nomJoueurs[i++] = text.getText();
-            m.nomsJoueurs = nomJoueurs;
-            ihm.notifierObservateur(m);
+            if (entreeNomValide() < 5){
+
+                if (entreeNomValide() == 0){
+                    erreurJ1.setText("VIDE !");
+                } else if ( entreeNomValide() == 1 ) {
+                    erreurJ2.setText("VIDE !");
+                } else if ( entreeNomValide() == 2 ) {
+                    erreurJ3.setText("VIDE !");
+                } else{
+                    erreurJ4.setText("VIDE !");
+                }
+
+            }else{
+                Message m = new Message(TypeMessage.JOUER);
+                m.nbJoueur = (int) choixNbJoueurs.getSelectedItem();
+                m.niveauEau = groupeBouton.getSelection().getActionCommand();
+
+                int i = 0;
+                nomJoueurs = new String[4];
+                for(JTextField text : saisieNomJoueurs) {
+                    nomJoueurs[i++] = text.getText();
+                }
+                m.nomsJoueurs = nomJoueurs;
+                ihm.notifierObservateur(m);
+            }
+
         });
+    }
+
+    public int entreeNomValide(){
+        int indexErreur = 5;
+        for (int j = 0 ; j < ((int) choixNbJoueurs.getSelectedItem()) ; j++) {
+            if(saisieNomJoueurs[j].getText().equals("")){
+                indexErreur = j;
+                break;
+            }
+        }
+        return indexErreur;
     }
 
     @Override
@@ -85,13 +125,23 @@ public class VueConfig extends Vue {
         panelJoueur.add(new JLabel(""));
 
         // Saisie des noms de joueurs
+
         for(int i = 0; i < saisieNomJoueurs.length; i++) {
             saisieNomJoueurs[i] = new JTextField();
             saisieNomJoueurs[i].setPreferredSize(new Dimension(20,3));
             labelNomJoueurs[i] = new JLabel("Nom du joueur " + (i+1) + " :");
             panelJoueur.add(labelNomJoueurs[i]);
             panelJoueur.add(saisieNomJoueurs[i]);
-            panelJoueur.add(new JLabel(""));
+            if (i == 0){
+                panelJoueur.add(erreurJ1);
+            } else if ( i== 1 ) {
+                panelJoueur.add(erreurJ2);
+            } else if ( i== 2 ) {
+                panelJoueur.add(erreurJ3);
+            } else{
+                panelJoueur.add(erreurJ4);
+            }
+
             labelNomJoueurs[i].setEnabled(i < 2);
             saisieNomJoueurs[i].setEnabled(i < 2);
         }
