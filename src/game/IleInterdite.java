@@ -400,6 +400,7 @@ public class IleInterdite extends Observe {
                 "Nom joueur : " + getJoueur().getNomJoueur() +
                 "\n\tRole : " + getJoueur().getRole().name() +
                 "\n\tActions; " + getJoueur().getNbActions() +
+                "\n\tTuile où se trouve le joueur : " + getJoueur().getTuile().getName() +
                 "\n\tCartes Inventaire : ");
         for (int j = 0; j < getJoueur().getInventaire().size(); j++) {
             System.out.print(getJoueur().getInventaire().get(j).getName() + ", ");
