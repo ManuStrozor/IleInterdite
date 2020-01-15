@@ -105,7 +105,6 @@ public class IleInterdite extends Observe {
         for(int i = 0; i < 2; i++){
             CarteTresor c = pileTresor.get(random.nextInt(pileTresor.size()-1));
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
-                defausserTresor(c);
                 i--;
             } else {
                 aventurier.getInventaire().add(c);
