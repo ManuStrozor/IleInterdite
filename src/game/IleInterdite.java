@@ -268,6 +268,9 @@ public class IleInterdite extends Observe {
 
     public void utiliserHelico() {
         if(isWon()) {
+            Message msg = new Message(TypeMessage.CHANGER_VUE);
+            msg.vue = "gagne";
+            this.notifierObservateur(msg);
             System.out.println("Vous avez gagné !!!");
         } else {
             Message m = new Message(TypeMessage.HELICO);
