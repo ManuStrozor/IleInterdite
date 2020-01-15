@@ -142,7 +142,7 @@ public class Controlleur implements IControlleur {
                 break;
 
             case RECUPERER_TRESOR:
-                ile.recupererTresor(ile.getJoueur().getTuile().getTresor());
+                ile.recupererTresor();
                 break;
 
             case PASSER_TOUR:
@@ -160,15 +160,14 @@ public class Controlleur implements IControlleur {
         lastAction = msg.type;
         indexCible = msg.indexAventurier;
 
-        if(ile.getJoueur() !=null&&ile.getJoueur().getNbActions()>0){
-            if(ile.estRecuperable(ile.getJoueur())){
+        if (ile.getJoueur() != null && ile.getJoueur().getNbActions() == 0) {
+            ile.passerTour();
+        } else if(ile.getJoueur() != null) {
+            if(!ile.getJoueur().peutRecupererTresor(ile.getTresorsDispo()).isEmpty()) {
                 ihm.getVue("jeu").rendreBoutonsClicables(true);
             } else {
                 ihm.getVue("jeu").rendreBoutonsClicables(false);
             }
-        }
-        if (ile.getJoueur() != null && ile.getJoueur().getNbActions() == 0) {
-            ile.passerTour();
         }
 
     }

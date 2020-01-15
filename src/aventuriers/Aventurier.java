@@ -93,7 +93,21 @@ public abstract class Aventurier {
         av.remove(this);
         return av;
     }
-    
+
+    public ArrayList<CarteTresor> peutRecupererTresor(ArrayList<Tresor> tresorsDispo) {
+        ArrayList<CarteTresor> cartes = new ArrayList<>();
+        Tresor tresor = this.getTuile().getTresor();
+        if (tresor != null && tresorsDispo.contains(tresor)) {
+            for (CarteTresor c : this.getInventaire()) {
+                if (c.getTresor() == tresor) {
+                    cartes.add(c);
+                    if(cartes.size() == 4) return cartes;
+                }
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Tuile> peutAssecher(Grille grille){
         ArrayList<Tuile> tuiles = new ArrayList<>();
 

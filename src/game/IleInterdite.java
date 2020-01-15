@@ -20,8 +20,8 @@ public class IleInterdite extends Observe {
     Random random = new Random();
 
     public IleInterdite() {
-        grille = new Grille(); // initialisation grille
-        aventuriers = new ArrayList<>(); // initialisation aventuriers
+        grille = new Grille();
+        aventuriers = new ArrayList<>();
         tresorsDispo = new ArrayList<>();
         Collections.addAll(tresorsDispo, Tresor.values());
         tresorsDispo.remove(Tresor.Montee_Des_Eaux);
@@ -101,9 +101,9 @@ public class IleInterdite extends Observe {
         }
     }
 
-    private void distribuerCarteTresor(Aventurier aventurier) { // Distribue 2 carte trésor au début sauf montée eaux
+    private void distribuerCarteTresor(Aventurier aventurier) {
         for(int i = 0; i < 2; i++){
-            CarteTresor c = pileTresor.get(random.nextInt(pileTresor.size()-1));
+            CarteTresor c = pileTresor.get(random.nextInt(pileTresor.size()));
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
                 i--;
             } else {
@@ -111,7 +111,7 @@ public class IleInterdite extends Observe {
                 pileTresor.remove(c);
             }
         }
-    }
+    } // Distribue 2 carte trésor au début sauf montée eaux
 
     private void tirerCartesInond(int n) {
         for(int i = 0; i < n; i++) {
@@ -121,9 +121,9 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public void tirerCartesTresor(int n) { //Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
+    public void tirerCartesTresor(int n) {
         for(int i = 0; i < n; i++) {
-            CarteTresor c = pileTresor.get(random.nextInt(pileTresor.size()-1));
+            CarteTresor c = pileTresor.get(random.nextInt(pileTresor.size()));
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
                 useCarteMonteeDesEaux(c);
             } else {
@@ -131,7 +131,7 @@ public class IleInterdite extends Observe {
                 pileTresor.remove(c);
             }
         }
-    }
+    } // Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
         aventurier.seDeplacer(tuileDest);
@@ -144,7 +144,10 @@ public class IleInterdite extends Observe {
 
     public void assecher(Aventurier aventurier, Tuile tuile) {
         tuile.assecher();
-        aventurier.consommerAction((aventurier.getRole() == Role.ingenieur) ? 0.5 : 1);
+        if (aventurier.getRole() == Role.ingenieur)
+            aventurier.consommerAction(0.5);
+        else
+            aventurier.consommerAction(1);
     }
 
     public void donnerCarte(CarteTresor carte, Aventurier receveur) {
@@ -153,22 +156,15 @@ public class IleInterdite extends Observe {
         getJoueur().consommerAction(1);
     }
 
-    public void recupererTresor(Tresor tresor) {
-        if(estRecuperable(getJoueur())) { // methode avant
-            tresorsDispo.remove(tresor);
-            System.out.println(getJoueur().getInventaire().size());
-            ArrayList<CarteTresor> cartesADegager = new ArrayList<>();
-            for (CarteTresor c : getJoueur().getInventaire()) {
-                if(c.getTresor() == tresor) {
-                    defausserTresor(c);
-                    cartesADegager.add(c);
-                }
-            }
+    public void recupererTresor() {
+        ArrayList<CarteTresor> cartesADegager = getJoueur().peutRecupererTresor(tresorsDispo);
+        if(!cartesADegager.isEmpty()) {
+            tresorsDispo.remove(getJoueur().getTuile().getTresor());
+            defausseTresor.addAll(cartesADegager);
             getJoueur().getInventaire().removeAll(cartesADegager);
             getJoueur().consommerAction(1);
-            System.out.println(getJoueur().getNomJoueur()+ " recupere le tresor "+tresor.name());
         }
-    }
+    } // condition à verifier avant !
 
     public void passerTour() {
         tirerCartesTresor(2);
@@ -282,41 +278,6 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public boolean estRecuperable(Aventurier aventurier) { // Déplacer dans Tuile.java
-
-        boolean conditionOK = false;
-        int nbcarte = 0;
-        ArrayList<CarteTresor> inventaire = aventurier.getInventaire(); //inventaire de l'aventurier
-        Tresor tresorTuile = aventurier.getTuile().getTresor(); //Type de la tuile où est l'aventurier
-
-        if (aventurier.getTuile().getTresor() != null) {
-
-            //si le tresor n'est pas deja recup
-            for (Tresor t : tresorsDispo) {
-                if (t == tresorTuile) {
-                    conditionOK = true;
-                    break;
-                }
-            }
-
-            //si l'aventurier a le bon nombre de carte du meme type que la tuile où il se situe
-            for (int i = 0; i < inventaire.size(); i++) {
-                if (inventaire.get(i).getTresor() == tresorTuile) {
-                    nbcarte++;
-
-                }
-            }
-
-            if (nbcarte >= 4) {
-                conditionOK = true;
-            } else {
-                conditionOK = false;
-            }
-        }
-
-        return conditionOK;
-    }
-
     public boolean isGameover() {
         for (Aventurier aventurier : aventuriers) {
             if(aventurier.mort(grille)) {
@@ -335,6 +296,10 @@ public class IleInterdite extends Observe {
     public boolean isWon() {
         Tuile heliport = grille.getTuilesMap().get(Nom.Heliport);
         return aventuriers.size() == heliport.getAventuriers().size() && tresorsDispo.isEmpty();
+    }
+
+    public ArrayList<Tresor> getTresorsDispo() {
+        return tresorsDispo;
     }
 
     private ArrayList<Tresor> getRecup() {
