@@ -154,7 +154,7 @@ public class Controlleur implements IControlleur {
                 break;
 
             case QUITTER:
-                ile.quitter();
+                System.exit(0);
                 break;
         }
         lastAction = msg.type;
