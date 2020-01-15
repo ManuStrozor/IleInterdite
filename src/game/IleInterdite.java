@@ -323,6 +323,7 @@ public class IleInterdite extends Observe {
 
     public void utiliserHelico(Aventurier joueur, Tuile destination){
         if (destination.getEtatTuile()!=EtatTuile.coulee){
+            //Ceci est la méthode temporaire, une fois la question de l'IHM réglée on pourra selectionner plusieurs joueurs
             joueur.getTuile().getAventuriers().remove(joueur);
             destination.addAventurier(joueur);
             getJoueur().getInventaire().remove(getJoueur().getCarteHelico());
@@ -337,7 +338,7 @@ public class IleInterdite extends Observe {
         ArrayList<CarteTresor> inventaire = aventurier.getInventaire(); //inventaire de l'aventurier
         Tresor tresorTuile = aventurier.getTuile().getTresor(); //Type de la tuile où est l'aventurier
 
-        if (aventurier.getTuile().getTresor() != null){
+        if (aventurier.getTuile().getTresor() != null) {
 
             //si le tresor n'est pas deja recup
             for (Tresor t : tresorsDispo) {
@@ -349,7 +350,10 @@ public class IleInterdite extends Observe {
 
             //si l'aventurier a le bon nombre de carte du meme type que la tuile où il se situe
             for (int i = 0; i < inventaire.size(); i++) {
-                nbcarte++;
+                if (inventaire.get(i).getTresor() == tresorTuile) {
+                    nbcarte++;
+
+                }
             }
 
             if (nbcarte >= 4) {
@@ -357,7 +361,6 @@ public class IleInterdite extends Observe {
             } else {
                 conditionOK = false;
             }
-
         }
 
         return conditionOK;
