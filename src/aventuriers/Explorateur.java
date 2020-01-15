@@ -17,7 +17,7 @@ public class Explorateur extends Aventurier {
     public Explorateur(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
         setRole(Role.explorateur);
-        setCouleurPion(Color.GREEN);
+        setColor(Color.GREEN);
     }
 
     @Override

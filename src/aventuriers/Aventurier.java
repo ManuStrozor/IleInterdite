@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author estevmat
  */
 public abstract class Aventurier {
-    private Color couleurPion;
+
+    private Color color;
     private Tuile tuile;
     private ArrayList<CarteTresor> inventaire;
     private double nbActions;
@@ -26,28 +27,19 @@ public abstract class Aventurier {
         inventaire = new ArrayList<>();
         tuile = getTuileSpawn(grille);
         tuile.addAventurier(this);
-        couleurPion = null;
+        color = null;
     }
 
     public ArrayList<CarteTresor> getInventaire() {
         return inventaire;
     }
 
-    public Color getCouleurPion() {
-        return couleurPion;
+    public Color getColor() {
+        return color;
     }
 
     protected abstract Tuile getTuileSpawn(Grille grille);
 
-    public int getNombreCarte() {
-        int nb = 0;
-        for (int i = 0; i < inventaire.size(); i++) {
-            if (inventaire.get(i) != null) {
-                nb++;
-            }
-        }
-        return nb;
-    }
     public CarteTresor getCarteSacDeSable(){
         CarteTresor carte = null;
         for(int i=0;i<=getInventaire().size();i++){
@@ -76,25 +68,12 @@ public abstract class Aventurier {
 
     public void setRole(Role role) { this.role = role;  }
 
-    public void setCouleurPion(Color couleur) { this.couleurPion = couleur;}
+    public void setColor(Color couleur) { this.color = couleur;}
 
     public void setNbActions(double nbActions) { this.nbActions = nbActions;}
 
     public double getNbActions() {
         return nbActions;
-    }
-
-    public void ajouterCarte(CarteTresor carte){
-        getInventaire().add(carte);
-    }
-
-
-    public void defausseCarte(CarteTresor c){
-        int i = inventaire.size();
-        while (i>0 && getInventaire().get(i) != null){
-            inventaire.remove(c);
-            i--;
-        }
     }
 
     public Tuile getTuile() {

@@ -247,6 +247,9 @@ public class VueJeu extends Vue {
             for(Carte c : aventuriers.get(i).getInventaire()){
                 if(c != null) {
                     TilePanel carte = (TilePanel)cartesPanel.getComponent(j);
+                    JButton btn = (JButton)carte.getComponent(0);
+                    btn.setEnabled(false);
+                    btn.setOpaque(false);
                     carte.setBackground(c.getTresor().getImage());
                 }
                 j++;

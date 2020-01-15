@@ -17,7 +17,7 @@ public class Messager extends Aventurier {
     public Messager(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
         setRole(Role.messager);
-        setCouleurPion(Color.GRAY);
+        setColor(Color.GRAY);
     }
 
     @Override

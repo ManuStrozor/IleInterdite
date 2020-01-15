@@ -17,7 +17,7 @@ public class Plongeur extends Aventurier {
     public Plongeur(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
         setRole(Role.plongeur);
-        setCouleurPion(Color.BLACK);
+        setColor(Color.BLACK);
     }
 
     @Override

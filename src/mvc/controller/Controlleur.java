@@ -27,6 +27,7 @@ public class Controlleur implements IControlleur {
     private IHM ihm;
     private IleInterdite ile;
     private TypeMessage lastAction = null;
+    private int indexCible;
     
     public Controlleur(IHM ihm, IleInterdite ile) {
         this.ihm = ihm;
@@ -63,7 +64,7 @@ public class Controlleur implements IControlleur {
                 break;
 
             case DEPLACEMENT:
-                if(ile.getJoueur().getNbActions() < 1) {
+                if(ile.getJoueur().getNbActions() < 1) { // Helico...verifier lastAction
                     ile.passerTour();
                 } else {
                     ArrayList<Tuile> tuiles = ile.getJoueur().getTuilesAccessibles(grille);
@@ -77,7 +78,7 @@ public class Controlleur implements IControlleur {
                 break;
 
             case ASSECHER_TUILE:
-                if(ile.getJoueur().getNbActions() < 1 && ile.getJoueur().getRole() != Role.ingenieur) {
+                if(ile.getJoueur().getNbActions() < 1 && ile.getJoueur().getRole() != Role.ingenieur) { // Sace de sable Verifier lastAction
                     ile.passerTour();
                 } else {
                     ArrayList<Tuile> tuiless = ile.getJoueur().peutAssecher(grille);
@@ -112,9 +113,19 @@ public class Controlleur implements IControlleur {
 
             case CLIK_CARTE:
                 Aventurier av = ile.getAventuriers().get(msg.indexAventurier);
-                System.out.println(av.getRole().name()
-                        + " a cliké sur la carte n°" + (msg.index+1)
-                        + " : " + av.getInventaire().get(msg.index).getName());
+                CarteTresor c = av.getInventaire().get(msg.index);
+
+                if(c.getTresor() != Tresor.Helicoptere && c.getTresor() != Tresor.Sac_De_Sable) {
+                    ile.donnerCarte(ile.getJoueur().getInventaire().get(msg.index), ile.getAventuriers().get(indexCible));
+
+                } else if(c.getTresor() == Tresor.Helicoptere) {
+                    System.out.println("Helicoptere");
+                } else if(c.getTresor() == Tresor.Sac_De_Sable) {
+                    System.out.println("Sac de sable");
+                } else {
+
+                }
+                ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 break;
 
             case CLIK_JOUEUR:
@@ -138,6 +149,7 @@ public class Controlleur implements IControlleur {
                 break;
         }
         lastAction = msg.type;
+        indexCible = msg.indexAventurier;
 
         if(ile.getJoueur() !=null&&ile.getJoueur().getNbActions()>0){
             if(ile.estRecuperable(ile.getJoueur())){

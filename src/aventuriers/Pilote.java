@@ -17,7 +17,7 @@ public class Pilote extends Aventurier {
     public Pilote(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
         setRole(Role.pilote);
-        setCouleurPion(Color.BLUE);
+        setColor(Color.BLUE);
     }
 
     @Override

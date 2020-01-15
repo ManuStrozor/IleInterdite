@@ -17,7 +17,7 @@ public class Ingenieur extends Aventurier {
     public Ingenieur(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
         setRole(Role.ingenieur);
-        setCouleurPion(Color.RED);
+        setColor(Color.RED);
     }
 
     @Override

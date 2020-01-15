@@ -128,7 +128,7 @@ public class IleInterdite extends Observe {
                 defausserCartesTresor(c);
                 i--;
             } else {
-                aventurier.ajouterCarte(c);
+                aventurier.getInventaire().add(c);
                 defausserCartesTresor(c);
             }
         }
@@ -165,14 +165,9 @@ public class IleInterdite extends Observe {
     }
 
     public void donnerCarte(CarteTresor carte, Aventurier receveur) {
-        System.out.println(getJoueur().getInventaire() + " " + receveur.getInventaire());
-        if (getJoueur().aventuriersAccessible(aventuriers).contains(receveur)) {
-            getJoueur().defausseCarte(carte);
-            receveur.ajouterCarte(carte);
-        }
-        System.out.println(getJoueur().getInventaire() + " " + receveur.getInventaire());
+        getJoueur().getInventaire().remove(carte);
+        receveur.getInventaire().add(carte);
         getJoueur().consommerAction(1);
-        // il faudra completer la methode carte pour faire marcher les méthodes ajouterCarte et defausseCarte
     }
 
     public void recupererTresor(Tresor tresor) {
@@ -240,7 +235,7 @@ public class IleInterdite extends Observe {
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
                 useCarteMonteeDesEaux();
             } else {
-                getJoueur().ajouterCarte(c);
+                getJoueur().getInventaire().add(c);
                 pileCartesTresor.remove(c);
                 defausserCartesTresor(c);
             }
@@ -319,13 +314,13 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public void useCarteSacDeSable(Tuile tuile){ // Montrer les tuiles inondées AVANT quand carte cliquée !
+    public void useCarteSacDeSable(Tuile tuile) { // Montrer les tuiles inondées AVANT quand carte cliquée !
         tuile.assecher();
         defausseCartesTresor.add(getJoueur().getCarteSacDeSable());
         getJoueur().getInventaire().remove(getJoueur().getCarteSacDeSable());
     }
 
-    public void utiliserHelico(Aventurier joueur, Tuile destination){
+    public void utiliserHelico(Aventurier joueur, Tuile destination) {
         if (destination.getEtatTuile()!=EtatTuile.coulee){
             //Ceci est la méthode temporaire, une fois la question de l'IHM réglée on pourra selectionner plusieurs joueurs
             joueur.getTuile().getAventuriers().remove(joueur);
@@ -382,7 +377,7 @@ public class IleInterdite extends Observe {
                     && getTuileTresor(t).get(1).getEtatTuile() == EtatTuile.coulee;
         }
 
-        return grille.getTuilesMap().get("Heliport").getEtatTuile() == EtatTuile.coulee || getNiveauEau() >= 10;
+        return grille.getTuilesMap().get(Nom.Heliport).getEtatTuile() == EtatTuile.coulee || getNiveauEau() >= 10;
     }
 
     public ArrayList<Tuile> getTuileTresor(Tresor t) {
