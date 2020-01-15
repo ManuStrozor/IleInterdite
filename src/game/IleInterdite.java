@@ -320,14 +320,10 @@ public class IleInterdite extends Observe {
         getJoueur().getInventaire().remove(getJoueur().getCarteSacDeSable());
     }
 
-    public void utiliserHelico(Aventurier joueur, Tuile destination) {
-        if (destination.getEtatTuile()!=EtatTuile.coulee){
-            //Ceci est la méthode temporaire, une fois la question de l'IHM réglée on pourra selectionner plusieurs joueurs
-            joueur.getTuile().getAventuriers().remove(joueur);
-            destination.addAventurier(joueur);
-            getJoueur().getInventaire().remove(getJoueur().getCarteHelico());
-            gagnerPartie();
-        }
+    public void utiliserHelico() {
+        gagnerPartie();
+        Message m = new Message(TypeMessage.HELICO);
+        this.notifierObservateur(m);
     }
 
     public boolean estRecuperable(Aventurier aventurier) { // Déplacer dans Tuile.java

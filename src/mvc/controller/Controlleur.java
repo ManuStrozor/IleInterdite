@@ -103,6 +103,7 @@ public class Controlleur implements IControlleur {
                         ile.assecher(ile.getJoueur(), grille.getTuile(msg.index));
                         break;
                     case HELICO:
+
                         break;
                     case SABLE:
                         break;
