@@ -7,10 +7,7 @@
 
 import game.IleInterdite;
 import mvc.controller.Controlleur;
-import mvc.view.IHM;
-import mvc.view.VueConfig;
-import mvc.view.VueJeu;
-import mvc.view.VueMenu;
+import mvc.view.*;
 
 /**
  *
@@ -27,6 +24,7 @@ public class Main {
         ihm.addVue(new VueMenu("menu", ihm));
         ihm.addVue(new VueConfig("config", ihm));
         ihm.addVue(new VueJeu("jeu", ihm, 1250, 800));
+        ihm.addVue(new VueGameOver("perdu", ihm));
 
         new Controlleur(ihm, ileInterdite); // Controleur
 
