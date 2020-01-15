@@ -125,7 +125,7 @@ public class IleInterdite extends Observe {
         for(int i = 0; i < n; i++) {
             CarteTresor c = pileTresor.get(random.nextInt(pileTresor.size()-1));
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
-                useCarteMonteeDesEaux();
+                useCarteMonteeDesEaux(c);
             } else {
                 getJoueur().getInventaire().add(c);
                 pileTresor.remove(c);
@@ -254,9 +254,10 @@ public class IleInterdite extends Observe {
         return aventuriers;
     }
 
-    public void useCarteMonteeDesEaux() { // Déclenché automatiquement...ne pas oublier de defausser !
+    public void useCarteMonteeDesEaux(CarteTresor c) { // Déclenché automatiquement...ne pas oublier de defausser !
         niveauEau++;
         if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) cartesAPiocher++;
+        defausserTresor(c);
     }
 
     public void useCarteSacDeSable(Tuile tuile) { // Montrer les tuiles inondées AVANT quand carte cliquée !
