@@ -40,26 +40,13 @@ public abstract class Aventurier {
 
     protected abstract Tuile getTuileSpawn(Grille grille);
 
-    public CarteTresor getCarteSacDeSable(){
-        CarteTresor carte = null;
-        for(int i=0;i<=getInventaire().size();i++){
-            if (getInventaire().get(i).getNom().equals("Sac de sable")){
-                carte = getInventaire().get(i);
-            } else {
-                carte = null;
+    public CarteTresor getCarte(Tresor tresor) {
+        for (CarteTresor c : getInventaire()) {
+            if(c.getTresor() == tresor) {
+                return c;
             }
         }
-        return carte;
-    }
-
-    public CarteTresor getCarteHelico(){
-        CarteTresor carte = null;
-        for (Carte c : getInventaire()) {
-            if(c.getTresor() == Tresor.Helicoptere) {
-                carte = (CarteTresor) c;
-            }
-        }
-        return carte;
+        return null;
     }
 
     public Role getRole() {
@@ -105,7 +92,7 @@ public abstract class Aventurier {
                 }
             }
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public ArrayList<Tuile> peutAssecher(Grille grille){

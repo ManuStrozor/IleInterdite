@@ -27,8 +27,9 @@ public class VueGameOver extends Vue {
             ihm.notifierObservateur(m);
         });
     }
+
     @Override
-    public void rendreBoutonsClicables(boolean bool){}
+    public void rendreBoutonsClicables(boolean bool) {}
     @Override
     public void afficherTitreJoueur(String nom) {}
     @Override
@@ -41,7 +42,6 @@ public class VueGameOver extends Vue {
     public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {}
     @Override
     public void afficherCartesAccessibles(ArrayList<Aventurier> aventuriers, Aventurier joueur) {}
-
     @Override
     public void initBoards(int nbJoueur) {}
 

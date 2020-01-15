@@ -262,8 +262,8 @@ public class IleInterdite extends Observe {
 
     public void useCarteSacDeSable(Tuile tuile) { // Montrer les tuiles inondées AVANT quand carte cliquée !
         tuile.assecher();
-        defausseTresor.add(getJoueur().getCarteSacDeSable());
-        getJoueur().getInventaire().remove(getJoueur().getCarteSacDeSable());
+        defausseTresor.add(getJoueur().getCarte(Tresor.Sac_De_Sable));
+        getJoueur().getInventaire().remove(getJoueur().getCarte(Tresor.Sac_De_Sable));
     }
 
     public void utiliserHelico() {

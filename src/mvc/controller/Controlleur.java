@@ -163,7 +163,8 @@ public class Controlleur implements IControlleur {
         if (ile.getJoueur() != null && ile.getJoueur().getNbActions() == 0) {
             ile.passerTour();
         } else if(ile.getJoueur() != null) {
-            if(!ile.getJoueur().peutRecupererTresor(ile.getTresorsDispo()).isEmpty()) {
+            ArrayList<CarteTresor> cartes = ile.getJoueur().peutRecupererTresor(ile.getTresorsDispo());
+            if(!cartes.isEmpty()) {
                 ihm.getVue("jeu").rendreBoutonsClicables(true);
             } else {
                 ihm.getVue("jeu").rendreBoutonsClicables(false);
