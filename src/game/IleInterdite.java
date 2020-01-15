@@ -135,7 +135,11 @@ public class IleInterdite extends Observe {
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
         aventurier.seDeplacer(tuileDest);
-        aventurier.consommerAction(1);
+        if(aventurier.getRole()== Role.plongeur && tuileDest.getEtat()== Etat.innondee){
+            aventurier.consommerAction(0);
+        }
+        else{
+        aventurier.consommerAction(1);}
     }
 
     public void assecher(Aventurier aventurier, Tuile tuile) {
