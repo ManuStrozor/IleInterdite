@@ -1,7 +1,8 @@
 package aventuriers;
 
 
-import enumerations.Roles;
+import enumerations.Nom;
+import enumerations.Role;
 import game.Grille;
 import game.Tuile;
 
@@ -13,15 +14,14 @@ import java.awt.*;
  */
 public class Messager extends Aventurier {
 
-
     public Messager(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
-        setRole(Roles.messager);
+        setRole(Role.messager);
         setCouleurPion(Color.GRAY);
     }
 
     @Override
     protected Tuile getTuileSpawn(Grille grille) {
-        return grille.getTuilesMap().get("La Porte d'Argent");
+        return grille.getTuilesMap().get(Nom.La_Porte_D_Argent);
     }
 }

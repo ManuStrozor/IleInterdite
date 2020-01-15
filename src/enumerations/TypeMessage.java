@@ -10,20 +10,18 @@ package enumerations;
  */
 public enum TypeMessage {
     JOUER,
-    CHANGER_VUE,
-    QUITTER,
     UPDATE_GRILLE,
     UPDATE_DASHBOARD,
-    ASSECHER_TUILE,
-    RECUPERER_TRESOR,
     DEPLACEMENT,
-    BOUGER,
+    ASSECHER_TUILE,
     ECHANGE_CARTE,
-    NIVEAU_EAU,
+    RECUPERER_TRESOR,
     PASSERTOUR,
     CLIK_TUILE,
     CLIK_CARTE,
     HELICO,
     SABLE,
-    SAUVER
+    SAUVER,
+    CHANGER_VUE,
+    QUITTER,
 }

@@ -178,7 +178,7 @@ public class VueJeu extends Vue {
             for(Carte c : aventuriers.get(i).getInventaire()){
                 if(c != null) {
                     JLabel carte = (JLabel)cartesPanel.getComponent(j);
-                    carte.setText(c.getNom());
+                    carte.setText(c.getName());
                 }
                 j++;
             }
@@ -200,7 +200,7 @@ public class VueJeu extends Vue {
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundJeu.jpg"))).getImage());
 
-        JPanel menu = new JPanel( new GridLayout(4,1, 0 ,10));
+        JPanel menu = new JPanel( new GridLayout(4,1, 5,10));
         menu.setOpaque(false);
 
         ////// MENU //////
@@ -223,7 +223,7 @@ public class VueJeu extends Vue {
         JPanel marginLeft = new JPanel();
         marginLeft.setPreferredSize(new Dimension(100, 0)); marginLeft.setOpaque(false);
         JPanel marginTop = new JPanel();
-        marginTop.setPreferredSize(new Dimension(0, 100)); marginTop.setOpaque(false);
+        marginTop.setPreferredSize(new Dimension(0, 50)); marginTop.setOpaque(false);
         JPanel marginBot = new JPanel();
         marginBot.setPreferredSize(new Dimension(0, 100)); marginBot.setOpaque(false);
 

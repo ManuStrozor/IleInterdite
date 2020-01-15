@@ -1,6 +1,6 @@
 package enumerations;
 
-public enum Roles {
+public enum Role {
     ingenieur,
     messager,
     navigateur,

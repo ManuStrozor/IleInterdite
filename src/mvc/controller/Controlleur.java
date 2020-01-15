@@ -5,7 +5,7 @@ package mvc.controller;
  * and open the template in the editor.
  */
 
-import aventuriers.Aventurier;
+import enumerations.Role;
 import enumerations.TypeMessage;
 import game.Grille;
 import game.IleInterdite;
@@ -43,6 +43,8 @@ public class Controlleur implements IControlleur {
                 ihm.setVue("jeu");
                 ihm.getVue("jeu").initBoards(msg.nbJoueur);
                 ile.commencerPartie(msg.nbJoueur, msg.niveauEau, msg.nomsJoueurs);
+                ihm.getVue("jeu").updateGrille(grille);
+                ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 break;
 
             case UPDATE_GRILLE:
@@ -54,18 +56,34 @@ public class Controlleur implements IControlleur {
                 break;
 
             case DEPLACEMENT:
-                ArrayList<Tuile> tuiles = ile.getJoueur().getTuilesAccessibles(grille);
-                ihm.getVue("jeu").afficherTuilesAccessibles(grille, tuiles);
+                if(ile.getJoueur().getNbActions() < 1) {
+                    ile.passerTour();
+                    ihm.getVue("jeu").updateGrille(grille);
+                    ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
+                } else {
+                    ArrayList<Tuile> tuiles = ile.getJoueur().getTuilesAccessibles(grille);
+                    ihm.getVue("jeu").afficherTuilesAccessibles(grille, tuiles);
+                }
                 break;
 
-            case  SAUVER:
+            case SAUVER:
                 ArrayList<Tuile> t =msg.a.getTuilesAccessibles(grille);
                 ihm.getVue("jeu").afficherTuilesAccessibles(grille, t);
                 break;
 
             case ASSECHER_TUILE:
-                ArrayList<Tuile> tuiless = ile.getJoueur().peutAssecher(grille);
-                ihm.getVue("jeu").afficherTuilesAccessibles(grille, tuiless);
+                if(ile.getJoueur().getNbActions() < 1 && ile.getJoueur().getRole() != Role.ingenieur) {
+                    ile.passerTour();
+                    ihm.getVue("jeu").updateGrille(grille);
+                    ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
+                } else {
+                    ArrayList<Tuile> tuiless = ile.getJoueur().peutAssecher(grille);
+                    ihm.getVue("jeu").afficherTuilesAccessibles(grille, tuiless);
+                }
+                break;
+
+            case ECHANGE_CARTE:
+                ihm.getVue("jeu").afficherAventurierAccessibles(ile.getJoueur().aventuriersAccessible(ile.getAventuriers()));
                 break;
 
             case CLIK_TUILE:
@@ -89,11 +107,6 @@ public class Controlleur implements IControlleur {
                 break;
 
             case CLIK_CARTE:
-
-
-            case ECHANGE_CARTE:
-                System.out.println("echangerCarte()");
-                ihm.getVue("jeu").afficherAventurierAccessibles(ile.getJoueur().aventuriersAccessible(ile.getAventuriers()));
                 break;
 
             case RECUPERER_TRESOR:
@@ -105,10 +118,6 @@ public class Controlleur implements IControlleur {
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 break;
 
-            case NIVEAU_EAU:
-                ile.setNiveauEau(msg.niveauEau);
-                break;
-
             case CHANGER_VUE:
                 ihm.setVue(msg.vue);
                 break;
@@ -118,6 +127,12 @@ public class Controlleur implements IControlleur {
                 break;
         }
         lastAction = msg.type;
+
+        if (ile.getJoueur() != null && ile.getJoueur().getNbActions() == 0) {
+            ile.passerTour();
+            ihm.getVue("jeu").updateGrille(ile.getGrille());
+            ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
+        }
     }
 
 }

@@ -45,8 +45,8 @@ public class IHM extends Observe {
         vues.put(vue.name, vue);
     }
 
-    public Vue getVue(String name) {
-        return vues.get(name);
+    public Vue getVue(String vue) {
+        return vues.get(vue);
     }
 
     private void resizeFromSize(int w, int h) {

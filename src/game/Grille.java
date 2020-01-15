@@ -1,8 +1,9 @@
 package game;
 
-import java.util.*;
+import enumerations.Nom;
+import enumerations.Tresor;
 
-import static enumerations.Tresor.*;
+import java.util.*;
 
 /**
  *
@@ -10,7 +11,7 @@ import static enumerations.Tresor.*;
  */
 public class Grille {
 
-    private HashMap<String, Tuile> tuiles;
+    private HashMap<Nom, Tuile> tuiles;
 
     public Grille() {
         tuiles = new HashMap<>();
@@ -34,7 +35,6 @@ public class Grille {
     private void shuffleTuiles() {
         ArrayList<Tuile> list = new ArrayList<>(tuiles.values());
         Collections.shuffle(list);
-
         tuiles.clear();
         list.forEach(k->tuiles.put(k.getNom(), k));
     }
@@ -42,39 +42,27 @@ public class Grille {
     private void sortTuiles() {
         ArrayList<Tuile> list = new ArrayList<>(tuiles.values());
         Collections.sort(list);
-
         tuiles.clear();
         list.forEach(k->tuiles.put(k.getNom(), k));
     }
 
     private void creerTuiles() {
-        tuiles.put("La Porte de Bronze", new Tuile("La Porte de Bronze"));
-        tuiles.put("La Porte Dargent", new Tuile("La Porte Dargent"));
-        tuiles.put("La Porte de Fer", new Tuile("La Porte de Fer"));
-        tuiles.put("La porte Dor", new Tuile("La porte Dor"));
-        tuiles.put("Heliport", new Tuile("Heliport"));
-        tuiles.put("La porte de cuivre", new Tuile("La porte de cuivre"));
-        tuiles.put("Les falaises de Loubli", new Tuile("Les falaises de Loubli"));
-        tuiles.put("Les dunes de Lillusion", new Tuile("Les dunes de Lillusion"));
-        tuiles.put("Le pont des abimes", new Tuile("Le pont des abimes"));
-        tuiles.put("La foret pourpre", new Tuile("La foret pourpre"));
-        tuiles.put("Le lagon perdu", new Tuile("Le lagon perdu"));
-        tuiles.put("Le marais brumeux", new Tuile("Le marais brumeux"));
-        tuiles.put("Observatoire", new Tuile("Observatoire"));
-        tuiles.put("Le rocher fantome", new Tuile("Le rocher fantome"));
-        tuiles.put("Le val du crépuscule", new Tuile("Le val du crépuscule"));
-        tuiles.put("La tour du guet", new Tuile("La tour du guet"));
-        tuiles.put("La caverne des ombres", new Tuile("La caverne des ombres", cristalArdent));
-        tuiles.put("La caverne du brasier", new Tuile("La caverne du brasier", cristalArdent));
-        tuiles.put("Le palais de corail", new Tuile("Le palais de corail", caliceDelombre));
-        tuiles.put("Le palais des marees", new Tuile("Le palais des marees", caliceDelombre));
-        tuiles.put("Le temple de la lune", new Tuile("Le temple de la lune", pierreSacree));
-        tuiles.put("Le temple du soleil", new Tuile("Le temple du soleil", pierreSacree));
-        tuiles.put("Le jardin des hurlements", new Tuile("Le jardin des hurlements", statueDeZephir));
-        tuiles.put("Le jardin de murmures", new Tuile("Le jardin de murmures", statueDeZephir));
+        for (Nom nom : Nom.values()) {
+            Tuile newTuile = new Tuile(nom);
+            tuiles.put(nom, newTuile);
+            if(newTuile.getName().contains("caverne")) {
+                newTuile.setTresor(Tresor.Le_Cristal_Ardent);
+            } if(newTuile.getName().contains("palais")) {
+                newTuile.setTresor(Tresor.Le_Calice_De_L_Onde);
+            } if(newTuile.getName().contains("temple")) {
+                newTuile.setTresor(Tresor.La_Pierre_Sacree);
+            } if(newTuile.getName().contains("jardin")) {
+                newTuile.setTresor(Tresor.La_Statue_Du_Zephyr);
+            }
+        }
     }
 
-    public HashMap<String, Tuile> getTuilesMap() {
+    public HashMap<Nom, Tuile> getTuilesMap() {
         return tuiles;
     }
 

@@ -10,8 +10,11 @@ package enumerations;
  * @author estevmat
  */
 public enum Tresor {
-    pierreSacree,
-    cristalArdent,
-    caliceDelombre,
-    statueDeZephir
+    Le_Cristal_Ardent,
+    La_Pierre_Sacree,
+    La_Statue_Du_Zephyr,
+    Le_Calice_De_L_Onde,
+    Montee_Des_Eaux,
+    Helicoptere,
+    Sac_De_Sable,
 }

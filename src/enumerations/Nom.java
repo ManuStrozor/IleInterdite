@@ -1,0 +1,28 @@
+package enumerations;
+
+public enum Nom {
+    Heliport,
+    La_Caverne_Des_Ombres,
+    La_Caverne_Du_Brasier,
+    La_Foret_Pourpre,
+    La_Porte_D_Argent,
+    La_Porte_De_Bronze,
+    La_Porte_De_Cuivre,
+    La_Porte_De_Fer,
+    La_Porte_D_Or,
+    La_Tour_Du_Guet,
+    Le_Jardin_Des_Hurlements,
+    Le_Jardin_Des_Murmures,
+    Le_Lagon_Perdu,
+    Le_Marais_Brumeux,
+    Le_Palais_De_Corail,
+    Le_Palais_Des_Marees,
+    Le_Pont_Des_Abimes,
+    Le_Rocher_Fantome,
+    Les_Dunes_De_L_Illusion,
+    Les_Falaises_De_L_Oubli,
+    Le_Temple_De_La_Lune,
+    Le_Temple_Du_Soleil,
+    Le_Val_Du_Crepuscule,
+    Observatoire,
+}

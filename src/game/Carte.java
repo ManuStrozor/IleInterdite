@@ -1,5 +1,6 @@
 package game;
 
+import enumerations.Nom;
 import enumerations.Tresor;
 
 /**
@@ -9,21 +10,24 @@ import enumerations.Tresor;
 public abstract class Carte {
 
     protected Tresor tresor;
+    protected Nom nom;
 
-    protected String nom;
-
-    Carte(String nom){
+    Carte(Nom nom){
         this.nom = nom;
+    }
+
+    Carte(Tresor tresor){
+        this.tresor = tresor;
     }
 
     abstract void defausser();
+    public abstract Tresor getTresor();
 
-    public String getNom() {
+    public Nom getNom() {
         return nom;
     }
-    public void setNom(String nom) {
+    public abstract String getName();
+    public void setNom(Nom nom) {
         this.nom = nom;
     }
-
-    abstract Tresor getTresor();
 }

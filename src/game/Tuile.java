@@ -2,7 +2,7 @@ package game;
 
 import aventuriers.Aventurier;
 import enumerations.EtatTuile;
-import enumerations.Roles;
+import enumerations.Nom;
 import enumerations.Tresor;
 
 import javax.swing.*;
@@ -16,14 +16,14 @@ import java.util.HashSet;
  */
 public class Tuile implements Comparable<Tuile> {
 
-    private String nom;
+    private Nom nom;
     private Image image;
     private Tresor tresor;
     private EtatTuile etatTuile;
     private int ligne, colonne;
     private HashSet<Aventurier> aventuriers;
 
-    Tuile(String nom){
+    Tuile(Nom nom){
         setNom(nom);
         this.assecher();
         setImage(etatTuile);
@@ -31,18 +31,13 @@ public class Tuile implements Comparable<Tuile> {
         setTresor(null);
     }
 
-    Tuile(String nom, Tresor tresor){
-        setNom(nom);
-        this.assecher();
-        setImage(etatTuile);
-        aventuriers = new HashSet<>();
-        setTresor(tresor);
-    }
-
-    public String getNom() {
+    public Nom getNom() {
         return nom;
     }
-    private void setNom(String nom) {
+    public String getName() {
+        return nom.name();
+    }
+    private void setNom(Nom nom) {
         this.nom = nom;
     }
 
@@ -50,26 +45,25 @@ public class Tuile implements Comparable<Tuile> {
         return this.image;
     }
     public void setImage(EtatTuile etat) {
-        String filename = Utils.getImageFromName(this.nom);
+        String filename = Utils.toCamelCase(getName());
+        if(etat == EtatTuile.innondee) {
+            filename += "2";
+        } else if(etat == EtatTuile.coulee) {
+            filename = "EauSombree";
+        }
         URL url = getClass().getClassLoader().getResource("images/tuiles/" + filename + ".png");
         if (url != null) {
             Image img = new ImageIcon(url).getImage();
-            if(etat == EtatTuile.assechee) {
-                this.image = img;
-            } else if(etat == EtatTuile.innondee) {
-                this.image = Utils.createColorImage( Utils.toBufferedImage(img), 0xFF0000FF);
-            } else if(etat == EtatTuile.coulee) {
-                this.image = Utils.createColorImage( Utils.toBufferedImage(img), 0xFFFF0000);
-            } else {
-                this.image = Utils.createColorImage( Utils.toBufferedImage(img), 0x66FFFFFF);
-            }
+            this.image = etat == EtatTuile.cachee ? Utils.createColorImage(Utils.toBufferedImage(img), 0x66FFFFFF) : img;
+        } else {
+            System.out.println("Erreur nom image : " + getName() + " " + filename);
         }
     }
 
     public Tresor getTresor() {
         return tresor;
     }
-    private void setTresor(Tresor tresor) {
+    public void setTresor(Tresor tresor) {
         this.tresor = tresor;
     }
 
@@ -107,8 +101,7 @@ public class Tuile implements Comparable<Tuile> {
         if (getEtatTuile() == EtatTuile.innondee){
             setEtatTuile(EtatTuile.coulee);
             setImage(EtatTuile.coulee);
-        }
-        else{
+        } else{
             setEtatTuile(EtatTuile.innondee);
             setImage(EtatTuile.innondee);
         }
@@ -124,15 +117,8 @@ public class Tuile implements Comparable<Tuile> {
         this.aventuriers.remove(aventurier);
     }
 
-    public Tresor getTuileTresor() {
-        return tresor;
-    }
-
     @Override
     public int compareTo(Tuile o) {
         return (o.getLigne() > this.getLigne() || (o.getLigne() == this.getLigne() && o.getColonne() > this.getColonne())) ? 1 : 0;
     }
-
-
-
 }

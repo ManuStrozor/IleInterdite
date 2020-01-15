@@ -51,7 +51,6 @@ public class VueConfig extends Vue {
             int i = 0;
             nomJoueurs = new String[4];
             for(JTextField text : saisieNomJoueurs) nomJoueurs[i++] = text.getText();
-
             m.nomsJoueurs = nomJoueurs;
             ihm.notifierObservateur(m);
         });

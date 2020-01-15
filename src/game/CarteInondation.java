@@ -1,10 +1,11 @@
 package game;
 
+import enumerations.Nom;
 import enumerations.Tresor;
 
 public class CarteInondation extends Carte {
 
-    CarteInondation(String nom) {
+    CarteInondation(Nom nom) {
         super(nom);
     }
 
@@ -13,7 +14,12 @@ public class CarteInondation extends Carte {
     }
 
     @Override
-    Tresor getTresor() {
+    public Tresor getTresor() {
         return null;
+    }
+
+    @Override
+    public String getName() {
+        return nom.name();
     }
 }

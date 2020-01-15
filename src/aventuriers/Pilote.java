@@ -1,7 +1,8 @@
 package aventuriers;
 
 
-import enumerations.Roles;
+import enumerations.Nom;
+import enumerations.Role;
 import game.Grille;
 import game.Tuile;
 
@@ -15,12 +16,12 @@ public class Pilote extends Aventurier {
 
     public Pilote(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
-        setRole(Roles.pilote);
+        setRole(Role.pilote);
         setCouleurPion(Color.BLUE);
     }
 
     @Override
     protected Tuile getTuileSpawn(Grille grille) {
-        return grille.getTuilesMap().get("Heliport");
+        return grille.getTuilesMap().get(Nom.Heliport);
     }
 }

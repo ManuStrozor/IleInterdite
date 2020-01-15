@@ -1,7 +1,8 @@
 package aventuriers;
 
 
-import enumerations.Roles;
+import enumerations.Nom;
+import enumerations.Role;
 import game.Grille;
 import game.Tuile;
 
@@ -15,12 +16,12 @@ public class Navigateur extends Aventurier {
 
     public Navigateur(String nomJoueur, Grille grille){
         super(nomJoueur, grille);
-        setRole(Roles.navigateur);
+        setRole(Role.navigateur);
         setCouleurPion(Color.YELLOW);
     }
 
     @Override
     protected Tuile getTuileSpawn(Grille grille) {
-        return grille.getTuilesMap().get("La porte d'or");
+        return grille.getTuilesMap().get(Nom.La_Porte_D_Or);
     }
 }

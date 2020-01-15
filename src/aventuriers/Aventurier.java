@@ -16,7 +16,7 @@ public abstract class Aventurier {
     private Tuile tuile;
     private ArrayList<CarteTresor> inventaire;
     private double nbActions;
-    private Roles role;
+    private Role role;
     private String nomJoueur;
 
     public Aventurier(String nomJoueur, Grille grille) {
@@ -51,10 +51,9 @@ public abstract class Aventurier {
     public CarteTresor getCarteSacDeSable(){
         CarteTresor carte = null;
         for(int i=0;i<=getInventaire().size();i++){
-            if (getInventaire().get(i).getNom()=="Sac de sable"){
+            if (getInventaire().get(i).getNom().equals("Sac de sable")){
                 carte = getInventaire().get(i);
-            }
-            else {
+            } else {
                 carte = null;
             }
         }
@@ -63,22 +62,19 @@ public abstract class Aventurier {
 
     public CarteTresor getCarteHelico(){
         CarteTresor carte = null;
-        for(int i=0;i<=getInventaire().size();i++){
-            if (getInventaire().get(i).getNom()=="Helicoptere"){
-                carte = getInventaire().get(i);
-            }
-            else {
-                carte = null;
+        for (Carte c : getInventaire()) {
+            if(c.getTresor() == Tresor.Helicoptere) {
+                carte = (CarteTresor) c;
             }
         }
         return carte;
     }
 
-    public Roles getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Roles role) { this.role = role;  }
+    public void setRole(Role role) { this.role = role;  }
 
     public void setCouleurPion(Color couleur) { this.couleurPion = couleur;}
 
@@ -98,7 +94,7 @@ public abstract class Aventurier {
     public void defausseCarte(){
         int i = inventaire.size();
         while (i>0 && getInventaire().get(i) != null){
-            i= i-1;
+            i--;
         }
     }
 
@@ -115,7 +111,7 @@ public abstract class Aventurier {
     }
 
     public ArrayList<Aventurier> aventuriersAccessible(ArrayList<Aventurier> aventuriers) {
-        ArrayList<Aventurier> av = new ArrayList<>(this.getRole() == Roles.messager ? aventuriers : tuile.getAventuriers());
+        ArrayList<Aventurier> av = new ArrayList<>(this.getRole() == Role.messager ? aventuriers : tuile.getAventuriers());
         av.remove(this);
         return av;
     }
@@ -144,7 +140,7 @@ public abstract class Aventurier {
                 break;
         }
 
-        if (getRole() == Roles.explorateur) {
+        if (getRole() == Role.explorateur) {
             Tuile newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()+1);
             if(newTuile != null) tuiles.add(newTuile);
 
@@ -198,7 +194,7 @@ public abstract class Aventurier {
                 break;
         }
 
-        if (getRole() == Roles.explorateur) {
+        if (getRole() == Role.explorateur) {
             Tuile newTuile = grille.getTuile(tuile.getLigne()+1, tuile.getColonne()+1);
             if(newTuile != null) tuiles.add(newTuile);
 
@@ -236,14 +232,7 @@ public abstract class Aventurier {
     }
 
     public boolean mort(Grille grille) {
-        if ( getRole() != Roles.plongeur){
-            if ( tuile.getEtatTuile() == EtatTuile.coulee && getTuilesAccessibles(grille) == null){
-                return true;
-            }
-            else { return false;}
-        }
-        else {return false ; }
-
+        return getRole() != Role.plongeur && tuile.getEtatTuile() == EtatTuile.coulee && getTuilesAccessibles(grille) == null;
     }
 
     public void defaussetoi(ArrayList<CarteTresor> cs){
