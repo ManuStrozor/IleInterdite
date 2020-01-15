@@ -101,7 +101,8 @@ public class Tuile implements Comparable<Tuile> {
         if (getEtatTuile() == EtatTuile.innondee){
             setEtatTuile(EtatTuile.coulee);
             setImage(EtatTuile.coulee);
-        } else{
+        }
+        else if (getEtatTuile() == EtatTuile.assechee){
             setEtatTuile(EtatTuile.innondee);
             setImage(EtatTuile.innondee);
         }
@@ -121,4 +122,7 @@ public class Tuile implements Comparable<Tuile> {
     public int compareTo(Tuile o) {
         return (o.getLigne() > this.getLigne() || (o.getLigne() == this.getLigne() && o.getColonne() > this.getColonne())) ? 1 : 0;
     }
+
+
+
 }

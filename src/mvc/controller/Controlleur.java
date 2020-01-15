@@ -133,6 +133,7 @@ public class Controlleur implements IControlleur {
             ihm.getVue("jeu").updateGrille(ile.getGrille());
             ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
         }
+
     }
 
 }

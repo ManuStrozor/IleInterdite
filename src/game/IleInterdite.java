@@ -365,7 +365,7 @@ public class IleInterdite extends Observe {
         return joueurASauver;
     }
 
-    public void defaussetoi(ArrayList<CarteTresor> ct){
+    public void defaussetoi(ArrayList<CarteTresor> ct) {
         getJoueur().defaussetoi(ct);
         for(CarteTresor c: ct){
             DEFAUSSECARTETRESOR(c);
