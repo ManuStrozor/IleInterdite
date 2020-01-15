@@ -119,7 +119,7 @@ public class IleInterdite extends Observe {
                 i--;
             } else {
                 aventurier.getInventaire().add(c);
-                defausserCartesTresor(c);
+                pileTresor.remove(c);
             }
         }
     }
