@@ -196,6 +196,7 @@ public abstract class Aventurier {
                 if (newTuile != null) tuiles.add(newTuile);
                 break;
             case pilote:
+
                 tuiles.addAll(grille.getTuiles());
                 break;
         }
