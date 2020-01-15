@@ -8,6 +8,7 @@ package mvc;
 
 import aventuriers.Aventurier;
 import enumerations.TypeMessage;
+import game.CarteTresor;
 import game.Grille;
 import game.Tuile;
 
@@ -25,7 +26,7 @@ public class Message {
 
     public TypeMessage type;
     public String vue;
-    public int nbJoueur;
+    public int nbJoueur, nbCarteEnTrop;
     public Grille grille;
     public String niveauEau;
     public String[] nomsJoueurs;

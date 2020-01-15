@@ -130,8 +130,20 @@ public class IleInterdite extends Observe {
                 getJoueur().getInventaire().add(c);
                 pileTresor.remove(c);
             }
+
+            if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
+
+                //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
+                // et qui recupere l'index de cette carte dans inventaire
+                Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
+                //msg.index = l'index de la carte qu'on recupere avec la fonction
+                msg.nbCarteEnTrop = getJoueur().getInventaire().size()-5;
+                notifierObservateur(msg);
+            }
+
         }
     } // Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
+
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
         aventurier.seDeplacer(tuileDest);
@@ -154,6 +166,14 @@ public class IleInterdite extends Observe {
         getJoueur().getInventaire().remove(carte);
         receveur.getInventaire().add(carte);
         getJoueur().consommerAction(1);
+
+//        if (receveur.getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
+//            System.out.println("testXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+//            Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
+//            msg.a = receveur;
+//            msg.nbCarteEnTrop = receveur.getInventaire().size()-5;
+//            notifierObservateur(msg);
+//        }
     }
 
     public void recupererTresor() {
@@ -216,6 +236,23 @@ public class IleInterdite extends Observe {
             pileTresor.addAll(defausseTresor);
             defausseTresor.clear();
         }
+    }
+
+    public void defausserCartesTresorInventaire(CarteTresor c, Aventurier av){
+        System.out.println("on defausse la carte " + c.getName());
+        // TEST HAMZA
+        defausseTresor.add(c);
+
+        ArrayList<CarteTresor> carteAsupprimer = new ArrayList<>();
+        for (CarteTresor carte : av.getInventaire() ) {
+            if (carte == c ){
+                carteAsupprimer.add(carte);
+                break;
+            }
+        }
+        av.getInventaire().removeAll(carteAsupprimer);
+        Message m = new Message(TypeMessage.UPDATE_DASHBOARD);
+        notifierObservateur(m);
     }
 
     public void setNbJoueurs(int nbJoueurs) {

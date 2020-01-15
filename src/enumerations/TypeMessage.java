@@ -26,4 +26,5 @@ public enum TypeMessage {
     SAUVER,
     CHANGER_VUE,
     QUITTER,
+    INVENTAIRE_PLEIN;
 }
