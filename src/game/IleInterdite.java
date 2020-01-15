@@ -128,7 +128,7 @@ public class IleInterdite extends Observe {
                 useCarteMonteeDesEaux();
             } else {
                 getJoueur().getInventaire().add(c);
-                defausserTresor(c);
+                pileTresor.remove(c);
             }
         }
     }
