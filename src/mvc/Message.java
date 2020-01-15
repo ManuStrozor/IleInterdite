@@ -30,6 +30,6 @@ public class Message {
     public String niveauEau;
     public String[] nomsJoueurs;
     public ArrayList<Aventurier> aventuriers;
-    public int tuileIndex;
-    public Aventurier a ;
+    public int indexAventurier, index;
+    public Aventurier a;
 }

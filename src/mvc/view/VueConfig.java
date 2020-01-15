@@ -99,15 +99,19 @@ public class VueConfig extends Vue {
     }
 
     @Override
+    public void afficherTitreJoueur(String nom) {}
+    @Override
     public void updateDashboard(ArrayList<Aventurier> aventuriers) {}
     @Override
     public void updateGrille(Grille grille) {}
     @Override
     public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {}
     @Override
+    public void afficherCartesAccessibles(ArrayList<Aventurier> aventuriers, Aventurier joueur) {}
+    @Override
     public void initBoards(int nbJoueur) {}
     @Override
-    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers) {}
+    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers, ArrayList<Aventurier> aventuriersOK) {}
 
     @Override
     public void initComponents() {

@@ -51,7 +51,7 @@ public class Tuile implements Comparable<Tuile> {
         } else if(etat == EtatTuile.coulee) {
             filename = "EauSombree";
         }
-        URL url = getClass().getClassLoader().getResource("images/tuiles/" + filename + ".png");
+        URL url = getClass().getClassLoader().getResource("tuiles/" + filename + ".png");
         if (url != null) {
             Image img = new ImageIcon(url).getImage();
             this.image = etat == EtatTuile.cachee ? Utils.createColorImage(Utils.toBufferedImage(img), 0x66FFFFFF) : img;

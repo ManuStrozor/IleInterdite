@@ -58,6 +58,8 @@ public class IleInterdite extends Observe {
         initiateAventuriers(nomJoueurs);
         initiateInondation();
         tirerCartesIondation();
+
+        this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
     }
 
     private void initiateTresorCards() {
@@ -214,6 +216,8 @@ public class IleInterdite extends Observe {
         } else {
             joueur++;
         }
+
+        this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
     }
 
     public void sauverJoueur() {

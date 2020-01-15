@@ -8,6 +8,7 @@ package mvc.view;
 import aventuriers.Aventurier;
 import enumerations.EtatTuile;
 import enumerations.Role;
+import enumerations.Tresor;
 import enumerations.TypeMessage;
 import game.Carte;
 import game.CarteTresor;
@@ -39,6 +40,7 @@ import java.util.Objects;
 public class VueJeu extends Vue {
 
     private JPanel grille, dashBoard;
+    private JLabel joueur;
     private JButton deplacer, assecher, donnerCarteTresor, recupererTresor, passertour;
 
     public VueJeu(String name, IHM ihm, int width, int height) {
@@ -56,7 +58,6 @@ public class VueJeu extends Vue {
 
         assecher.addActionListener(e -> {
             Message m = new Message(TypeMessage.ASSECHER_TUILE);
-            //m.currentplayer = currentplayer();
             ihm.notifierObservateur(m);
         });
 
@@ -85,19 +86,16 @@ public class VueJeu extends Vue {
             TilePanel t = (TilePanel)this.grille.getComponent(i);
             JButton btn = (JButton)t.getComponent(0);
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
-                int finalPos = pos;
+                int index = pos;
                 btn.addActionListener(e -> {
                     Message m = new Message(TypeMessage.CLIK_TUILE);
-                    m.tuileIndex = finalPos;
+                    m.index = index;
                     ihm.notifierObservateur(m);
                 });
                 pos++;
             }
         }
-
-
     }
-
 
     public void updateGrille(Grille grille) {
         int i = 0, pos = 0;
@@ -110,16 +108,17 @@ public class VueJeu extends Vue {
 
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
                 t.setBackground(grille.getTuile(pos).getImage());
-
                 pos++;
             }
             i++;
         }
         this.updateUI();
     }
+
     public void rendreBoutonsClicables(boolean bool){
         recupererTresor.setEnabled(bool);
     }
+
     @Override
     public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {
         int i = 0, pos = 0;
@@ -143,32 +142,89 @@ public class VueJeu extends Vue {
         this.updateUI();
     }
 
+    @Override
+    public void afficherCartesAccessibles(ArrayList<Aventurier> aventuriers, Aventurier joueur) {
+        int j = 0;
+        for(Component dash : this.dashBoard.getComponents()) {
+            JPanel d = (JPanel)dash;
+            JPanel cartes = (JPanel)d.getComponent(2);
+
+            Aventurier a = aventuriers.get(j);
+            for (int i = 0; i < a.getInventaire().size(); i++) {
+
+                TilePanel carte = (TilePanel)cartes.getComponent(i);
+                JButton btn = (JButton)carte.getComponent(0);
+
+                CarteTresor c = a.getInventaire().get(i);
+                if(a == joueur && c.getTresor() != Tresor.Helicoptere && c.getTresor() != Tresor.Sac_De_Sable) {
+
+                    btn.setEnabled(true);
+                    btn.setContentAreaFilled(false);
+
+                } else if(a != joueur && (c.getTresor() == Tresor.Helicoptere || c.getTresor() == Tresor.Sac_De_Sable)) {
+
+                    btn.setEnabled(true);
+                    btn.setContentAreaFilled(false);
+
+                } else {
+                    // cacher pour update background
+                }
+
+                carte.setBackground(a.getInventaire().get(i).getTresor().getImage());
+            }
+            j++;
+        }
+        this.updateUI();
+    }
+
     public void initBoards(int nb) {
         for (int i = 0; i < nb; i++) {
+            int indexAventurier = i;
             JPanel dashPanel = new JPanel(new BorderLayout());
             dashPanel.setOpaque(false);
 
-            JPanel rolePanel = new JPanel(new BorderLayout());
+            TilePanel rolePanel = new TilePanel(new BorderLayout());
+            JButton bouton = new JButton();
+            bouton.setEnabled(false);
+            bouton.setOpaque(false);
+            rolePanel.add(bouton);
+
+            bouton.addActionListener(e -> {
+                Message m = new Message(TypeMessage.CLIK_JOUEUR);
+                m.indexAventurier = indexAventurier;
+                ihm.notifierObservateur(m);
+            });
+
             rolePanel.setPreferredSize(new Dimension(100, 0));
-            rolePanel.add(new JLabel());
+            rolePanel.setOpaque(false);
 
             JPanel descPanel = new JPanel(new BorderLayout());
             descPanel.add(new JLabel());
 
-            JPanel cartesPanel = new JPanel(new GridLayout(1, 8)); // 8 = Un joueur n'aura jamais plus de 8 cartes en main
-            cartesPanel.setPreferredSize(new Dimension(0, 100));
-            for(int c = 0; c < 8; c++) {
-                cartesPanel.add(new JLabel());
-            }
+            JPanel cartes = new JPanel(new GridLayout(1, 8));
+            cartes.setPreferredSize(new Dimension(0, 80));
+            cartes.setOpaque(false);
 
-            /*cartesPanel.addActionListener(e -> {
-                Message m = new Message(TypeMessage.CLIK_CARTE);
-                ihm.notifierObservateur(m);
-            });*/
+            for(int c = 0; c < 8; c++) {
+                TilePanel carte = new TilePanel(new BorderLayout());
+                JButton btn = new JButton();
+                btn.setEnabled(false);
+                btn.setOpaque(false);
+                carte.add(btn);
+                int index = c;
+                btn.addActionListener(e -> {
+                    Message m = new Message(TypeMessage.CLIK_CARTE);
+                    m.indexAventurier = indexAventurier;
+                    m.index = index;
+                    ihm.notifierObservateur(m);
+                });
+                carte.setOpaque(false);
+                cartes.add(carte);
+            }
 
             dashPanel.add(rolePanel, BorderLayout.WEST);
             dashPanel.add(descPanel, BorderLayout.CENTER);
-            dashPanel.add(cartesPanel, BorderLayout.SOUTH);
+            dashPanel.add(cartes, BorderLayout.SOUTH);
             dashBoard.add(dashPanel);
         }
     }
@@ -178,14 +234,11 @@ public class VueJeu extends Vue {
         for(Component comp : dashBoard.getComponents()) {
             JPanel dashPanel = (JPanel)comp;
 
-            JPanel rolePanel = (JPanel)dashPanel.getComponent(0);
+            TilePanel rolePanel = (TilePanel)dashPanel.getComponent(0);
             JPanel descPanel = (JPanel)dashPanel.getComponent(1);
             JPanel cartesPanel = (JPanel)dashPanel.getComponent(2);
 
-            rolePanel.setBackground(aventuriers.get(i).getCouleurPion());
-            JLabel role = (JLabel)rolePanel.getComponent(0);
-            role.setText(String.valueOf(aventuriers.get(i).getRole()));
-            role.setForeground((aventuriers.get(i).getCouleurPion() == Color.YELLOW) ? Color.BLACK : Color.WHITE);
+            rolePanel.setBackground(aventuriers.get(i).getRole().getImage());
 
             JLabel desc = (JLabel)descPanel.getComponent(0);
             desc.setText("Joueur: ["+aventuriers.get(i).getNomJoueur() + "]  Actions: " + aventuriers.get(i).getNbActions());
@@ -193,8 +246,8 @@ public class VueJeu extends Vue {
             int j = 0;
             for(Carte c : aventuriers.get(i).getInventaire()){
                 if(c != null) {
-                    JLabel carte = (JLabel)cartesPanel.getComponent(j);
-                    carte.setText(c.getName());
+                    TilePanel carte = (TilePanel)cartesPanel.getComponent(j);
+                    carte.setBackground(c.getTresor().getImage());
                 }
                 j++;
             }
@@ -205,36 +258,74 @@ public class VueJeu extends Vue {
     }
 
     @Override
-    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventurierAccessibles) {
-        System.out.println("Aventuriers qui peuvent recevoir :");
-        for(Aventurier a : aventurierAccessibles) {
-            System.out.println("\t" + a.getNomJoueur());
+    public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers, ArrayList<Aventurier> aventuriersOK) {
+        int i = 0;
+        for (Component dash : this.dashBoard.getComponents()) {
+            JPanel d = (JPanel)dash;
+            TilePanel r = (TilePanel)d.getComponent(0);
+            JButton btn = (JButton)r.getComponent(0);
+
+            Aventurier a = aventuriers.get(i);
+
+            if(aventuriersOK.contains(a)) {
+                btn.setEnabled(true);
+                btn.setContentAreaFilled(false);
+            } else {
+                // cacher pour update le background
+            }
+
+            r.setBackground(a.getRole().getImage());
+            i++;
         }
+        this.updateUI();
+    }
+
+    @Override
+    public void afficherTitreJoueur(String nom) {
+        joueur.setText(nom);
+        this.updateUI();
     }
 
     @Override
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundJeu.jpg"))).getImage());
 
-        JPanel menu = new JPanel( new GridLayout(4,1, 5,10));
+        JPanel menuPanel = new JPanel(new BorderLayout());
+        menuPanel.setOpaque(false);
+
+        JPanel parchemin = new JPanel(new BorderLayout(0, 10));
+        parchemin.setOpaque(false);
+
+        JPanel menu = new JPanel(new GridLayout(2,2, 20,20));
         menu.setOpaque(false);
 
         ////// MENU //////
+        JPanel menuBar = new JPanel(new BorderLayout());
+        menuBar.setPreferredSize(new Dimension(0, 50)); menuBar.setOpaque(false);
+
+        JPanel title = new JPanel(new BorderLayout()); title.setOpaque(false);
+        joueur = new JLabel();
+        title.add(new JLabel("C'est au tour de "), BorderLayout.WEST);
+        title.add(joueur, BorderLayout.CENTER);
+        passertour = new JButton("passerTour");
+
+        menuBar.add(title, BorderLayout.CENTER);
+        menuBar.add(passertour, BorderLayout.EAST);
+
         deplacer = new JButton("Se déplacer");
         assecher = new JButton("Assécher la tuile");
         donnerCarteTresor = new JButton("Donner une carte");
         recupererTresor = new JButton("Récupérer le Trésor");
-        passertour = new JButton("passerTouur");
 
         menu.add(deplacer);
         menu.add(assecher);
         menu.add(donnerCarteTresor);
         menu.add(recupererTresor);
-        menu.add(passertour);
         ////// MENU //////
 
-        JPanel menuPanel = new JPanel(new BorderLayout());
-        menuPanel.setOpaque(false);
+        parchemin.add(menuBar, BorderLayout.NORTH);
+        parchemin.add(menu, BorderLayout.CENTER);
+
         JPanel marginLeft = new JPanel();
         marginLeft.setPreferredSize(new Dimension(100, 0)); marginLeft.setOpaque(false);
         JPanel marginTop = new JPanel();
@@ -242,13 +333,11 @@ public class VueJeu extends Vue {
         JPanel marginBot = new JPanel();
         marginBot.setPreferredSize(new Dimension(0, 100)); marginBot.setOpaque(false);
 
-
-
         menuPanel.add(marginTop, BorderLayout.NORTH);
         menuPanel.add(marginLeft, BorderLayout.WEST);
         menuPanel.add(marginBot, BorderLayout.SOUTH);
-        menuPanel.add(menu, BorderLayout.CENTER);
-        menuPanel.setPreferredSize(new Dimension(450,0));
+        menuPanel.add(parchemin, BorderLayout.CENTER);
+        menuPanel.setPreferredSize(new Dimension(425,0));
 
         JPanel board = new JPanel(new BorderLayout());
         board.setOpaque(false);
@@ -286,7 +375,6 @@ public class VueJeu extends Vue {
         JPanel marginBot2 = new JPanel();
         marginBot2.setPreferredSize(new Dimension(0, 10)); marginBot2.setOpaque(false);
 
-
         boardPanel.add(marginTop2, BorderLayout.NORTH);
         boardPanel.add(marginLeft2, BorderLayout.WEST);
         boardPanel.add(marginRight2, BorderLayout.EAST);
@@ -301,7 +389,5 @@ public class VueJeu extends Vue {
         this.add(boardPanel, BorderLayout.CENTER);
         this.add(dashBoard, BorderLayout.SOUTH);
     }
-
-
 
 }

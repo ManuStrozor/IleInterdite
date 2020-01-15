@@ -5,6 +5,13 @@ package enumerations;
  * and open the template in the editor.
  */
 
+import game.Utils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
+import java.util.Objects;
+
 /**
  *
  * @author estevmat
@@ -17,4 +24,10 @@ public enum Tresor {
     Montee_Des_Eaux,
     Helicoptere,
     Sac_De_Sable,
+    ;
+
+    public Image getImage() {
+        URL url = getClass().getClassLoader().getResource("cartes/tresor/"+ Utils.toCamelCase(this.name()) +".png");
+        return new ImageIcon(Objects.requireNonNull(url)).getImage();
+    }
 }

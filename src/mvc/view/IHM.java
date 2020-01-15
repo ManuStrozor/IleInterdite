@@ -21,6 +21,7 @@ public class IHM extends Observe {
 
     public final int WIDTH = 580;
     public final int HEIGHT = 800;
+    //private Toolkit tk;
     private double screenWidth, screenHeight, frameWidth, frameHeight;
 
     private JFrame frame;
@@ -33,6 +34,10 @@ public class IHM extends Observe {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(vue);
+
+//        tk = Toolkit.getDefaultToolkit();
+//        WIDTH = (int) tk.getScreenSize().getWidth();
+//        HEIGHT = (int) tk.getScreenSize().getHeight();
 
         Rectangle ws = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         screenWidth = ws.width;
