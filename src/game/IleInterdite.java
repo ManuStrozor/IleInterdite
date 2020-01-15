@@ -187,16 +187,13 @@ public class IleInterdite extends Observe {
                         cartesADegager.add(c);
                     }
                 }
-
                 getJoueur().getInventaire().removeAll(cartesADegager);
                 getJoueur().consommerAction(1);
                 System.out.println(getJoueur().getNomJoueur()+ " recupere le tresor "+tresor.name());
-
             }
             else{
                 System.out.println("MarchePas");
             }
-
     }
 
 
@@ -212,6 +209,14 @@ public class IleInterdite extends Observe {
             joueur++;
         }
 
+        if(perdrePartie(grille)== true) {
+            System.out.println("VOUS AVEZ PERDU");
+            Message msg = new Message(TypeMessage.CHANGER_VUE);
+            msg.vue = "perdu";
+            this.notifierObservateur(msg);
+        } else{
+            System.out.println("Vous avez pas encore perdu");
+        }
         this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
     }
 
@@ -320,14 +325,10 @@ public class IleInterdite extends Observe {
         getJoueur().getInventaire().remove(getJoueur().getCarteSacDeSable());
     }
 
-    public void utiliserHelico(Aventurier joueur, Tuile destination) {
-        if (destination.getEtatTuile()!=EtatTuile.coulee){
-            //Ceci est la méthode temporaire, une fois la question de l'IHM réglée on pourra selectionner plusieurs joueurs
-            joueur.getTuile().getAventuriers().remove(joueur);
-            destination.addAventurier(joueur);
-            getJoueur().getInventaire().remove(getJoueur().getCarteHelico());
-            gagnerPartie();
-        }
+    public void utiliserHelico() {
+        gagnerPartie();
+        Message m = new Message(TypeMessage.HELICO);
+        this.notifierObservateur(m);
     }
 
     public boolean estRecuperable(Aventurier aventurier) { // Déplacer dans Tuile.java
@@ -368,16 +369,22 @@ public class IleInterdite extends Observe {
     public boolean perdrePartie(Grille grille) {
 
         for (Aventurier a : aventuriers) { //si un aventurier est mort, la partie est perdue
-            return a.mort(grille);
+            if ( a.mort(grille)){
+                return a.mort(grille);
+            }
         }
 
         for (Tresor t : tresorsDispo) { // pour chaque tresor que l'on a pas encore recuperé
             // Si les tuiles permettants de recuperer ce tresor sont toutes les deux coulées, on retourne true
-            return getTuileTresor(t).get(0).getEtatTuile() == EtatTuile.coulee
-                    && getTuileTresor(t).get(1).getEtatTuile() == EtatTuile.coulee;
+            if (getTuileTresor(t).get(0).getEtatTuile() == EtatTuile.coulee
+                    && getTuileTresor(t).get(1).getEtatTuile() == EtatTuile.coulee){
+                return getTuileTresor(t).get(0).getEtatTuile() == EtatTuile.coulee
+                        && getTuileTresor(t).get(1).getEtatTuile() == EtatTuile.coulee;
+            }
+
         }
 
-        return grille.getTuilesMap().get(Nom.Heliport).getEtatTuile() == EtatTuile.coulee || getNiveauEau() >= 10;
+        return grille.getTuilesMap().get(Nom.Heliport).getEtatTuile() == EtatTuile.coulee || getNiveauEau() >= 10; // marche pas
     }
 
     public ArrayList<Tuile> getTuileTresor(Tresor t) {

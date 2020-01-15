@@ -15,6 +15,7 @@ import game.IleInterdite;
 import game.Tuile;
 import mvc.Message;
 import mvc.view.IHM;
+import mvc.view.VueGameOver;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,8 @@ public class Controlleur implements IControlleur {
     private IleInterdite ile;
     private TypeMessage lastAction = null;
     private int indexCible;
-    
+    private VueGameOver VueGameOver;
+
     public Controlleur(IHM ihm, IleInterdite ile) {
         this.ihm = ihm;
         ihm.setObservateur(this);
@@ -66,7 +68,6 @@ public class Controlleur implements IControlleur {
                 ihm.getVue("jeu").updateGrille(grille);
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 break;
-
             case DEPLACEMENT:
                 if(ile.getJoueur().getNbActions() < 1) { // Helico...verifier lastAction
                     ile.passerTour();
@@ -107,6 +108,7 @@ public class Controlleur implements IControlleur {
                         ile.assecher(ile.getJoueur(), grille.getTuile(msg.index));
                         break;
                     case HELICO:
+
                         break;
                     case SABLE:
                         break;
