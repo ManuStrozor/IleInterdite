@@ -115,21 +115,21 @@ public class IleInterdite extends Observe {
         }
     }
 
-    private void distribuerCarteTresor(Aventurier aventurier) {
-        for (int k = 1; k <= 2; k++) {
-            int i = pileCartesTresor.size() - 1;
-            CarteTresor carte = pileCartesTresor.get(i);
-
-            while (carte.getTresor() == Tresor.Montee_Des_Eaux) {
+    private void distribuerCarteTresor(Aventurier aventurier) { // Distribue 2 carte trésor au début sauf montée eaux
+        CarteTresor c;
+        for(int i=0; i<2; i++){
+            c = pileCartesTresor.get(random.nextInt(pileCartesTresor.size()-1));
+            if(c.getTresor() == Tresor.Montee_Des_Eaux) {
+                DEFAUSSECARTETRESOR(c);
                 i--;
-                carte = pileCartesTresor.get(i);
+            } else {
+                aventurier.ajouterCarte(c);
+                DEFAUSSECARTETRESOR(c);
             }
-            aventurier.ajouterCarte(carte) ;
-            pileCartesTresor.remove(carte);
         }
     }
 
-    private void tirerCartesIondation(){
+    private void tirerCartesIondation(){ // Distribue 6 carte inondation au début du jeu
         for(int i=0; i<6; i++) {
             CarteInondation c;
             c = pileCartesInondation.get(random.nextInt(pileCartesInondation.size()));
@@ -215,18 +215,18 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public void DEFAUSSECARTEINONDATION(CarteInondation c){
+    public void DEFAUSSECARTEINONDATION(CarteInondation c){ // defausse la carte et si la pile est vide la re rempli innondation
         defausseCartesInondation.add(c);
         pileCartesInondation.remove(c);
-        if(defausseCartesInondation.isEmpty()){
+        if(pileCartesInondation.isEmpty()){
             defausseCartesInondation.addAll(pileCartesInondation);
         }
     }
 
-    public void DEFAUSSECARTETRESOR(CarteTresor c){
+    public void DEFAUSSECARTETRESOR(CarteTresor c){ // defausse la carte et si la pile est vide la re rempli tresor
         defausseCartesTresor.add(c);
         pileCartesTresor.remove(c);
-        if(defausseCartesTresor.isEmpty()){
+        if(pileCartesTresor.isEmpty()){
             defausseCartesTresor.addAll(pileCartesTresor);
         }
     }
@@ -272,7 +272,6 @@ public class IleInterdite extends Observe {
 
     public void useCarteMonteeDesEaux() { // Déclenché automatiquement...ne pas oublier de defausser !
         niveauEau = niveauEau + 1;
-
         if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) {
                 cartesAPiocher+=1;
         }
@@ -365,7 +364,7 @@ public class IleInterdite extends Observe {
         return joueurASauver;
     }
 
-    public void defaussetoi(ArrayList<CarteTresor> ct) {
+    public void defaussetoi(ArrayList<CarteTresor> ct) { // en cours de codage
         getJoueur().defaussetoi(ct);
         for(CarteTresor c: ct){
             DEFAUSSECARTETRESOR(c);
