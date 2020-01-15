@@ -398,7 +398,7 @@ public class IleInterdite extends Observe {
         }
 
         int totalInond=pileInond.size()+defausseInond.size();
-        System.out.print("\n\tNb " + defausseInond.size() + "\n\tTotal inond : " + totalInond + "/24");
+        System.out.print("\n\tNb " + defausseInond.size() + "\n\tTotal cartes inond : " + totalInond + "/24");
 
         System.out.print("\n\n\tCartes pile trésor : ");
         for (CarteTresor carteTresor : pileTresor) {
@@ -416,7 +416,7 @@ public class IleInterdite extends Observe {
             somme +=a.getInventaire().size();
         }
         int totalTresor=pileTresor.size()+defausseTresor.size()+somme;
-        System.out.print("\n\tNb " + defausseTresor.size() + "\n\tTotal tresor : " + totalTresor+ "/28");
+        System.out.print("\n\tNb " + defausseTresor.size() + "\n\tTotal cartes tresor : " + totalTresor+ "/28");
 
         System.out.print("\n\nInformations sur les autres joueurs : \n\n");
         for (Aventurier aventurier : aventuriers) {
