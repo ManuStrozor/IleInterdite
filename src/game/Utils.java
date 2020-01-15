@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class Utils {
 
     static String getImageFromName(String s) {
-        return toCamelCase(s).replace("'", "").replace("é", "e");
+        return toCamelCase(s).replace("é", "e");
     }
 
     static String toCamelCase(String s){

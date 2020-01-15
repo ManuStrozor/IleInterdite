@@ -22,6 +22,7 @@ public enum TypeMessage {
     NIVEAU_EAU,
     PASSERTOUR,
     CLIK_TUILE,
+    CLIK_CARTE,
     HELICO,
     SABLE,
     SAUVER

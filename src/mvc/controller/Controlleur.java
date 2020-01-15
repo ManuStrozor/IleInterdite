@@ -88,6 +88,9 @@ public class Controlleur implements IControlleur {
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 break;
 
+            case CLIK_CARTE:
+
+
             case ECHANGE_CARTE:
                 System.out.println("echangerCarte()");
                 ihm.getVue("jeu").afficherAventurierAccessibles(ile.getJoueur().aventuriersAccessible(ile.getAventuriers()));

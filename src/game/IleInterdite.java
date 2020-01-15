@@ -59,7 +59,7 @@ public class IleInterdite extends Observe {
         notifierObservateur(m);
 
         initiateInondation();
-        //tirerCartesIondation(6);
+        tirerCartesIondation();
 
         m = new Message(TypeMessage.UPDATE_GRILLE);
         notifierObservateur(m);
@@ -119,7 +119,7 @@ public class IleInterdite extends Observe {
                     throw new IllegalStateException("[InitiateAventuriers] Unexpected value: " + lesRoles.get(i));
             }
             aventuriers.add(newAventurier);
-           //piocherCarteTresor();
+           distribuerCarteTresor(newAventurier);
         }
     }
 
@@ -134,6 +134,15 @@ public class IleInterdite extends Observe {
             }
             aventurier.ajouterCarte(carte) ;
             pileCartesTresor.remove(carte);
+        }
+    }
+
+    private void tirerCartesIondation(){
+        for(int i=0; i<6; i++) {
+            CarteInondation c;
+            c = pileCartesInondation.get(random.nextInt(pileCartesInondation.size()));
+            grille.getTuilesMap().get(c.getNom()).innonder();
+            DEFAUSSECARTEINONDATION(c);
         }
     }
 
@@ -201,32 +210,36 @@ public class IleInterdite extends Observe {
             else {
                 getJoueur().ajouterCarte(c);
                 pileCartesTresor.remove(c);
-                defausseCartesTresor.add(c);
+                DEFAUSSECARTETRESOR(c);
             }
         }
+
 
     }
 
     public void piocherCarteInnondation(){ // fais piocher le nombre de carte innondation en fonction du niveau eau
         CarteInondation c;
-        for(int i=0; i<=cartesAPiocher; i++){
+        for(int i=0; i<cartesAPiocher; i++){
             c = pileCartesInondation.get(random.nextInt(pileCartesInondation.size()-1));
             pileCartesInondation.add(c);
-            defausseCartesInondation.add(c);
+            DEFAUSSECARTEINONDATION(c);
             grille.getTuilesMap().get(c.getNom()).innonder();
         }
     }
 
-    /*public void defausseCarteInnondation(CarteInondation c){
+    public void DEFAUSSECARTEINONDATION(CarteInondation c){
         defausseCartesInondation.add(c);
         if(defausseCartesInondation.size()==0){
-            for(){
-                //dezdezdzedzedzedze
-            }
-        };
-    }*/
+            defausseCartesInondation.addAll(pileCartesInondation);
+        }
+    }
 
-
+    public void DEFAUSSECARTETRESOR(CarteTresor c){
+        defausseCartesTresor.add(c);
+        if(defausseCartesTresor.size()==0){
+            defausseCartesTresor.addAll(pileCartesTresor);
+        }
+    }
 
     public void setNbJoueurs(int nbJoueurs) {
         this.nbJoueurs = nbJoueurs;
@@ -372,5 +385,12 @@ public class IleInterdite extends Observe {
 
     public Aventurier getJoueurASauver() {
         return joueurASauver;
+    }
+
+    public void defaussetoi(ArrayList<CarteTresor> ct){
+        getJoueur().defaussetoi(ct);
+        for(CarteTresor c: ct){
+            DEFAUSSECARTETRESOR(c);
+        }
     }
 }

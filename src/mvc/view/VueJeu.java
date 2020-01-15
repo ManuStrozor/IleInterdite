@@ -145,6 +145,11 @@ public class VueJeu extends Vue {
                 cartesPanel.add(new JLabel());
             }
 
+            /*cartesPanel.addActionListener(e -> {
+                Message m = new Message(TypeMessage.CLIK_CARTE);
+                ihm.notifierObservateur(m);
+            });*/
+
             dashPanel.add(rolePanel, BorderLayout.WEST);
             dashPanel.add(descPanel, BorderLayout.CENTER);
             dashPanel.add(cartesPanel, BorderLayout.SOUTH);

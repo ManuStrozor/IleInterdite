@@ -245,4 +245,8 @@ public abstract class Aventurier {
         else {return false ; }
 
     }
+
+    public void defaussetoi(ArrayList<CarteTresor> cs){
+        this.getInventaire().remove(cs);
+    }
 }

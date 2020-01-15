@@ -102,13 +102,11 @@ public class Tuile implements Comparable<Tuile> {
         setEtatTuile(EtatTuile.assechee);
         setImage(EtatTuile.assechee);
     }
-    public void couler() {
-        setEtatTuile(EtatTuile.coulee);
-        setImage(EtatTuile.coulee);
-    }
+
     public void innonder() {
-        if (this.getEtatTuile() == EtatTuile.innondee){
-            this.couler();
+        if (getEtatTuile() == EtatTuile.innondee){
+            setEtatTuile(EtatTuile.coulee);
+            setImage(EtatTuile.coulee);
         }
         else{
             setEtatTuile(EtatTuile.innondee);
