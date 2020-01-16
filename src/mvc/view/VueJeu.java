@@ -292,7 +292,9 @@ public class VueJeu extends Vue {
         JPanel TOP = new JPanel(new BorderLayout()); TOP.setOpaque(false);
         TOP.setPreferredSize(new Dimension(0, 200));
         JPanel LEFT = new JPanel(new BorderLayout()); LEFT.setOpaque(false);
+        LEFT.setPreferredSize(new Dimension(200, 0));
         JPanel RIGHT = new JPanel(new BorderLayout()); RIGHT.setOpaque(false);
+        LEFT.setPreferredSize(new Dimension(200, 0));
         JPanel BOT = new JPanel(new BorderLayout()); BOT.setOpaque(false);
         BOT.setPreferredSize(new Dimension(0, 200));
 
@@ -338,8 +340,9 @@ public class VueJeu extends Vue {
         menu_left.add(menu, BorderLayout.CENTER);
 
         LEFT.add(roles[0], BorderLayout.NORTH);
-        LEFT.add(menu_left, BorderLayout.CENTER);
+        //LEFT.add(menu_left, BorderLayout.CENTER);
         LEFT.add(roles[2], BorderLayout.SOUTH);
+        TOP.add(menu_left, BorderLayout.CENTER);
 
         /////////////////////////// MENU_LEFT ///////////////////////////
 
@@ -366,7 +369,7 @@ public class VueJeu extends Vue {
 
         /////////////////////////// MENU_RIGHT ///////////////////////////
 
-        JPanel menu_right = new JPanel(new BorderLayout()); menu_right.setOpaque(false);
+        JPanel menu_right = new JPanel(new BorderLayout()); menu_right.setBackground(Color.lightGray);
         menu_right.setPreferredSize(new Dimension(200,0));
 
         //////////// MENU
