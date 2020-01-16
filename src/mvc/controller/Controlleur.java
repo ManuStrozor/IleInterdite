@@ -68,11 +68,12 @@ public class Controlleur implements IControlleur {
                 break;
 
             case UPDATE_IHM:
-                ihm.getVue("jeu").updateJoueur(ile.getJoueur().getNomJoueur());
+                ihm.getVue("jeu").updateJoueur(ile.getJoueur().getRole().name() + " (" + ile.getJoueur().getNomJoueur() + ")");
                 ihm.getVue("jeu").updateNiveauEau(ile.getNiveauEau());
                 ihm.getVue("jeu").updateGrille(grille);
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 break;
+
             case DEPLACEMENT:
                 if(ile.getJoueur().getNbActions() < 1) { // Helico...verifier lastAction
                     ile.passerTour();

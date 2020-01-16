@@ -29,9 +29,10 @@ import java.util.Objects;
 public class VueJeu extends Vue {
 
     private TilePanel[] roles = new TilePanel[4];
+    private TilePanel niveauPanel;
     private JPanel[] dashs = new JPanel[4];
     private JPanel grille;
-    private JLabel joueur,niveaueau;
+    private JLabel joueur;
     private JButton deplacer, assecher, donnerCarteTresor, recupererTresor, passertour;
 
     public VueJeu(String name, IHM ihm, int width, int height) {
@@ -230,12 +231,11 @@ public class VueJeu extends Vue {
             JPanel cartesPanel = (JPanel)dashs[i].getComponent(1);
 
             roles[i].setBackground(a.getRole().getImage());
-            btn = (JButton)roles[i].getComponent(0);
-            btn.setEnabled(false);
-            btn.setOpaque(false);
+
+            btn = (JButton)roles[i].getComponent(0); btn.setOpaque(false); btn.setEnabled(false);
 
             JLabel desc = (JLabel)descPanel.getComponent(0);
-            desc.setText("Joueur: "+a.getNomJoueur() + " NbActions: " + a.getNbActions());
+            desc.setText("NbActions: " + a.getNbActions());
 
             int j = 0;
             for(Component c : cartesPanel.getComponents()) {
@@ -282,8 +282,8 @@ public class VueJeu extends Vue {
     }
 
     @Override
-    public void updateNiveauEau(int niveau){
-        niveaueau.setText(Integer.toString(niveau));
+    public void updateNiveauEau(int niveau) {
+        niveauPanel.setBackground(new ImageIcon(getClass().getClassLoader().getResource("niveau/niveauDesEaux"+niveau+".png")).getImage());
         this.updateUI();
     }
 
@@ -294,7 +294,7 @@ public class VueJeu extends Vue {
         /////////// ROLES + DASHS ///////////
 
         for(int i = 0; i < 4; i++) {
-            roles[i] = new TilePanel(new BorderLayout()); roles[i].setOpaque(false);
+            roles[i] = new TilePanel(new BorderLayout()); roles[i].setBackground(Color.darkGray);
             roles[i].setPreferredSize(new Dimension(0, 200));
 
             dashs[i] = new JPanel(new BorderLayout()); dashs[i].setOpaque(false);
@@ -339,7 +339,7 @@ public class VueJeu extends Vue {
 
         joueur = new JLabel();
 
-        title.add(new JLabel("C'est au tour de "));
+        title.add(new JLabel("Tour : "));
         title.add(joueur);
 
         ////// TITLE
@@ -352,11 +352,13 @@ public class VueJeu extends Vue {
         assecher = new JButton("Assécher la tuile");
         donnerCarteTresor = new JButton("Donner une carte");
         recupererTresor = new JButton("Récupérer le Trésor");
+        passertour = new JButton("passerTour");
 
         menu.add(deplacer);
         menu.add(assecher);
         menu.add(donnerCarteTresor);
         menu.add(recupererTresor);
+        menu.add(passertour);
 
         //////////// MENU
 
@@ -410,29 +412,9 @@ public class VueJeu extends Vue {
         JPanel menu_right = new JPanel(new BorderLayout()); menu_right.setBackground(Color.lightGray);
         menu_right.setPreferredSize(new Dimension(200,0));
 
-        //////////// MENU
+        niveauPanel = new TilePanel(new BorderLayout()); niveauPanel.setOpaque(false);
 
-        JPanel menu2 = new JPanel(); menu2.setOpaque(false);
-
-        passertour = new JButton("passerTour");
-
-        menu2.add(passertour);
-
-        //////////// MENU
-
-        ////// NIVEAU
-
-        JPanel niveaudeau = new JPanel(); niveaudeau.setOpaque(false);
-
-        niveaueau = new JLabel();
-
-        niveaudeau.add(new JLabel("Niveau d'eau : "));
-        niveaudeau.add(niveaueau);
-
-        ////// NIVEAU
-
-        menu_right.add(menu2, BorderLayout.CENTER);
-        menu_right.add(niveaudeau, BorderLayout.SOUTH);
+        menu_right.add(niveauPanel, BorderLayout.CENTER);
 
         RIGHT.add(roles[1], BorderLayout.NORTH);
         //RIGHT.add(menu_right, BorderLayout.CENTER);

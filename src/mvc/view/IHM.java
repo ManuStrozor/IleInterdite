@@ -31,7 +31,7 @@ public class IHM extends Observe {
     public IHM() {
         frame = new JFrame("Ile Interdite");
         frame.setUndecorated(false);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(vue);
 
