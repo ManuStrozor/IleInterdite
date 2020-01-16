@@ -178,7 +178,20 @@ public class VueJeu extends Vue {
     @Override
     public void afficherCartes(int indexJoueur){
 
-        this.dashBoard.getComponent(indexJoueur).getComponentAt(1,0).setEnabled(true);
+        System.out.println("afficherCartes");
+
+        JPanel panel = (JPanel) (this.dashBoard.getComponent(indexJoueur));
+        JPanel lesCartes = (JPanel) (panel.getComponent(2));
+        for (Component carte : lesCartes.getComponents()){
+            TilePanel uneCarte = (TilePanel) (carte);
+            JButton btn = (JButton) uneCarte.getComponent(0);
+            btn.setEnabled(true);
+            btn.setContentAreaFilled(true);
+            Message msg = new Message(TypeMessage.UPDATE_DASHBOARD);
+            ihm.notifierObservateur(msg);
+            System.out.println("for");
+            this.updateUI();
+        }
 
 
 //        for (Component dash : this.dashBoard.getComponents()) {

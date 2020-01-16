@@ -122,22 +122,29 @@ public class IleInterdite extends Observe {
     }
 
     public void tirerCartesTresor(int n) {
+        System.out.println("on va tirer " + n + " cartes");
         for(int i = 0; i < n; i++) {
+
             CarteTresor c = pileTresor.get(random.nextInt(pileTresor.size()));
-            if(c.getTresor() == Tresor.Montee_Des_Eaux) {
+            if (c.getTresor() == Tresor.Montee_Des_Eaux) {
                 useCarteMonteeDesEaux(c);
                 System.out.println("Montée des eaux !!!!!!!!!!!!!!!!!!!!!!! " + nbCartesAPiocher + " cartes à piocher");
             } else {
                 getJoueur().getInventaire().add(c);
                 pileTresor.remove(c);
+
+                if (getJoueur().getInventaire().size() > 5){     // on notifie l'observateur qu'on a des cartes en trop
+                    System.out.println("on a trop de carte");
+                    Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
+                    msg.nbCarteEnTrop = 1 ; //getJoueur().getInventaire().size()-5
+                    notifierObservateur(msg);
+                }
             }
 
-            if (getJoueur().getInventaire().size() > 5){     // on notifie l'observateur qu'on a des cartes en trop
-                Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
-                msg.nbCarteEnTrop = getJoueur().getInventaire().size()-5;
-                notifierObservateur(msg);
-            }
-            //////////////////////////////////////
+
+        }
+
+    //////////////////////////////////////
 //            if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
 //                //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
 //                // et qui recupere l'index de cette carte dans inventaire
@@ -148,7 +155,6 @@ public class IleInterdite extends Observe {
 //                notifierObservateur(msg);
 //            }
 
-        }
     } // Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
 
 //    public int choixCarteADefausser(){ // permet à l'utilisateur de cliquer sur la carte qu'il veux defausser et renvoie son idex
@@ -296,6 +302,12 @@ public class IleInterdite extends Observe {
         niveauEau++;
         if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) nbCartesAPiocher++;
         defausserTresor(c, null);
+        Collections.shuffle(defausseInond);
+        ArrayList<CarteInondation>pile = new ArrayList<>();
+        pile.addAll(defausseInond);
+        pile.addAll(pileInond);
+        pileInond.clear();
+        pileInond=pile;
     }
 
     public void useCarteSacDeSable(Tuile tuile) { // Montrer les tuiles inondées AVANT quand carte cliquée !
