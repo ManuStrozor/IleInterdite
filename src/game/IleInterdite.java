@@ -320,7 +320,7 @@ public class IleInterdite extends Observe {
         getJoueur().getInventaire().remove(getJoueur().getCarte(Tresor.Sac_De_Sable));
     }
 
-    public void utiliserHelico() {
+    public void utiliserHelico(){
         if(isWon()) {
             Message msg = new Message(TypeMessage.CHANGER_VUE);
             msg.vue = "gagne";

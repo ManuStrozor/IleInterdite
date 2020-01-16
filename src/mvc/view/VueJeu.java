@@ -157,7 +157,7 @@ public class VueJeu extends Vue {
 
                 CarteTresor c = a.getInventaire().get(j);
 
-                if(a == joueur && c.getTresor() != Tresor.Helicoptere && c.getTresor() != Tresor.Sac_De_Sable) {
+                if(a == joueur && c.getTresor() != Tresor.Sac_De_Sable) {
 
                     btn.setEnabled(true);
                     btn.setContentAreaFilled(false);

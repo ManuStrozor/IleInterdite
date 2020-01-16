@@ -30,6 +30,7 @@ public class Controlleur implements IControlleur {
     private TypeMessage lastAction = null;
     private int indexCible;
     private VueGameOver VueGameOver;
+    //private boolean x =false;
 
     public Controlleur(IHM ihm, IleInterdite ile) {
         this.ihm = ihm;
@@ -80,6 +81,12 @@ public class Controlleur implements IControlleur {
                     ihm.getVue("jeu").afficherTuilesAccessibles(grille, tuiles);
                 }
                 break;
+            case HELICO: //Clic joueur
+                //ArrayList<Aventurier> y = ile.getJoueur().peutDonnerA(ile.getAventuriers());
+                //ihm.getVue("jeu").afficherAventurierAccessibles(ile.getAventuriers(),y);
+                //System.out.println(" case HELICO 1");
+                break;
+
 
             case SAUVER:
                 ArrayList<Tuile> t = msg.a.getTuilesAccessibles(grille);
@@ -111,6 +118,14 @@ public class Controlleur implements IControlleur {
                     case ASSECHER_TUILE:
                         ile.assecher(ile.getJoueur(), grille.getTuile(msg.index));
                         break;
+                    case CLIK_JOUEUR:
+                        //if (x==true){
+                        //    System.out.println("case HELICO>JOUEUR>TUILE 3");
+                        //    ile.seDeplacer(ile.getAventuriers().get(msg.indexAventurier),grille.getTuile(msg.index));
+                        //}
+                        break;
+                    case SABLE:
+                        break;
                 }
                 ihm.getVue("jeu").updateGrille(grille);
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
@@ -123,7 +138,10 @@ public class Controlleur implements IControlleur {
                 if(c.getTresor() != Tresor.Helicoptere && c.getTresor() != Tresor.Sac_De_Sable) {
                     ile.donnerCarte(ile.getJoueur().getInventaire().get(msg.index), ile.getAventuriers().get(indexCible));
                 } else if(c.getTresor() == Tresor.Helicoptere) {
+                    ihm.getVue("jeu").afficherAventurierAccessibles(ile.getAventuriers(),ile.getAventuriers());
                     System.out.println("Helicoptere");
+                    //ile.utiliserHelico();
+
                 } else if(c.getTresor() == Tresor.Sac_De_Sable) {
                     System.out.println("Sac de sable");
                 }
@@ -133,7 +151,19 @@ public class Controlleur implements IControlleur {
                 break;
 
             case CLIK_JOUEUR:
-                ihm.getVue("jeu").afficherCartesAccessibles(ile.getAventuriers(), ile.getJoueur());
+                switch (lastAction) {
+                    case DONNER_CARTE:
+                        ihm.getVue("jeu").afficherCartesAccessibles(ile.getAventuriers(), ile.getJoueur());
+                        break;
+                    case HELICO:
+                     //clic tuile
+                    //x=true;
+                    //System.out.println(" case HELICO>JOUEUR 2");
+                    //ihm.getVue("jeu").afficherTuilesAccessibles(grille, grille.getTuiles());
+                    //break;
+                }
+
+
                 break;
 
             case RECUPERER_TRESOR:
