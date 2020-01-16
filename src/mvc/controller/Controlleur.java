@@ -157,14 +157,12 @@ public class Controlleur implements IControlleur {
                         ihm.getVue("jeu").afficherCartesAccessibles(ile.getAventuriers(), ile.getJoueur());
                         break;
                     case HELICO:
-                     //clic tuile
+                        //clic tuile
                     //x=true;
                     //System.out.println(" case HELICO>JOUEUR 2");
                     //ihm.getVue("jeu").afficherTuilesAccessibles(grille, grille.getTuiles());
                     //break;
                 }
-
-
                 break;
 
             case RECUPERER_TRESOR:

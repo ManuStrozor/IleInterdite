@@ -26,7 +26,7 @@ public class TilePanel extends JPanel {
         w = (int) getSize().getWidth();
         h = (int) getSize().getHeight();
         if(background != null) {
-            g.drawImage(background, 0, 0, Math.min(w, h), Math.min(w, h), null);
+            g.drawImage(background, 0, 0, w, h, null);
         }
     }
 }

@@ -236,6 +236,7 @@ public class VueJeu extends Vue {
 
             JLabel desc = (JLabel)descPanel.getComponent(0);
             desc.setText("NbActions: " + a.getNbActions());
+            desc.setForeground(Color.WHITE);
 
             int j = 0;
             for(Component c : cartesPanel.getComponents()) {
@@ -294,11 +295,11 @@ public class VueJeu extends Vue {
         /////////// ROLES + DASHS ///////////
 
         for(int i = 0; i < 4; i++) {
-            roles[i] = new TilePanel(new BorderLayout()); roles[i].setBackground(Color.darkGray);
-            roles[i].setPreferredSize(new Dimension(0, 200));
+            roles[i] = new TilePanel(new BorderLayout()); roles[i].setOpaque(false);
+            roles[i].setPreferredSize(new Dimension(0, 150));
 
             dashs[i] = new JPanel(new BorderLayout()); dashs[i].setOpaque(false);
-            dashs[i].setPreferredSize(new Dimension(500, 0));
+            //dashs[i].setPreferredSize(new Dimension(500, 0));
         }
 
         /////////// ROLES + DASHS ///////////
@@ -309,13 +310,16 @@ public class VueJeu extends Vue {
 
 
         JPanel TOP = new JPanel(new BorderLayout()); TOP.setOpaque(false);
-        TOP.setPreferredSize(new Dimension(0, 200));
+        TOP.setPreferredSize(new Dimension(0, 150));
+
         JPanel LEFT = new JPanel(new BorderLayout()); LEFT.setOpaque(false);
-        LEFT.setPreferredSize(new Dimension(200, 0));
+        LEFT.setPreferredSize(new Dimension(150, 0));
+
         JPanel RIGHT = new JPanel(new BorderLayout()); RIGHT.setOpaque(false);
-        RIGHT.setPreferredSize(new Dimension(200, 0));
+        RIGHT.setPreferredSize(new Dimension(150, 0));
+
         JPanel BOT = new JPanel(new BorderLayout()); BOT.setOpaque(false);
-        BOT.setPreferredSize(new Dimension(0, 200));
+        BOT.setPreferredSize(new Dimension(0, 150));
 
         TOP.add(dashs[0], BorderLayout.WEST);
         TOP.add(dashs[1], BorderLayout.EAST);
@@ -331,7 +335,7 @@ public class VueJeu extends Vue {
         /////////////////////////// MENU_LEFT ///////////////////////////
 
         JPanel menu_left = new JPanel(new BorderLayout()); menu_left.setBackground(Color.lightGray);
-        menu_left.setPreferredSize(new Dimension(200,0));
+        //menu_left.setPreferredSize(new Dimension(150,0));
 
         ////// TITLE
 
@@ -366,9 +370,9 @@ public class VueJeu extends Vue {
         menu_left.add(menu, BorderLayout.CENTER);
 
         LEFT.add(roles[0], BorderLayout.NORTH);
-        //LEFT.add(menu_left, BorderLayout.CENTER);
+        LEFT.add(menu_left, BorderLayout.CENTER);
         LEFT.add(roles[2], BorderLayout.SOUTH);
-        TOP.add(menu_left, BorderLayout.CENTER);
+        //TOP.add(menu_left, BorderLayout.CENTER);
 
         /////////////////////////// MENU_LEFT ///////////////////////////
 
@@ -410,16 +414,16 @@ public class VueJeu extends Vue {
         /////////////////////////// MENU_RIGHT ///////////////////////////
 
         JPanel menu_right = new JPanel(new BorderLayout()); menu_right.setBackground(Color.lightGray);
-        menu_right.setPreferredSize(new Dimension(200,0));
+        //menu_right.setPreferredSize(new Dimension(150,0));
 
         niveauPanel = new TilePanel(new BorderLayout()); niveauPanel.setOpaque(false);
 
         menu_right.add(niveauPanel, BorderLayout.CENTER);
 
         RIGHT.add(roles[1], BorderLayout.NORTH);
-        //RIGHT.add(menu_right, BorderLayout.CENTER);
+        RIGHT.add(menu_right, BorderLayout.CENTER);
         RIGHT.add(roles[3], BorderLayout.SOUTH);
-        BOT.add(menu_right, BorderLayout.CENTER);
+        //BOT.add(menu_right, BorderLayout.CENTER);
 
         /////////////////////////// MENU_RIGHT ///////////////////////////
 
@@ -437,22 +441,20 @@ public class VueJeu extends Vue {
             JButton btnRole = new JButton(); btnRole.setOpaque(false); btnRole.setEnabled(false);
 
             roles[i].add(btnRole);
-
             btnRole.addActionListener(e -> {
                 Message m = new Message(TypeMessage.CLIK_JOUEUR);
                 m.indexAventurier = indexAventurier;
                 ihm.notifierObservateur(m);
             });
 
-
             JPanel descPanel = new JPanel(new BorderLayout()); descPanel.setOpaque(false);
             descPanel.add(new JLabel());
 
             JPanel cartes = new JPanel(); cartes.setOpaque(false);
 
-            for(int j = 0; j < 8; j++) {
+            for(int j = 0; j < 6; j++) {
                 TilePanel carte = new TilePanel(new BorderLayout()); carte.setOpaque(false);
-                carte.setPreferredSize(new Dimension(80, 80));
+                carte.setPreferredSize(new Dimension(70, 70));
 
                 JButton btnCard = new JButton(); btnCard.setOpaque(false); btnCard.setEnabled(false);
 
