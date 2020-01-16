@@ -298,7 +298,7 @@ public class VueJeu extends Vue {
         JPanel LEFT = new JPanel(new BorderLayout()); LEFT.setOpaque(false);
         LEFT.setPreferredSize(new Dimension(200, 0));
         JPanel RIGHT = new JPanel(new BorderLayout()); RIGHT.setOpaque(false);
-        LEFT.setPreferredSize(new Dimension(200, 0));
+        RIGHT.setPreferredSize(new Dimension(200, 0));
         JPanel BOT = new JPanel(new BorderLayout()); BOT.setOpaque(false);
         BOT.setPreferredSize(new Dimension(0, 200));
 
