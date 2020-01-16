@@ -55,7 +55,6 @@ public class Controlleur implements IControlleur {
                 ihm.getVue("jeu").initBoards(msg.nbJoueur);
                 ile.setNbJoueurs(msg.nbJoueur);
                 ile.setNiveauEau(msg.niveauEau);
-
                 ile.commencerPartie(msg.nomsJoueurs);
                 break;
 
@@ -68,7 +67,8 @@ public class Controlleur implements IControlleur {
                 break;
 
             case UPDATE_IHM:
-                ihm.getVue("jeu").afficherTitreJoueur(ile.getJoueur().getNomJoueur());
+                ihm.getVue("jeu").updateJoueur(ile.getJoueur().getNomJoueur());
+                ihm.getVue("jeu").updateNiveauEau(ile.getNiveauEau());
                 ihm.getVue("jeu").updateGrille(grille);
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 break;
@@ -170,7 +170,7 @@ public class Controlleur implements IControlleur {
             ile.passerTour();
         } else if(ile.getJoueur() != null) {
             ArrayList<CarteTresor> cartes = ile.getJoueur().peutRecupererTresor(ile.getTresorsDispo());
-            if(!cartes.isEmpty()) {
+            if (!cartes.isEmpty()) {
                 ihm.getVue("jeu").rendreBoutonsClicables(true);
             } else {
                 ihm.getVue("jeu").rendreBoutonsClicables(false);

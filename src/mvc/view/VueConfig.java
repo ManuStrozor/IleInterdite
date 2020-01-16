@@ -97,9 +97,10 @@ public class VueConfig extends Vue {
         }
         return indexErreur;
     }
-
     @Override
-    public void afficherTitreJoueur(String nom) {}
+    public void updateNiveauEau(int niveau){}
+    @Override
+    public void updateJoueur(String nom) {}
     @Override
     public void updateDashboard(ArrayList<Aventurier> aventuriers) {}
     @Override

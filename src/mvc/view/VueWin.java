@@ -27,9 +27,11 @@ public class VueWin extends Vue {
         });
     }
     @Override
+    public void updateNiveauEau(int niveau){}
+    @Override
     public void rendreBoutonsClicables(boolean bool){}
     @Override
-    public void afficherTitreJoueur(String nom) {}
+    public void updateJoueur(String nom) {}
     @Override
     public void updateDashboard(ArrayList<Aventurier> aventuriers) {}
     @Override

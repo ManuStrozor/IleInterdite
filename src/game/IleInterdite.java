@@ -213,8 +213,13 @@ public class IleInterdite extends Observe {
         } else {
             joueur++;
         }
+        if(isWon()){
+            Message msg = new Message(TypeMessage.CHANGER_VUE);
+            msg.vue = "gagne";
+            this.notifierObservateur(msg);
+            }
 
-        if(isGameover()) {
+        else if(isGameover()) {
             Message msg = new Message(TypeMessage.CHANGER_VUE);
             msg.vue = "perdu";
             this.notifierObservateur(msg);
