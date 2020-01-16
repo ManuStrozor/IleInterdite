@@ -309,9 +309,9 @@ public class IleInterdite extends Observe {
         ArrayList<CarteInondation>pile = new ArrayList<>();
         pile.addAll(defausseInond);
         pile.addAll(pileInond);
-        defausseInond.clear();
         pileInond.clear();
         pileInond=pile;
+        defausseInond.clear();
     }
 
     public void useCarteSacDeSable(Tuile tuile) { // Montrer les tuiles inondées AVANT quand carte cliquée !

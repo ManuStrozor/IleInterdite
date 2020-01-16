@@ -187,6 +187,8 @@ public class Controlleur implements IControlleur {
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
                 ihm.getVue("jeu").afficherCartes(ile.getAventuriers().indexOf(ile.getJoueur()), ile.getJoueur().getInventaire().size());
                 break;
+            case DEFAUSSER_CARTE:
+                ile.defausserTresor(ile.getAventuriers().get(msg.indexAventurier).getInventaire().get(msg.index), ile.getAventuriers().get(msg.indexAventurier));
         }
         lastAction = msg.type;
         indexCible = msg.indexAventurier;

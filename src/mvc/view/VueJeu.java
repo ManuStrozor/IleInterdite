@@ -16,6 +16,9 @@ import mvc.Message;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -179,7 +182,7 @@ public class VueJeu extends Vue {
     @Override
     public void afficherCartes(int index, int nbCartes){
 
-        JPanel lesCartes = (JPanel)dashs[index].getComponent(1);
+        JPanel lesCartes = (JPanel) dashs[index].getComponent(1);
 
         for(int i = 0; i < nbCartes; i++) {
             TilePanel uneCarte = (TilePanel)lesCartes.getComponent(i);
@@ -188,6 +191,18 @@ public class VueJeu extends Vue {
 
             btn.setEnabled(true);
             btn.setContentAreaFilled(false);
+
+            this.passertour.setEnabled(false);
+
+            int finalI = i;
+            btn.addActionListener(e -> {
+                Message msg = new Message(TypeMessage.DEFAUSSER_CARTE);
+                msg.index = finalI;
+                msg.indexAventurier = index;
+                System.out.println("parent : " + btn.getParent().getName());
+                ihm.notifierObservateur(msg);
+                this.passertour.setEnabled(true);
+            });
         }
 
         this.updateUI();

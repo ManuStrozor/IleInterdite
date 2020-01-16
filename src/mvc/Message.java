@@ -33,4 +33,5 @@ public class Message {
     public ArrayList<Aventurier> aventuriers;
     public int indexAventurier, index;
     public Aventurier a;
+    public CarteTresor carteTresor;
 }
