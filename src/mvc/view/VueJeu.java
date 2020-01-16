@@ -397,8 +397,9 @@ public class VueJeu extends Vue {
         menu_right.add(niveaudeau, BorderLayout.SOUTH);
 
         RIGHT.add(roles[1], BorderLayout.NORTH);
-        RIGHT.add(menu_right, BorderLayout.CENTER);
+        //RIGHT.add(menu_right, BorderLayout.CENTER);
         RIGHT.add(roles[3], BorderLayout.SOUTH);
+        BOT.add(menu_right, BorderLayout.CENTER);
 
         /////////////////////////// MENU_RIGHT ///////////////////////////
 
