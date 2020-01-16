@@ -132,9 +132,19 @@ public class IleInterdite extends Observe {
             }
 
             if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
-
                 //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
                 // et qui recupere l'index de cette carte dans inventaire
+
+                Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
+                //msg.index = l'index de la carte qu'on recupere avec la fonction
+                msg.nbCarteEnTrop = getJoueur().getInventaire().size()-5;
+                notifierObservateur(msg);
+            }
+            //////////////////////////////////////
+            if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
+                //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
+                // et qui recupere l'index de cette carte dans inventaire
+
                 Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
                 //msg.index = l'index de la carte qu'on recupere avec la fonction
                 msg.nbCarteEnTrop = getJoueur().getInventaire().size()-5;
@@ -144,6 +154,10 @@ public class IleInterdite extends Observe {
         }
     } // Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
 
+//    public int choixCarteADefausser(){ // permet à l'utilisateur de cliquer sur la carte qu'il veux defausser et renvoie son idex
+//        Message m = new Message(TypeMessage.CLIK_CARTE);
+//
+//    }
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
         aventurier.seDeplacer(tuileDest);
@@ -229,31 +243,22 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public void defausserTresor(CarteTresor c){
+    public void defausserTresor(CarteTresor c, Aventurier av){
         defausseTresor.add(c);
-        pileTresor.remove(c);
-        if(pileTresor.isEmpty()) {
-            pileTresor.addAll(defausseTresor);
-            defausseTresor.clear();
-        }
-    }
-
-    public void defausserCartesTresorInventaire(CarteTresor c, Aventurier av){
-        System.out.println("on defausse la carte " + c.getName());
-        // TEST HAMZA
-        defausseTresor.add(c);
-
-        ArrayList<CarteTresor> carteAsupprimer = new ArrayList<>();
-        for (CarteTresor carte : av.getInventaire() ) {
-            if (carte == c ){
-                carteAsupprimer.add(carte);
-                break;
+        if (av == null){
+            pileTresor.remove(c);
+            if(pileTresor.isEmpty()) {
+                pileTresor.addAll(defausseTresor);
+                defausseTresor.clear();
             }
+        }else{
+            System.out.println("on defausse la carte " + c.getName());
+            av.getInventaire().remove(c);
+            Message m = new Message(TypeMessage.UPDATE_DASHBOARD);
+            notifierObservateur(m);
         }
-        av.getInventaire().removeAll(carteAsupprimer);
-        Message m = new Message(TypeMessage.UPDATE_DASHBOARD);
-        notifierObservateur(m);
     }
+
 
     public void setNbJoueurs(int nbJoueurs) {
         this.nbJoueurs = nbJoueurs;
@@ -294,7 +299,7 @@ public class IleInterdite extends Observe {
     public void useCarteMonteeDesEaux(CarteTresor c) { // Déclenché automatiquement...ne pas oublier de defausser !
         niveauEau++;
         if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) cartesAPiocher++;
-        defausserTresor(c);
+        defausserTresor(c, null);
     }
 
     public void useCarteSacDeSable(Tuile tuile) { // Montrer les tuiles inondées AVANT quand carte cliquée !
@@ -356,7 +361,7 @@ public class IleInterdite extends Observe {
     public void defaussetoi(ArrayList<CarteTresor> ct) { // en cours de codage
         getJoueur().defaussetoi(ct);
         for(CarteTresor c: ct){
-            defausserTresor(c);
+            defausserTresor(c, null);
         }
     }
 
