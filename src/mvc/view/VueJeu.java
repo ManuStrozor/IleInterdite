@@ -175,6 +175,25 @@ public class VueJeu extends Vue {
         this.updateUI();
     }
 
+    @Override
+    public void afficherCartes(int indexJoueur){
+
+        this.dashBoard.getComponent(indexJoueur).getComponentAt(1,0).setEnabled(true);
+
+
+//        for (Component dash : this.dashBoard.getComponents()) {
+//            dash.setEnabled(false);
+//            System.out.println("test");
+//        }
+
+//            dashBoard.getComponent(0);
+//        System.out.println("test" + dashBoard.getComponent(0).getName());
+//
+//        for(Component comp : dashBoard.getComponents()) {
+//            for ( )
+//        }
+    }
+
     public void initBoards(int nb) {
         for (int i = 0; i < nb; i++) {
             int indexAventurier = i;

@@ -152,14 +152,18 @@ public class Controlleur implements IControlleur {
                 System.exit(0);
                 break;
             case INVENTAIRE_PLEIN:
-                System.out.println("Constructeur" + msg.nbCarteEnTrop);
+                System.out.println("Constructeur" + msg.nbCarteEnTrop); //test
                 for (int i = 0 ; i < msg.nbCarteEnTrop; i++){
                     System.out.println("loop");
+                    Message m = new Message(TypeMessage.DEFAUSSER_CARTE);
+                    ihm.notifierObservateur(m);
                     //interaction avec joueur pour recuperer index de la carte qu'il veux supprimer
                     ile.defausserTresor(ile.getJoueur().getInventaire().get(0), ile.getJoueur()); //changer 0 par msg.index et ile.getJoueur par msg.a
                 }
+                break;
+            case DEFAUSSER_CARTE:
 
-
+                ihm.getVue("jeu").afficherCartes(indexCible);
                 break;
         }
         lastAction = msg.type;

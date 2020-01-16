@@ -132,15 +132,21 @@ public class IleInterdite extends Observe {
                 pileTresor.remove(c);
             }
 
-            if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
-                //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
-                // et qui recupere l'index de cette carte dans inventaire
-
+            if (getJoueur().getInventaire().size() > 5){     // on notifie l'observateur qu'on a des cartes en trop
                 Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
-                //msg.index = l'index de la carte qu'on recupere avec la fonction
                 msg.nbCarteEnTrop = getJoueur().getInventaire().size()-5;
                 notifierObservateur(msg);
             }
+            //////////////////////////////////////
+//            if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
+//                //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
+//                // et qui recupere l'index de cette carte dans inventaire
+//
+//                Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
+//                //msg.index = l'index de la carte qu'on recupere avec la fonction
+//                msg.nbCarteEnTrop = getJoueur().getInventaire().size()-5;
+//                notifierObservateur(msg);
+//            }
 
         }
     } // Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau

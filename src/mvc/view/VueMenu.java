@@ -41,6 +41,12 @@ public class VueMenu extends Vue {
     public void updateGrille(Grille grille) {}
     @Override
     public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers, ArrayList<Aventurier> aventuriersOK) {}
+
+    @Override
+    public void afficherCartes(int indexJoueur) {
+
+    }
+
     @Override
     public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {}
     @Override

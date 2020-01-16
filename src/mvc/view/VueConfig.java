@@ -114,6 +114,11 @@ public class VueConfig extends Vue {
     public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers, ArrayList<Aventurier> aventuriersOK) {}
 
     @Override
+    public void afficherCartes(int indexJoueur) {
+
+    }
+
+    @Override
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("backgroundConfig.jpg"))).getImage());
 

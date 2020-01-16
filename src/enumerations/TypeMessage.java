@@ -26,5 +26,6 @@ public enum TypeMessage {
     SAUVER,
     CHANGER_VUE,
     QUITTER,
-    INVENTAIRE_PLEIN;
+    INVENTAIRE_PLEIN,
+    DEFAUSSER_CARTE;
 }

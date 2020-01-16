@@ -78,4 +78,6 @@ public abstract class Vue extends JPanel implements IVue {
     public abstract void initBoards(int nbJoueur);
     public abstract void rendreBoutonsClicables(boolean b);
     public abstract void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers, ArrayList<Aventurier> aventuriersOK);
+    public abstract void afficherCartes(int indexJoueur);
+
 }
