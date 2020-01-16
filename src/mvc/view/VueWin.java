@@ -38,12 +38,8 @@ public class VueWin extends Vue {
     public void updateGrille(Grille grille) {}
     @Override
     public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers, ArrayList<Aventurier> aventuriersOK) {}
-
     @Override
-    public void afficherCartes(int indexJoueur) {
-
-    }
-
+    public void afficherCartes(int index, int nbCartes) {}
     @Override
     public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {}
     @Override

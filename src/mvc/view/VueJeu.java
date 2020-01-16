@@ -177,21 +177,20 @@ public class VueJeu extends Vue {
     }
 
     @Override
-    public void afficherCartes(int indexJoueur){
+    public void afficherCartes(int index, int nbCartes){
 
-        System.out.println("afficherCartes");
+        JPanel lesCartes = (JPanel)dashs[index].getComponent(1);
 
-        JPanel lesCartes = (JPanel)dashs[indexJoueur].getComponent(2);
-        for (Component carte : lesCartes.getComponents()){
-            TilePanel uneCarte = (TilePanel) (carte);
-            JButton btn = (JButton) uneCarte.getComponent(0);
+        for(int i = 0; i < nbCartes; i++) {
+            TilePanel uneCarte = (TilePanel)lesCartes.getComponent(i);
+
+            JButton btn = (JButton)uneCarte.getComponent(0);
+
             btn.setEnabled(true);
-            btn.setContentAreaFilled(true);
-            Message msg = new Message(TypeMessage.UPDATE_DASHBOARD);
-            ihm.notifierObservateur(msg);
-            System.out.println("for");
-            this.updateUI();
+            btn.setContentAreaFilled(false);
         }
+
+        this.updateUI();
 
 
 //        for (Component dash : this.dashBoard.getComponents()) {
@@ -289,6 +288,11 @@ public class VueJeu extends Vue {
 
         /////////// ROLES + DASHS ///////////
 
+
+
+
+
+
         JPanel TOP = new JPanel(new BorderLayout()); TOP.setOpaque(false);
         TOP.setPreferredSize(new Dimension(0, 200));
         JPanel LEFT = new JPanel(new BorderLayout()); LEFT.setOpaque(false);
@@ -303,6 +307,11 @@ public class VueJeu extends Vue {
 
         BOT.add(dashs[2], BorderLayout.WEST);
         BOT.add(dashs[3], BorderLayout.EAST);
+
+
+
+
+
 
         /////////////////////////// MENU_LEFT ///////////////////////////
 
@@ -346,6 +355,13 @@ public class VueJeu extends Vue {
 
         /////////////////////////// MENU_LEFT ///////////////////////////
 
+
+
+
+
+
+
+
         /////////////////// GRILLE /////////////////
 
         grille = new JPanel(new GridLayout(6, 6, 5, 5)); grille.setOpaque(false);
@@ -366,6 +382,13 @@ public class VueJeu extends Vue {
         }
 
         /////////////////// GRILLE /////////////////
+
+
+
+
+
+
+
 
         /////////////////////////// MENU_RIGHT ///////////////////////////
 
