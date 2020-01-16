@@ -48,7 +48,7 @@ public class VueJeu extends Vue {
         });
 
         donnerCarteTresor.addActionListener(e -> {
-            Message m = new Message(TypeMessage.ECHANGE_CARTE);
+            Message m = new Message(TypeMessage.DONNER_CARTE);
             ihm.notifierObservateur(m);
 
         });
@@ -70,7 +70,7 @@ public class VueJeu extends Vue {
         int pos = 0;
         for (int i = 0; i < this.grille.getComponentCount(); i++) {
             TilePanel t = (TilePanel)this.grille.getComponent(i);
-            JButton btn = (JButton)t.getComponent(0);
+            JButton btn = (JButton)t.getComponent(4);
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
                 int index = pos;
                 btn.addActionListener(e -> {
@@ -88,11 +88,23 @@ public class VueJeu extends Vue {
         for (Component tile : this.grille.getComponents()) {
             TilePanel t = (TilePanel)tile;
 
-            JButton btn = (JButton)t.getComponent(0);
+            for(int a = 0; a < 4; a++) {
+                JLabel j = (JLabel)t.getComponent(a);
+                j.setText("");
+            }
+
+            JButton btn = (JButton)t.getComponent(4);
             btn.setEnabled(false);
             btn.setOpaque(false);
 
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
+
+                ArrayList<Aventurier> joueurs = grille.getTuile(pos).getAventuriers();
+                for(int a = 0; a < joueurs.size(); a++) {
+                    JLabel j = (JLabel)t.getComponent(a);
+                    j.setText(joueurs.get(a).getRole().name());
+                }
+
                 t.setBackground(grille.getTuile(pos).getImage());
                 pos++;
             }
@@ -101,7 +113,7 @@ public class VueJeu extends Vue {
         this.updateUI();
     }
 
-    public void rendreBoutonsClicables(boolean bool){
+    public void rendreBoutonsClicables(boolean bool) {
         recupererTresor.setEnabled(bool);
     }
 
@@ -111,7 +123,7 @@ public class VueJeu extends Vue {
         for (Component tile : this.grille.getComponents()) {
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
                 TilePanel t = (TilePanel)tile;
-                JButton btn = (JButton)t.getComponent(0);
+                JButton btn = (JButton)t.getComponent(4);
 
                 if(!tuiles.contains(grille.getTuile(pos))) {
                     grille.getTuile(pos).setImage(Etat.cachee);
@@ -344,6 +356,10 @@ public class VueJeu extends Vue {
             JButton btn = new JButton();
             btn.setEnabled(false);
             btn.setOpaque(false);
+            tile.add(new JLabel(""), BorderLayout.NORTH);
+            tile.add(new JLabel(""), BorderLayout.WEST);
+            tile.add(new JLabel(""), BorderLayout.EAST);
+            tile.add(new JLabel(""), BorderLayout.SOUTH);
             tile.add(btn);
             tile.setOpaque(false);
             this.grille.add(tile);

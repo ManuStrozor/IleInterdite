@@ -12,7 +12,6 @@ public class CarteTresor extends Carte {
         super(tresor);
     }
 
-    public void defausser() {}
     public Tresor getTresor(){
         return tresor;
     }

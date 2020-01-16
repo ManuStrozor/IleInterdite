@@ -75,7 +75,7 @@ public abstract class Aventurier {
         this.nomJoueur = nomJoueur;
     }
 
-    public ArrayList<Aventurier> aventuriersAccessible(ArrayList<Aventurier> aventuriers) {
+    public ArrayList<Aventurier> peutDonnerA(ArrayList<Aventurier> aventuriers) {
         ArrayList<Aventurier> av = new ArrayList<>(this.getRole() == Role.messager ? aventuriers : tuile.getAventuriers());
         av.remove(this);
         return av;

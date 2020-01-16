@@ -95,8 +95,8 @@ public class Controlleur implements IControlleur {
                 }
                 break;
 
-            case ECHANGE_CARTE:
-                ArrayList<Aventurier> a = ile.getJoueur().aventuriersAccessible(ile.getAventuriers());
+            case DONNER_CARTE:
+                ArrayList<Aventurier> a = ile.getJoueur().peutDonnerA(ile.getAventuriers());
                 ihm.getVue("jeu").afficherAventurierAccessibles(ile.getAventuriers(), a);
                 break;
 
@@ -110,11 +110,6 @@ public class Controlleur implements IControlleur {
                         break;
                     case ASSECHER_TUILE:
                         ile.assecher(ile.getJoueur(), grille.getTuile(msg.index));
-                        break;
-                    case HELICO:
-
-                        break;
-                    case SABLE:
                         break;
                 }
                 ihm.getVue("jeu").updateGrille(grille);

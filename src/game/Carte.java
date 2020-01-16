@@ -20,7 +20,6 @@ public abstract class Carte {
         this.tresor = tresor;
     }
 
-    abstract void defausser();
     public abstract Tresor getTresor();
 
     public Nom getNom() {

@@ -10,7 +10,7 @@ public class IleInterdite extends Observe {
 
     private Grille grille;
     private ArrayList<Tresor> tresorsDispo;
-    private int niveauEau = 0, nbJoueurs = 0, joueur = 0, cartesAPiocher = 2, tourjeu = 0;
+    private int niveauEau = 0, nbJoueurs = 0, joueur = 0, nbCartesAPiocher = 2, tourjeu = 0;
     private ArrayList<CarteTresor> pileTresor, defausseTresor;
     private ArrayList<CarteInondation> pileInond, defausseInond;
 
@@ -126,21 +126,12 @@ public class IleInterdite extends Observe {
             CarteTresor c = pileTresor.get(random.nextInt(pileTresor.size()));
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
                 useCarteMonteeDesEaux(c);
+                System.out.println("Montée des eaux !!!!!!!!!!!!!!!!!!!!!!! " + nbCartesAPiocher + " cartes à piocher");
             } else {
                 getJoueur().getInventaire().add(c);
                 pileTresor.remove(c);
             }
 
-            if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
-                //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
-                // et qui recupere l'index de cette carte dans inventaire
-
-                Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
-                //msg.index = l'index de la carte qu'on recupere avec la fonction
-                msg.nbCarteEnTrop = getJoueur().getInventaire().size()-5;
-                notifierObservateur(msg);
-            }
-            //////////////////////////////////////
             if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
                 //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
                 // et qui recupere l'index de cette carte dans inventaire
@@ -161,11 +152,11 @@ public class IleInterdite extends Observe {
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
         aventurier.seDeplacer(tuileDest);
-        if(aventurier.getRole()== Role.plongeur && tuileDest.getEtat()== Etat.innondee){
+        if(aventurier.getRole() == Role.plongeur && tuileDest.getEtat() == Etat.innondee){
             aventurier.consommerAction(0);
+        } else{
+            aventurier.consommerAction(1);
         }
-        else{
-        aventurier.consommerAction(1);}
     }
 
     public void assecher(Aventurier aventurier, Tuile tuile) {
@@ -202,7 +193,7 @@ public class IleInterdite extends Observe {
 
     public void passerTour() {
         tirerCartesTresor(2);
-        tirerCartesInond(cartesAPiocher);
+        tirerCartesInond(nbCartesAPiocher);
         getJoueur().setNbActions(3);
 
         if(joueur == aventuriers.size()-1){
@@ -252,7 +243,6 @@ public class IleInterdite extends Observe {
                 defausseTresor.clear();
             }
         }else{
-            System.out.println("on defausse la carte " + c.getName());
             av.getInventaire().remove(c);
             Message m = new Message(TypeMessage.UPDATE_DASHBOARD);
             notifierObservateur(m);
@@ -298,7 +288,7 @@ public class IleInterdite extends Observe {
 
     public void useCarteMonteeDesEaux(CarteTresor c) { // Déclenché automatiquement...ne pas oublier de defausser !
         niveauEau++;
-        if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) cartesAPiocher++;
+        if (niveauEau == 3 || niveauEau == 6 || niveauEau == 8) nbCartesAPiocher++;
         defausserTresor(c, null);
     }
 
@@ -385,7 +375,7 @@ public class IleInterdite extends Observe {
 
         System.out.print("\n\nInformations pour la partie : \n\n\t"
                 + "Le niveau d'eau est : " + niveauEau
-                + "\n\tLe nombre de carte à piocher est : " + cartesAPiocher);
+                + "\n\tLe nombre de carte à piocher est : " + nbCartesAPiocher);
 
         System.out.print("\n\tTrésors dispo : ");
         for (Tresor tresor : tresorsDispo) {

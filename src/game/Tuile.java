@@ -8,6 +8,7 @@ import enumerations.Tresor;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -21,13 +22,13 @@ public class Tuile implements Comparable<Tuile> {
     private Tresor tresor;
     private Etat etat;
     private int ligne, colonne;
-    private HashSet<Aventurier> aventuriers;
+    private ArrayList<Aventurier> aventuriers;
 
     Tuile(Nom nom){
         setNom(nom);
         this.assecher();
         setImage(etat);
-        aventuriers = new HashSet<>();
+        aventuriers = new ArrayList<>();
         setTresor(null);
     }
 
@@ -108,7 +109,7 @@ public class Tuile implements Comparable<Tuile> {
         }
     }
 
-    public HashSet<Aventurier> getAventuriers() {
+    public ArrayList<Aventurier> getAventuriers() {
         return aventuriers;
     }
     public void addAventurier(Aventurier aventurier) {
@@ -122,7 +123,4 @@ public class Tuile implements Comparable<Tuile> {
     public int compareTo(Tuile o) {
         return (o.getLigne() > this.getLigne() || (o.getLigne() == this.getLigne() && o.getColonne() > this.getColonne())) ? 1 : 0;
     }
-
-
-
 }

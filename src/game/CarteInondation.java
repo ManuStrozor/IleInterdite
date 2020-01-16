@@ -9,10 +9,6 @@ public class CarteInondation extends Carte {
         super(nom);
     }
 
-    public void defausser() {
-
-    }
-
     @Override
     public Tresor getTresor() {
         return null;

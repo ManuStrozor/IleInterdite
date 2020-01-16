@@ -15,7 +15,7 @@ public enum TypeMessage {
     UPDATE_IHM,
     DEPLACEMENT,
     ASSECHER_TUILE,
-    ECHANGE_CARTE,
+    DONNER_CARTE,
     RECUPERER_TRESOR,
     PASSER_TOUR,
     CLIK_TUILE,
