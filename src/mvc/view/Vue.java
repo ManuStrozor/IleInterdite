@@ -18,12 +18,12 @@ import java.util.ArrayList;
  * @author turbetde
  */
 public abstract class Vue extends JPanel implements IVue {
-    
+
     protected IHM ihm;
     protected String name;
     protected int width, height;
     private Image background;
-    
+
     Vue(String name, IHM ihm) {
         this.name = name;
         this.ihm = ihm;
@@ -79,6 +79,8 @@ public abstract class Vue extends JPanel implements IVue {
     public abstract void initBoards(int nbJoueur);
     public abstract void rendreBoutonsClicables(boolean b);
     public abstract void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers, ArrayList<Aventurier> aventuriersOK);
-    public abstract void afficherCartes(int index, int nbCartes);
+    public abstract void afficherCartes(int index, int nbCartes, Aventurier a);
+    public abstract void desactiverCartes(int index, int nbCartes, Aventurier a);
+
 
 }

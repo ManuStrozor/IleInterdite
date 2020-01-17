@@ -88,7 +88,6 @@ public class Controlleur implements IControlleur {
                 //System.out.println(" case HELICO 1");
                 break;
 
-
             case SAUVER:
                 ArrayList<Tuile> t = msg.a.getTuilesAccessibles(grille);
                 ihm.getVue("jeu").afficherTuilesAccessibles(grille, t);
@@ -184,16 +183,18 @@ public class Controlleur implements IControlleur {
             case INVENTAIRE_PLEIN:
                 System.out.println("message defausser");
                 ihm.getVue("jeu").updateDashboard(ile.getAventuriers());
-                ihm.getVue("jeu").afficherCartes(ile.getAventuriers().indexOf(ile.getJoueur()), ile.getJoueur().getInventaire().size());
+                ihm.getVue("jeu").afficherCartes(ile.getAventuriers().indexOf(msg.a), msg.a.getInventaire().size(), msg.a);
+                System.out.println("index joueur : " + ile.getAventuriers().indexOf(msg.a) );
                 break;
             case DEFAUSSER_CARTE:
                 ile.defausserTresor(ile.getAventuriers().get(msg.indexAventurier).getInventaire().get(msg.index), ile.getAventuriers().get(msg.indexAventurier));
+                ihm.getVue("jeu").desactiverCartes(ile.getAventuriers().indexOf(msg.a), msg.a.getInventaire().size(), msg.a);
         }
         lastAction = msg.type;
         indexCible = msg.indexAventurier;
 
-        if(ile.getJoueur() != null && ile.getJoueur().getInventaire().size() <= 5 && ile.isVeutFinir()) {
-            ile.finirTour();
+        if(msg.a != null && msg.a.getInventaire().size() <= 5 && ile.isVeutFinir()) {
+            ile.finirTour(msg.a);
         }
     }
 }

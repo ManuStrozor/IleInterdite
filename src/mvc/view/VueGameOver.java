@@ -40,14 +40,15 @@ public class VueGameOver extends Vue {
     @Override
     public void afficherAventurierAccessibles(ArrayList<Aventurier> aventuriers, ArrayList<Aventurier> aventuriersOK) {}
     @Override
-    public void afficherCartes(int index, int nbCartes) {}
+    public void afficherCartes(int index, int nbCartes, Aventurier a) {}
     @Override
     public void afficherTuilesAccessibles(Grille grille, ArrayList<Tuile> tuiles) {}
     @Override
     public void afficherCartesAccessibles(ArrayList<Aventurier> aventuriers, Aventurier joueur) {}
     @Override
     public void initBoards(int nbJoueur) {}
-
+    @Override
+    public void desactiverCartes(int index, int nbCartes, Aventurier a){}
     @Override
     public void initComponents() {
         this.setBackground(new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("gameOver.png"))).getImage());

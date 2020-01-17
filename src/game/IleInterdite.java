@@ -137,11 +137,12 @@ public class IleInterdite extends Observe {
         }
     }
 
-    public void ajouterCarteA(Aventurier a, CarteTresor c) {
+    public void ajouterCarteA(Aventurier a, CarteTresor c){
         a.getInventaire().add(c);
-        if (a.getInventaire().size() > 5) { // on notifie l'observateur qu'on a des cartes en trop
+        if (a.getInventaire().size() > 5){     // on notifie l'observateur qu'on a des cartes en trop
             System.out.println("on a trop de carte");
             Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
+            msg.a = a;
             this.notifierObservateur(msg);
         }
     }
@@ -220,13 +221,13 @@ public class IleInterdite extends Observe {
             msg.vue = "perdu";
             this.notifierObservateur(msg);
         } else if(getAventuriers().get(joueur).getInventaire().size() <= 5) {
-            finirTour();
+            finirTour(getJoueur());
         }
     }
 
-    public void finirTour() {
+    public void finirTour(Aventurier a) {
         tirerCartesInond(nbCartesAPiocher);
-        getJoueur().setNbActions(3);
+        a.setNbActions(3);
         if(joueur == aventuriers.size()-1) joueur = 0;
         else joueur++;
         tourjeu++;

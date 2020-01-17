@@ -173,11 +173,12 @@ public class VueJeu extends Vue {
     }
 
     @Override
-    public void afficherCartes(int index, int nbCartes) {
-
+    public void afficherCartes(int index, int nbCartes, Aventurier a){
+        System.out.println(a.getNomJoueur());
         JPanel lesCartes = (JPanel) dashs[index].getComponent(1);
 
         for(int i = 0; i < nbCartes; i++) {
+            System.out.println("loop");
             TilePanel uneCarte = (TilePanel)lesCartes.getComponent(i);
 
             JButton btn = (JButton)uneCarte.getComponent(0);
@@ -185,15 +186,46 @@ public class VueJeu extends Vue {
             btn.setEnabled(true);
             btn.setContentAreaFilled(false);
 
+            this.deplacer.setEnabled(false);
+            this.assecher.setEnabled(false);
+            this.recupererTresor.setEnabled(false);
+            this.donnerCarteTresor.setEnabled(false);
+
             this.passertour.setEnabled(false);
 
             int finalI = i;
             btn.addActionListener(e -> {
+                System.out.println("click");
                 Message msg = new Message(TypeMessage.DEFAUSSER_CARTE);
+                msg.a = a;
                 msg.index = finalI;
                 msg.indexAventurier = index;
                 ihm.notifierObservateur(msg);
+
+                this.passertour.setEnabled(true);
+                this.deplacer.setEnabled(true);
+                this.assecher.setEnabled(true);
+                this.donnerCarteTresor.setEnabled(true);
+
+                this.passertour.setEnabled(true);
             });
+        }
+        this.updateUI();
+    }
+
+    @Override
+    public void desactiverCartes(int index, int nbCartes, Aventurier a){
+        JPanel lesCartes = (JPanel) dashs[index].getComponent(1);
+
+        for(int i = 0; i < nbCartes; i++) {
+            System.out.println("loop");
+            TilePanel uneCarte = (TilePanel)lesCartes.getComponent(i);
+
+            JButton btn = (JButton)uneCarte.getComponent(0);
+
+            btn.setEnabled(false);
+            btn.setContentAreaFilled(false);
+
         }
         this.updateUI();
     }
@@ -443,7 +475,6 @@ public class VueJeu extends Vue {
                     m.index = index;
                     ihm.notifierObservateur(m);
                 });
-
                 cartes.add(carte);
             }
 
