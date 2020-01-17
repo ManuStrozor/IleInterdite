@@ -214,11 +214,6 @@ public abstract class Aventurier {
         tuile.addAventurier(this);
     }
 
-    public void consommerAction(double n) {
-        nbActions -= n;
-        // si plus d'actions....finir tour ou bloquer les boutons d'actions
-    }
-
     public boolean mort(Grille grille) {
         return getRole() != Role.plongeur && tuile.getEtat() == Etat.coulee && getTuilesAccessibles(grille) == null;
     }

@@ -16,9 +16,6 @@ import mvc.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -94,23 +91,18 @@ public class VueJeu extends Vue {
         for (Component tile : this.grille.getComponents()) {
             TilePanel t = (TilePanel)tile;
 
-            for(int a = 0; a < 4; a++) {
-                JLabel j = (JLabel)t.getComponent(a);
-                j.setText("");
-            }
+            for(int a = 0; a < 4; a++) ((JLabel) t.getComponent(a)).setText("");
 
             JButton btn = (JButton)t.getComponent(4);
             btn.setEnabled(false);
             btn.setOpaque(false);
 
             if(i != 0 && i != 1 && i != 4 && i != 5 && i != 6 && i != 11 && i != 24 && i != 29 && i != 30 && i != 31 && i != 34 && i != 35) {
-
                 ArrayList<Aventurier> joueurs = grille.getTuile(pos).getAventuriers();
                 for(int a = 0; a < joueurs.size(); a++) {
                     JLabel j = (JLabel)t.getComponent(a);
                     j.setText(joueurs.get(a).getRole().name());
                 }
-
                 t.setBackground(grille.getTuile(pos).getImage());
                 pos++;
             }
@@ -181,7 +173,7 @@ public class VueJeu extends Vue {
     }
 
     @Override
-    public void afficherCartes(int index, int nbCartes){
+    public void afficherCartes(int index, int nbCartes) {
 
         JPanel lesCartes = (JPanel) dashs[index].getComponent(1);
 
@@ -200,26 +192,10 @@ public class VueJeu extends Vue {
                 Message msg = new Message(TypeMessage.DEFAUSSER_CARTE);
                 msg.index = finalI;
                 msg.indexAventurier = index;
-                System.out.println("parent : " + btn.getParent().getName());
                 ihm.notifierObservateur(msg);
-                this.passertour.setEnabled(true);
             });
         }
-
         this.updateUI();
-
-
-//        for (Component dash : this.dashBoard.getComponents()) {
-//            dash.setEnabled(false);
-//            System.out.println("test");
-//        }
-
-//            dashBoard.getComponent(0);
-//        System.out.println("test" + dashBoard.getComponent(0).getName());
-//
-//        for(Component comp : dashBoard.getComponents()) {
-//            for ( )
-//        }
     }
 
     public void updateDashboard(ArrayList<Aventurier> aventuriers) {
@@ -356,6 +332,7 @@ public class VueJeu extends Vue {
         assecher = new JButton("Assécher la tuile");
         donnerCarteTresor = new JButton("Donner une carte");
         recupererTresor = new JButton("Récupérer le Trésor");
+        recupererTresor.setEnabled(false);
         passertour = new JButton("passerTour");
 
         menu.add(deplacer);
@@ -389,7 +366,6 @@ public class VueJeu extends Vue {
 
         for (int i = 0; i < 36; i++) {
             TilePanel tile = new TilePanel(new BorderLayout()); tile.setOpaque(false);
-
             JButton btn = new JButton(); btn.setOpaque(false); btn.setEnabled(false);
 
             tile.add(new JLabel(""), BorderLayout.NORTH);
@@ -452,7 +428,7 @@ public class VueJeu extends Vue {
 
             JPanel cartes = new JPanel(); cartes.setOpaque(false);
 
-            for(int j = 0; j < 6; j++) {
+            for(int j = 0; j < 7; j++) {
                 TilePanel carte = new TilePanel(new BorderLayout()); carte.setOpaque(false);
                 carte.setPreferredSize(new Dimension(70, 70));
 

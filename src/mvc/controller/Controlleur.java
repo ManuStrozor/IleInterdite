@@ -192,17 +192,8 @@ public class Controlleur implements IControlleur {
         lastAction = msg.type;
         indexCible = msg.indexAventurier;
 
-        if (ile.getJoueur() != null && ile.getJoueur().getNbActions() == 0) {
-            ile.passerTour();
-        } else if(ile.getJoueur() != null) {
-            ArrayList<CarteTresor> cartes = ile.getJoueur().peutRecupererTresor(ile.getTresorsDispo());
-            if (!cartes.isEmpty()) {
-                ihm.getVue("jeu").rendreBoutonsClicables(true);
-            } else {
-                ihm.getVue("jeu").rendreBoutonsClicables(false);
-            }
+        if(ile.getJoueur() != null && ile.getJoueur().getInventaire().size() <= 5 && ile.isVeutFinir()) {
+            ile.finirTour();
         }
-
     }
-
 }

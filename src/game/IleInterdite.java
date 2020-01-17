@@ -16,6 +16,7 @@ public class IleInterdite extends Observe {
 
     private ArrayList<Aventurier> aventuriers;
     private Aventurier joueurASauver;
+    private boolean veutFinir = false;
 
     Random random = new Random();
 
@@ -107,7 +108,7 @@ public class IleInterdite extends Observe {
             if(c.getTresor() == Tresor.Montee_Des_Eaux) {
                 i--;
             } else {
-                aventurier.getInventaire().add(c);
+                ajouterCarteA(aventurier, c);
                 pileTresor.remove(c);
             }
         }
@@ -130,56 +131,58 @@ public class IleInterdite extends Observe {
                 useCarteMonteeDesEaux(c);
                 System.out.println("Montée des eaux !!!!!!!!!!!!!!!!!!!!!!! " + nbCartesAPiocher + " cartes à piocher");
             } else {
-                getJoueur().getInventaire().add(c);
+                ajouterCarteA(getJoueur(), c);
                 pileTresor.remove(c);
-
-                if (getJoueur().getInventaire().size() > 5) { // on notifie l'observateur qu'on a des cartes en trop
-                    System.out.println("on a trop de carte");
-                    Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
-                    this.notifierObservateur(msg);
-                }
             }
         }
+    }
 
-    //////////////////////////////////////
-//            if (getJoueur().getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
-//                //appeler une methode qui permettrait à l'utilisateur de cliquer sur la carte à defausser
-//                // et qui recupere l'index de cette carte dans inventaire
-//
-//                Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
-//                //msg.index = l'index de la carte qu'on recupere avec la fonction
-//                msg.nbCarteEnTrop = getJoueur().getInventaire().size()-5;
-//                notifierObservateur(msg);
-//            }
-
-    } // Fais piocher 2 carte trésor si carte = montée des eaux lance la méthode usecartemontteeau
-
-//    public int choixCarteADefausser(){ // permet à l'utilisateur de cliquer sur la carte qu'il veux defausser et renvoie son idex
-//        Message m = new Message(TypeMessage.CLIK_CARTE);
-//
-//    }
+    public void ajouterCarteA(Aventurier a, CarteTresor c) {
+        a.getInventaire().add(c);
+        if (a.getInventaire().size() > 5) { // on notifie l'observateur qu'on a des cartes en trop
+            System.out.println("on a trop de carte");
+            Message msg = new Message(TypeMessage.INVENTAIRE_PLEIN);
+            this.notifierObservateur(msg);
+        }
+    }
 
     public void seDeplacer(Aventurier aventurier, Tuile tuileDest) {
         aventurier.seDeplacer(tuileDest);
         if(aventurier.getRole() == Role.plongeur && tuileDest.getEtat() == Etat.innondee){
-            aventurier.consommerAction(0);
+            consommerAction(aventurier, 0);
         } else{
-            aventurier.consommerAction(1);
+            consommerAction(aventurier, 1);
+        }
+    }
+
+    public void consommerAction(Aventurier a, double n) {
+        a.setNbActions(a.getNbActions()-n);
+        // si plus d'actions....finir tour ou bloquer les boutons d'actions
+        if (a.getNbActions() == 0) {
+            passerTour();
+        } else {
+            ArrayList<CarteTresor> cartes = a.peutRecupererTresor(tresorsDispo);
+            if (!cartes.isEmpty()) {
+                System.out.println("bouton recup clikable");
+                //ihm.getVue("jeu").rendreBoutonsClicables(true);
+            } else {
+                //ihm.getVue("jeu").rendreBoutonsClicables(false);
+            }
         }
     }
 
     public void assecher(Aventurier aventurier, Tuile tuile) {
         tuile.assecher();
         if (aventurier.getRole() == Role.ingenieur)
-            aventurier.consommerAction(0.5);
+            consommerAction(aventurier, 0.5);
         else
-            aventurier.consommerAction(1);
+            consommerAction(aventurier, 1);
     }
 
     public void donnerCarte(CarteTresor carte, Aventurier receveur) {
         getJoueur().getInventaire().remove(carte);
-        receveur.getInventaire().add(carte);
-        getJoueur().consommerAction(1);
+        ajouterCarteA(receveur, carte);
+        consommerAction(getJoueur(), 1);
 
 //        if (receveur.getInventaire().size() > 5){ // Rajouter dans le message la carte que l'utilisateur veux supprimer
 //            System.out.println("testXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -196,21 +199,17 @@ public class IleInterdite extends Observe {
             tresorsDispo.remove(getJoueur().getTuile().getTresor());
             defausseTresor.addAll(cartesADegager);
             getJoueur().getInventaire().removeAll(cartesADegager);
-            getJoueur().consommerAction(1);
+            consommerAction(getJoueur(), 1);
         }
     } // condition à verifier avant !
 
     public void passerTour() {
+        veutFinir = true;
 
+        System.out.println("avant");
         tirerCartesTresor(2);
-        tirerCartesInond(nbCartesAPiocher);
-        getJoueur().setNbActions(3);
+        System.out.println("apres");
 
-        if(joueur == aventuriers.size()-1) {
-            joueur = 0;
-        } else {
-            joueur++;
-        }
 
         if(isWon()) {
             Message msg = new Message(TypeMessage.CHANGER_VUE);
@@ -220,11 +219,24 @@ public class IleInterdite extends Observe {
             Message msg = new Message(TypeMessage.CHANGER_VUE);
             msg.vue = "perdu";
             this.notifierObservateur(msg);
-        } else {
-            tourjeu++;
-            DEBUGILEINTERDITE();
-            this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
+        } else if(getAventuriers().get(joueur).getInventaire().size() <= 5) {
+            finirTour();
         }
+    }
+
+    public void finirTour() {
+        tirerCartesInond(nbCartesAPiocher);
+        getJoueur().setNbActions(3);
+        if(joueur == aventuriers.size()-1) joueur = 0;
+        else joueur++;
+        tourjeu++;
+        veutFinir = false;
+        DEBUGILEINTERDITE();
+        this.notifierObservateur(new Message(TypeMessage.UPDATE_IHM));
+    }
+
+    public boolean isVeutFinir() {
+        return veutFinir;
     }
 
     public void sauverJoueur() {
